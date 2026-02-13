@@ -4,6 +4,7 @@ export interface Post {
   title: string
   url: string
   date: string
+  datetime: string
   category: string
 }
 
@@ -14,14 +15,18 @@ export default createContentLoader('posts/*.md', {
   transform(raw): Post[] {
     return raw
       .filter(({ url }) => url !== '/posts/')
-      .map(({ url, frontmatter }) => ({
-        title: frontmatter.title as string,
-        url,
-        date: frontmatter.date instanceof Date
-          ? frontmatter.date.toISOString().split('T')[0]
-          : String(frontmatter.date),
-        category: (frontmatter.category as string) || '',
-      }))
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .map(({ url, frontmatter }) => {
+        const dateValue = frontmatter.date instanceof Date
+          ? frontmatter.date.toISOString()
+          : String(frontmatter.date)
+        return {
+          title: frontmatter.title as string,
+          url,
+          date: dateValue.split('T')[0],
+          datetime: dateValue,
+          category: (frontmatter.category as string) || '',
+        }
+      })
+      .sort((a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime())
   },
 })

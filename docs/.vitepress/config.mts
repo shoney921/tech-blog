@@ -5,7 +5,7 @@ export default defineConfig({
   description: '개발 경험과 기술 이야기를 공유합니다',
   lang: 'ko-KR',
   cleanUrls: true,
-  lastUpdated: true,
+  lastUpdated: false,
 
   sitemap: {
     hostname: 'https://blog.shoneylife.com',
@@ -77,9 +77,6 @@ export default defineConfig({
       label: '목차',
     },
 
-    lastUpdated: {
-      text: '최종 수정일',
-    },
 
     notFound: {
       title: '페이지를 찾을 수 없습니다',
