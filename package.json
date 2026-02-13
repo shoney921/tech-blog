@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
+    "docs:build": "git fetch --unshallow 2>/dev/null || true; vitepress build docs",
     "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
