@@ -31,9 +31,13 @@ docs/
 ```markdown
 ---
 title: 글 제목
-date: YYYY-MM-DD
+date: YYYY-MM-DDThh:mm:ss
+category: 카테고리명
 ---
 ```
+
+- `date`: 시간까지 포함 (정렬 순서 결정에 사용)
+- `category`: AI / LLM, 블로그 등
 
 ### 2. 로컬 빌드 확인
 
