@@ -1,4 +1,50 @@
 import { defineConfig } from 'vitepress'
+import fs from 'node:fs'
+import path from 'node:path'
+
+function getSidebarFromPosts() {
+  const postsDir = path.resolve(__dirname, '../posts')
+  const files = fs.readdirSync(postsDir).filter(f => f.endsWith('.md') && f !== 'index.md')
+
+  const posts: { title: string; link: string; category: string; date: string }[] = []
+
+  for (const file of files) {
+    const content = fs.readFileSync(path.join(postsDir, file), 'utf-8')
+    const match = content.match(/^---\s*\n([\s\S]*?)\n---/)
+    if (!match) continue
+
+    const frontmatter = match[1]
+    const title = frontmatter.match(/^title:\s*["']?(.+?)["']?\s*$/m)?.[1] ?? file
+    const category = frontmatter.match(/^category:\s*["']?(.+?)["']?\s*$/m)?.[1] ?? ''
+    const date = frontmatter.match(/^date:\s*["']?(.+?)["']?\s*$/m)?.[1] ?? ''
+    const link = `/posts/${file.replace(/\.md$/, '')}`
+
+    posts.push({ title, link, category, date })
+  }
+
+  posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
+  const categoryMap = new Map<string, typeof posts>()
+  for (const post of posts) {
+    const cat = post.category || '기타'
+    if (!categoryMap.has(cat)) categoryMap.set(cat, [])
+    categoryMap.get(cat)!.push(post)
+  }
+
+  const sidebar: any[] = [
+    { text: '전체 글', link: '/' },
+  ]
+
+  for (const [category, items] of categoryMap) {
+    sidebar.push({
+      text: category,
+      collapsed: false,
+      items: items.map(p => ({ text: p.title, link: p.link })),
+    })
+  }
+
+  return sidebar
+}
 
 export default defineConfig({
   title: 'Shoney Tech Blog',
@@ -23,26 +69,7 @@ export default defineConfig({
       { text: '소개', link: '/about' },
     ],
 
-    sidebar: [
-      {
-        text: '전체 글',
-        link: '/',
-      },
-      {
-        text: 'AI / LLM',
-        collapsed: false,
-        items: [
-          { text: 'RAG vs Graph RAG', link: '/posts/2026-02-13-rag-vs-graph-rag' },
-        ],
-      },
-      {
-        text: '블로그',
-        collapsed: false,
-        items: [
-          { text: 'Hello World', link: '/posts/2026-02-13-hello-world' },
-        ],
-      },
-    ],
+    sidebar: getSidebarFromPosts(),
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/shoney' },
