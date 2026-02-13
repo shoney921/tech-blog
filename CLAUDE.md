@@ -9,7 +9,7 @@ docs/
 ├── index.md                    # 홈페이지
 ├── about.md                    # 소개 페이지
 ├── posts/
-│   ├── index.md                # 글 목록 (수동 관리)
+│   ├── index.md                # 글 목록 (PostList 컴포넌트로 자동 생성)
 │   └── YYYY-MM-DD-제목.md      # 포스트
 └── .vitepress/
     ├── config.mts              # VitePress 설정
@@ -35,15 +35,7 @@ date: YYYY-MM-DD
 ---
 ```
 
-### 2. 글 목록 업데이트
-
-`docs/posts/index.md`에 새 글 링크를 **맨 위(최신순)**에 추가:
-
-```markdown
-- [글 제목](/posts/YYYY-MM-DD-제목)
-```
-
-### 3. 로컬 빌드 확인
+### 2. 로컬 빌드 확인
 
 ```bash
 pnpm docs:build
@@ -51,12 +43,12 @@ pnpm docs:build
 
 빌드 에러가 없는지 확인.
 
-### 4. 커밋 & 푸시
+### 3. 커밋 & 푸시
 
 사용자가 요청하면 커밋하고 푸시한다.
 
 ```bash
-git add docs/posts/새파일.md docs/posts/index.md
+git add docs/posts/새파일.md
 git commit -m "post: 글 제목"
 git push
 ```
