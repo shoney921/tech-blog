@@ -1,6 +1,7 @@
 ---
 title: RAG vs Graph RAG - 아키텍처, 성능, 그리고 선택 기준
 date: 2026-02-13
+category: AI / LLM
 ---
 
 # RAG vs Graph RAG - 아키텍처, 성능, 그리고 선택 기준

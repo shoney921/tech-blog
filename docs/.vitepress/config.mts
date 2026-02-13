@@ -20,8 +20,28 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: '홈', link: '/' },
-      { text: '글 목록', link: '/posts/' },
       { text: '소개', link: '/about' },
+    ],
+
+    sidebar: [
+      {
+        text: '전체 글',
+        link: '/',
+      },
+      {
+        text: 'AI / LLM',
+        collapsed: false,
+        items: [
+          { text: 'RAG vs Graph RAG', link: '/posts/2026-02-13-rag-vs-graph-rag' },
+        ],
+      },
+      {
+        text: '블로그',
+        collapsed: false,
+        items: [
+          { text: 'Hello World', link: '/posts/2026-02-13-hello-world' },
+        ],
+      },
     ],
 
     socialLinks: [
