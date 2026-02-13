@@ -1,3 +1,7 @@
+---
+sidebar: false
+---
+
 # 소개
 
 안녕하세요, **Shoney**입니다.
