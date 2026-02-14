@@ -3,6 +3,11 @@
   --vp-c-brand-2: #4e5de6;
   --vp-c-brand-3: #3f4fd9;
   --vp-c-brand-soft: rgba(91, 106, 240, 0.14);
+
+  --vp-font-family-base: 'Intel One Mono', ui-monospace, SFMono-Regular,
+    'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  --vp-font-family-mono: 'Intel One Mono', ui-monospace, SFMono-Regular,
+    'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 }
 
 .dark {
