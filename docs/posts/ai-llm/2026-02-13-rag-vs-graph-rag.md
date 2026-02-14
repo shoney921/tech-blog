@@ -1,5 +1,6 @@
 ---
 title: RAG vs Graph RAG - 아키텍처, 성능, 그리고 선택 기준
+description: RAG와 Graph RAG의 아키텍처 차이, 성능 비교, 그리고 프로젝트에 맞는 선택 기준을 분석합니다.
 date: 2026-02-13T11:00:00
 ---
 

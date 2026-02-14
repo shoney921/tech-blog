@@ -1,5 +1,6 @@
 ---
 title: "개발 복귀자를 위한 AI 총정리 - LLM부터 에이전트, 그리고 AI 코딩 도구까지"
+description: LLM, 에이전트, RAG, LangChain, Cursor, Claude Code 등 최근 AI 기술의 핵심 개념을 처음부터 차근차근 설명합니다.
 date: 2026-02-13T12:00:00
 ---
 
