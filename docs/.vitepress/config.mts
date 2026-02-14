@@ -109,12 +109,80 @@ export default defineConfig({
 
   head: [
     ['meta', { name: 'theme-color', content: '#5b6af0' }],
-    ['meta', { name: 'og:type', content: 'website' }],
-    ['meta', { name: 'og:site_name', content: 'Shoney Tech Blog' }],
+    ['meta', { property: 'og:site_name', content: 'Shoney Tech Blog' }],
+    ['meta', { name: 'twitter:card', content: 'summary' }],
+    ['meta', { name: 'twitter:site', content: '@shoney' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
     ['link', { href: 'https://fonts.googleapis.com/css2?family=Intel+One+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap', rel: 'stylesheet' }],
   ],
+
+  transformHead({ pageData }) {
+    const head: Array<[string, Record<string, string>] | [string, Record<string, string>, string]> = []
+    const siteHostname = 'https://blog.shoneylife.com'
+    const pageUrl = `${siteHostname}/${pageData.relativePath.replace(/((^|\/)index)?\.md$/, '')}`
+
+    // Canonical URL
+    head.push(['link', { rel: 'canonical', href: pageUrl }])
+
+    // Per-page Open Graph
+    const title = pageData.frontmatter.title || pageData.title
+    const description = pageData.frontmatter.description || pageData.description || '개발 경험과 기술 이야기를 공유합니다'
+    const isPost = pageData.relativePath.startsWith('posts/') && pageData.relativePath !== 'posts/index.md'
+
+    head.push(['meta', { property: 'og:title', content: title }])
+    head.push(['meta', { property: 'og:description', content: description }])
+    head.push(['meta', { property: 'og:url', content: pageUrl }])
+    head.push(['meta', { property: 'og:type', content: isPost ? 'article' : 'website' }])
+
+    // Twitter meta
+    head.push(['meta', { name: 'twitter:title', content: title }])
+    head.push(['meta', { name: 'twitter:description', content: description }])
+
+    // Article-specific OG tags
+    if (isPost && pageData.frontmatter.date) {
+      head.push(['meta', { property: 'article:published_time', content: new Date(pageData.frontmatter.date).toISOString() }])
+      head.push(['meta', { property: 'article:author', content: 'Shoney' }])
+    }
+
+    // JSON-LD Structured Data
+    if (isPost) {
+      const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: title,
+        description,
+        url: pageUrl,
+        datePublished: pageData.frontmatter.date ? new Date(pageData.frontmatter.date).toISOString() : undefined,
+        author: {
+          '@type': 'Person',
+          name: 'Shoney',
+          url: 'https://github.com/shoney',
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'Shoney Tech Blog',
+          url: siteHostname,
+        },
+      }
+      head.push(['script', { type: 'application/ld+json' }, JSON.stringify(jsonLd)])
+    } else {
+      const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'Shoney Tech Blog',
+        url: siteHostname,
+        description: '개발 경험과 기술 이야기를 공유합니다',
+        author: {
+          '@type': 'Person',
+          name: 'Shoney',
+        },
+      }
+      head.push(['script', { type: 'application/ld+json' }, JSON.stringify(jsonLd)])
+    }
+
+    return head
+  },
 
   themeConfig: {
     nav: [

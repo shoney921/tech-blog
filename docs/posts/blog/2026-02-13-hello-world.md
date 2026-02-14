@@ -1,5 +1,6 @@
 ---
 title: Hello World - 블로그를 시작합니다
+description: VitePress와 Cloudflare Pages로 기술 블로그를 만들게 된 이유와 기술 스택을 소개합니다.
 date: 2026-02-13T10:00:00
 ---
 
