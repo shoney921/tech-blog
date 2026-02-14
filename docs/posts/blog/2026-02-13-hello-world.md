@@ -1,7 +1,6 @@
 ---
 title: Hello World - 블로그를 시작합니다
 date: 2026-02-13T10:00:00
-category: 블로그
 ---
 
 # Hello World - 블로그를 시작합니다

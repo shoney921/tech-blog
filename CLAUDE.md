@@ -10,9 +10,15 @@ docs/
 ├── about.md                    # 소개 페이지
 ├── posts/
 │   ├── index.md                # 글 목록 (PostList 컴포넌트로 자동 생성)
-│   └── YYYY-MM-DD-제목.md      # 포스트
+│   ├── ai-llm/                 # AI / LLM 카테고리
+│   │   └── YYYY-MM-DD-제목.md
+│   ├── blog/                   # 블로그 카테고리
+│   │   └── YYYY-MM-DD-제목.md
+│   └── <카테고리>/              # 카테고리별 디렉토리
+│       └── YYYY-MM-DD-제목.md
 └── .vitepress/
     ├── config.mts              # VitePress 설정
+    ├── categories.ts           # 카테고리 설정 (한글명, 순서)
     └── theme/
         ├── index.ts            # 테마 진입점
         └── style.css           # 커스텀 CSS
@@ -24,7 +30,8 @@ docs/
 
 ### 1. 포스트 파일 생성
 
-`docs/posts/YYYY-MM-DD-제목.md` 파일 생성. 파일명은 영문 kebab-case 사용.
+`docs/posts/<카테고리>/YYYY-MM-DD-제목.md` 파일 생성. 파일명은 영문 kebab-case 사용.
+카테고리 디렉토리에 파일을 배치하면 자동으로 해당 카테고리로 분류된다.
 
 프론트매터 필수:
 
@@ -32,12 +39,17 @@ docs/
 ---
 title: 글 제목
 date: YYYY-MM-DDThh:mm:ss
-category: 카테고리명
 ---
 ```
 
 - `date`: 시간까지 포함 (정렬 순서 결정에 사용)
-- `category`: AI / LLM, 블로그 등
+- 카테고리는 디렉토리로 결정되므로 프론트매터에 `category` 불필요
+
+### 카테고리 추가 방법
+
+1. `docs/.vitepress/categories.ts`에 새 카테고리 추가 (id, label, order)
+2. `docs/posts/<새카테고리>/` 디렉토리 생성
+3. 해당 디렉토리에 포스트 파일 작성
 
 ### 2. 로컬 빌드 확인
 

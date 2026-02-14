@@ -1,46 +1,96 @@
 import { defineConfig } from 'vitepress'
 import fs from 'node:fs'
 import path from 'node:path'
+import { categories, getCategoryLabel } from './categories'
+import type { Category } from './categories'
+
+interface PostEntry {
+  title: string
+  link: string
+  date: string
+}
+
+function scanPosts(dir: string, baseUrl: string): PostEntry[] {
+  const entries = fs.readdirSync(dir, { withFileTypes: true })
+  const posts: PostEntry[] = []
+
+  for (const entry of entries) {
+    if (entry.isDirectory()) {
+      posts.push(...scanPosts(path.join(dir, entry.name), `${baseUrl}/${entry.name}`))
+    } else if (entry.name.endsWith('.md') && entry.name !== 'index.md') {
+      const content = fs.readFileSync(path.join(dir, entry.name), 'utf-8')
+      const match = content.match(/^---\s*\n([\s\S]*?)\n---/)
+      if (!match) continue
+
+      const frontmatter = match[1]
+      const title = frontmatter.match(/^title:\s*["']?(.+?)["']?\s*$/m)?.[1] ?? entry.name
+      const date = frontmatter.match(/^date:\s*["']?(.+?)["']?\s*$/m)?.[1] ?? ''
+
+      posts.push({ title, link: `${baseUrl}/${entry.name.replace(/\.md$/, '')}`, date })
+    }
+  }
+
+  return posts
+}
+
+function buildSidebarCategory(cat: Category, postsDir: string, baseUrl: string): any | null {
+  const catDir = path.join(postsDir, cat.id)
+  if (!fs.existsSync(catDir)) return null
+
+  const posts = scanPosts(catDir, `${baseUrl}/${cat.id}`)
+  posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
+  const items: any[] = posts.map(p => ({ text: p.title, link: p.link }))
+
+  // 서브카테고리 처리
+  if (cat.children) {
+    for (const child of [...cat.children].sort((a, b) => a.order - b.order)) {
+      const childSection = buildSidebarCategory(child, catDir, `${baseUrl}/${cat.id}`)
+      if (childSection) items.push(childSection)
+    }
+  }
+
+  if (items.length === 0) return null
+
+  return {
+    text: cat.label,
+    collapsed: false,
+    items,
+  }
+}
 
 function getSidebarFromPosts() {
   const postsDir = path.resolve(__dirname, '../posts')
-  const files = fs.readdirSync(postsDir).filter(f => f.endsWith('.md') && f !== 'index.md')
-
-  const posts: { title: string; link: string; category: string; date: string }[] = []
-
-  for (const file of files) {
-    const content = fs.readFileSync(path.join(postsDir, file), 'utf-8')
-    const match = content.match(/^---\s*\n([\s\S]*?)\n---/)
-    if (!match) continue
-
-    const frontmatter = match[1]
-    const title = frontmatter.match(/^title:\s*["']?(.+?)["']?\s*$/m)?.[1] ?? file
-    const category = frontmatter.match(/^category:\s*["']?(.+?)["']?\s*$/m)?.[1] ?? ''
-    const date = frontmatter.match(/^date:\s*["']?(.+?)["']?\s*$/m)?.[1] ?? ''
-    const link = `/posts/${file.replace(/\.md$/, '')}`
-
-    posts.push({ title, link, category, date })
-  }
-
-  posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-
-  const categoryMap = new Map<string, typeof posts>()
-  for (const post of posts) {
-    const cat = post.category || '기타'
-    if (!categoryMap.has(cat)) categoryMap.set(cat, [])
-    categoryMap.get(cat)!.push(post)
-  }
-
   const sidebar: any[] = [
     { text: '전체 글', link: '/' },
   ]
 
-  for (const [category, items] of categoryMap) {
-    sidebar.push({
-      text: category,
-      collapsed: false,
-      items: items.map(p => ({ text: p.title, link: p.link })),
-    })
+  // categories.ts에 정의된 카테고리 순서대로
+  const sortedCategories = [...categories].sort((a, b) => a.order - b.order)
+  const knownIds = new Set(categories.map(c => c.id))
+
+  for (const cat of sortedCategories) {
+    const section = buildSidebarCategory(cat, postsDir, '/posts')
+    if (section) sidebar.push(section)
+  }
+
+  // categories.ts에 없는 디렉토리 → "기타"
+  const dirs = fs.readdirSync(postsDir, { withFileTypes: true })
+    .filter(d => d.isDirectory() && !knownIds.has(d.name))
+
+  if (dirs.length > 0) {
+    const etcPosts: PostEntry[] = []
+    for (const dir of dirs) {
+      etcPosts.push(...scanPosts(path.join(postsDir, dir.name), `/posts/${dir.name}`))
+    }
+    if (etcPosts.length > 0) {
+      etcPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      sidebar.push({
+        text: '기타',
+        collapsed: false,
+        items: etcPosts.map(p => ({ text: p.title, link: p.link })),
+      })
+    }
   }
 
   return sidebar

@@ -1,0 +1,56 @@
+export interface Category {
+  id: string
+  label: string
+  order: number
+  children?: Category[]
+}
+
+export const categories: Category[] = [
+  {
+    id: 'ai-llm',
+    label: 'AI / LLM',
+    order: 1,
+  },
+  {
+    id: 'blog',
+    label: '블로그',
+    order: 2,
+  },
+  {
+    id: 'test',
+    label: '테스트',
+    order: 99,
+  },
+]
+
+const categoryMap = new Map<string, Category>()
+
+function buildMap(cats: Category[], prefix = '') {
+  for (const cat of cats) {
+    const path = prefix ? `${prefix}/${cat.id}` : cat.id
+    categoryMap.set(path, cat)
+    if (cat.children) {
+      buildMap(cat.children, path)
+    }
+  }
+}
+
+buildMap(categories)
+
+export function getCategoryLabel(categoryPath: string): string {
+  const cat = categoryMap.get(categoryPath)
+  if (cat) return cat.label
+
+  // 서브카테고리 경로: "ai-llm/rag" → "AI / LLM > RAG" 형태로 조합
+  const parts = categoryPath.split('/')
+  const labels: string[] = []
+  let current = ''
+  for (const part of parts) {
+    current = current ? `${current}/${part}` : part
+    const c = categoryMap.get(current)
+    labels.push(c ? c.label : part)
+  }
+  if (labels.length > 0) return labels.join(' > ')
+
+  return categoryPath
+}

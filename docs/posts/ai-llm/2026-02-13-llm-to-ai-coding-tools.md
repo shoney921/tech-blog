@@ -1,7 +1,6 @@
 ---
 title: "개발 복귀자를 위한 AI 총정리 - LLM부터 에이전트, 그리고 AI 코딩 도구까지"
 date: 2026-02-13T12:00:00
-category: AI / LLM
 ---
 
 # 개발 복귀자를 위한 AI 총정리
@@ -165,7 +164,7 @@ RAG:
 RAG 덕분에 LLM은 **최신 정보**와 **사내 문서**까지 활용할 수 있게 되었다. ChatGPT의 웹 검색 기능, 회사 내부 챗봇 등이 모두 RAG 기반이다.
 
 ::: tip
-RAG에 대해 더 깊이 알고 싶다면 이전 포스트 [RAG vs Graph RAG](/posts/2026-02-13-rag-vs-graph-rag)를 참고하자.
+RAG에 대해 더 깊이 알고 싶다면 이전 포스트 [RAG vs Graph RAG](/posts/ai-llm/2026-02-13-rag-vs-graph-rag)를 참고하자.
 :::
 
 ---
