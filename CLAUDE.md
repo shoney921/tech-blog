@@ -59,17 +59,27 @@ pnpm docs:build
 
 빌드 에러가 없는지 확인.
 
-### 3. 커밋 & 푸시
+### 3. 커밋 & 배포
 
-사용자가 요청하면 커밋하고 푸시한다.
+작업 완료 시 피처 브랜치에서 커밋 후 main에 머지하고 푸시한다.
 
 ```bash
+# 1. 피처 브랜치 생성 & 커밋
+git checkout -b <브랜치명>
 git add docs/posts/새파일.md
 git commit -m "post: 글 제목"
+
+# 2. main에 머지 & 푸시
+git checkout main
+git merge <브랜치명>
 git push
+
+# 3. 피처 브랜치 정리
+git branch -d <브랜치명>
 ```
 
-푸시하면 Cloudflare Pages가 자동 빌드 & 배포한다.
+- 브랜치명 컨벤션: `post/YYYY-MM-DD-제목` (포스트), `feat/설명` (기능), `fix/설명` (수정)
+- main 푸시하면 Cloudflare Pages가 자동 빌드 & 배포한다.
 
 ## 명령어
 
