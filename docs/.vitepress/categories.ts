@@ -12,9 +12,14 @@ export const categories: Category[] = [
     order: 1,
   },
   {
+    id: 'physical-ai',
+    label: '피지컬 AI',
+    order: 2,
+  },
+  {
     id: 'blog',
     label: '블로그',
-    order: 2,
+    order: 3,
   },
   {
     id: 'test',
