@@ -36,13 +36,7 @@ function getLatestPosts(posts: BlogPost[], count: number): BlogPost[] {
 }
 ```
 
-::: tip
-VitePress는 마크다운 기반으로 콘텐츠를 작성할 수 있어 블로그에 적합합니다.
-:::
-
-::: info
-더 많은 글이 곧 올라올 예정입니다.
-:::
+VitePress는 마크다운 기반으로 콘텐츠를 작성할 수 있어서 블로그에 잘 맞는다.
 
 ## 앞으로의 계획
 
