@@ -3,6 +3,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { categories, getCategoryLabel } from './categories'
 import type { Category } from './categories'
+import { genFeed } from './genFeed'
 
 interface PostEntry {
   title: string
@@ -107,6 +108,8 @@ export default defineConfig({
     hostname: 'https://blog.shoneylife.com',
   },
 
+  buildEnd: genFeed,
+
   head: [
     ['meta', { name: 'theme-color', content: '#5b6af0' }],
     ['meta', { property: 'og:site_name', content: 'Shoney Tech Blog' }],
@@ -114,6 +117,7 @@ export default defineConfig({
     ['meta', { property: 'og:image', content: 'https://blog.shoneylife.com/og-image.svg' }],
     ['meta', { name: 'twitter:image', content: 'https://blog.shoneylife.com/og-image.svg' }],
     ['meta', { name: 'twitter:site', content: '@shoney' }],
+    ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'RSS', href: '/feed.xml' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
     ['link', { href: 'https://fonts.googleapis.com/css2?family=Intel+One+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap', rel: 'stylesheet' }],
