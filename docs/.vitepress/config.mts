@@ -110,7 +110,9 @@ export default defineConfig({
   head: [
     ['meta', { name: 'theme-color', content: '#5b6af0' }],
     ['meta', { property: 'og:site_name', content: 'Shoney Tech Blog' }],
-    ['meta', { name: 'twitter:card', content: 'summary' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { property: 'og:image', content: 'https://blog.shoneylife.com/og-image.svg' }],
+    ['meta', { name: 'twitter:image', content: 'https://blog.shoneylife.com/og-image.svg' }],
     ['meta', { name: 'twitter:site', content: '@shoney' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
@@ -138,6 +140,15 @@ export default defineConfig({
     // Twitter meta
     head.push(['meta', { name: 'twitter:title', content: title }])
     head.push(['meta', { name: 'twitter:description', content: description }])
+
+    // Per-page OG image (프론트매터에 image 필드가 있으면 덮어쓰기)
+    if (pageData.frontmatter.image) {
+      const ogImage = pageData.frontmatter.image.startsWith('http')
+        ? pageData.frontmatter.image
+        : `${siteHostname}${pageData.frontmatter.image}`
+      head.push(['meta', { property: 'og:image', content: ogImage }])
+      head.push(['meta', { name: 'twitter:image', content: ogImage }])
+    }
 
     // Article-specific OG tags
     if (isPost && pageData.frontmatter.date) {
