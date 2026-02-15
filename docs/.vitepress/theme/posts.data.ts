@@ -7,6 +7,7 @@ export interface Post {
   date: string
   datetime: string
   category: string
+  readingTime: number
 }
 
 declare const data: Post[]
@@ -20,11 +21,23 @@ function extractCategory(url: string): string {
   return getCategoryLabel(match[1])
 }
 
+function stripHtml(html: string): string {
+  return html.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim()
+}
+
+function calcReadingTime(html: string): number {
+  const text = stripHtml(html)
+  // 한국어 기준 ~500자/분
+  const minutes = Math.ceil(text.length / 500)
+  return Math.max(1, minutes)
+}
+
 export default createContentLoader('posts/**/*.md', {
+  render: true,
   transform(raw): Post[] {
     return raw
       .filter(({ url }) => !url.endsWith('/posts/'))
-      .map(({ url, frontmatter }) => {
+      .map(({ url, frontmatter, html }) => {
         const dateValue = frontmatter.date instanceof Date
           ? frontmatter.date.toISOString()
           : String(frontmatter.date)
@@ -34,6 +47,7 @@ export default createContentLoader('posts/**/*.md', {
           date: dateValue.split('T')[0],
           datetime: dateValue,
           category: extractCategory(url),
+          readingTime: html ? calcReadingTime(html) : 1,
         }
       })
       .sort((a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime())

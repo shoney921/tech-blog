@@ -24,6 +24,7 @@ function formatDate(dateStr: string): string {
         <div class="post-header">
           <span v-if="post.category" class="post-category">{{ post.category }}</span>
           <time :datetime="post.date">{{ formatDate(post.date) }}</time>
+          <span class="post-reading-time">{{ post.readingTime }}분</span>
         </div>
         <h2>{{ post.title }}</h2>
       </article>
@@ -86,5 +87,15 @@ function formatDate(dateStr: string): string {
 .post-item time {
   font-size: 0.8rem;
   color: var(--vp-c-text-3);
+}
+
+.post-reading-time {
+  font-size: 0.75rem;
+  color: var(--vp-c-text-3);
+}
+
+.post-reading-time::before {
+  content: '·';
+  margin: 0 0.4rem;
 }
 </style>
