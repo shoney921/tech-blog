@@ -1,10 +1,17 @@
 ---
-title: Shoney Tech Blog
+layout: home
+hero:
+  name: Shoney Tech Blog
+  text: 개발 경험과 기술 이야기
+  tagline: AI, 웹 개발, DevOps — 직접 부딪히며 배운 것들을 기록합니다
+  actions:
+    - theme: brand
+      text: 글 목록
+      link: /posts/
+    - theme: alt
+      text: 소개
+      link: /about
 ---
-
-# Shoney Tech Blog
-
-개발 경험과 기술 이야기를 공유합니다.
 
 ## 최근 글
 
