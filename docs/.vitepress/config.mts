@@ -111,6 +111,7 @@ export default defineConfig({
   buildEnd: genFeed,
 
   head: [
+    ['link', { rel: 'icon', type: 'image/png', href: '/favicon.png' }],
     ['meta', { name: 'theme-color', content: '#5b6af0' }],
     ['meta', { property: 'og:site_name', content: 'Shoney Tech Blog' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
