@@ -20,6 +20,12 @@ export const categories: Category[] = [
     id: 'langchain-langgraph',
     label: '랭체인 & 랭그래프',
     order: 3,
+    children: [
+      { id: 'background', label: '배경지식', order: 1 },
+      { id: 'langchain', label: 'LangChain', order: 2 },
+      { id: 'langgraph', label: 'LangGraph', order: 3 },
+      { id: 'evaluation', label: 'LLM 평가', order: 4 },
+    ],
   },
   {
     id: 'blog',
