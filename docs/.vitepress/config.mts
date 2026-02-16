@@ -11,12 +11,12 @@ interface PostEntry {
   date: string
 }
 
-function scanPosts(dir: string, baseUrl: string): PostEntry[] {
+function scanPosts(dir: string, baseUrl: string, recursive = true): PostEntry[] {
   const entries = fs.readdirSync(dir, { withFileTypes: true })
   const posts: PostEntry[] = []
 
   for (const entry of entries) {
-    if (entry.isDirectory()) {
+    if (recursive && entry.isDirectory()) {
       posts.push(...scanPosts(path.join(dir, entry.name), `${baseUrl}/${entry.name}`))
     } else if (entry.name.endsWith('.md') && entry.name !== 'index.md') {
       const content = fs.readFileSync(path.join(dir, entry.name), 'utf-8')
@@ -38,7 +38,10 @@ function buildSidebarCategory(cat: Category, postsDir: string, baseUrl: string):
   const catDir = path.join(postsDir, cat.id)
   if (!fs.existsSync(catDir)) return null
 
-  const posts = scanPosts(catDir, `${baseUrl}/${cat.id}`)
+  // children이 있으면 직접 .md만 스캔 (하위 디렉토리는 children이 처리)
+  const posts = cat.children
+    ? scanPosts(catDir, `${baseUrl}/${cat.id}`, false)
+    : scanPosts(catDir, `${baseUrl}/${cat.id}`)
   posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
   const items: any[] = posts.map(p => ({ text: p.title, link: p.link }))
