@@ -1,0 +1,48 @@
+---
+description: Shoney Tech Blog 프로젝트 구조, 새 글 작성 절차, 명령어, 배포
+alwaysApply: true
+---
+
+# Shoney Tech Blog
+
+VitePress 기술 블로그. Cloudflare Pages 배포 (`blog.shoneylife.com`).
+
+## 프로젝트 구조
+
+- `docs/` — 홈(index.md), about.md, posts/
+- `docs/posts/<카테고리>/YYYY-MM-DD-제목.md` — 포스트 (파일명 영문 kebab-case)
+- `docs/.vitepress/` — config.mts, categories.ts, theme/
+
+카테고리는 디렉터리로 결정. 프론트매터에 `category` 넣지 않음.
+
+## 새 글 작성 시 절차
+
+1. **파일 생성**: `docs/posts/<카테고리>/YYYY-MM-DD-제목.md`
+2. **프론트매터 필수**:
+   ```yaml
+   ---
+   title: 글 제목
+   date: YYYY-MM-DDThh:mm:ss
+   ---
+   ```
+3. **빌드 확인**: `pnpm docs:build`
+4. **커밋**: 피처 브랜치 → main 머지 → 푸시  
+   - 브랜치명: `post/YYYY-MM-DD-제목`, `feat/설명`, `fix/설명`  
+   - 커밋 메시지 예: `post: 글 제목`
+
+## 카테고리 추가
+
+1. `docs/.vitepress/categories.ts`에 추가 (id, label, order)
+2. `docs/posts/<새카테고리>/` 디렉터리 생성
+3. 해당 디렉터리에 포스트 작성
+
+## 명령어
+
+- `pnpm docs:dev` — 로컬 개발 (localhost:5173)
+- `pnpm docs:build` — 프로덕션 빌드
+- `pnpm docs:preview` — 빌드 미리보기
+
+## 배포
+
+- GitHub: shoney921/tech-blog
+- main 푸시 시 Cloudflare Pages 자동 배포
