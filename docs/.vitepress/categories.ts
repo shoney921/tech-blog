@@ -28,9 +28,19 @@ export const categories: Category[] = [
     ],
   },
   {
+    id: 'dearme',
+    label: 'DearMe',
+    order: 4,
+    children: [
+      { id: 'frontend', label: '프론트엔드', order: 1 },
+      { id: 'backend', label: '백엔드', order: 2 },
+      { id: 'ai', label: 'AI', order: 3 },
+    ],
+  },
+  {
     id: 'blog',
     label: '블로그',
-    order: 4,
+    order: 5,
   },
   {
     id: 'test',
