@@ -15,6 +15,9 @@ export const categories: Category[] = [
     id: 'physical-ai',
     label: '피지컬 AI',
     order: 2,
+    children: [
+      { id: 'smart-home', label: '스마트홈 / IoT', order: 1 },
+    ],
   },
   {
     id: 'langchain-langgraph',
