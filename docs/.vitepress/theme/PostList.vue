@@ -1,9 +1,44 @@
 <script setup lang="ts">
 import { data as posts } from './posts.data'
 import { withBase } from 'vitepress'
+import { ref, onMounted, onUnmounted } from 'vue'
 
-function formatDate(dateStr: string): string {
-  const date = new Date(dateStr + 'T00:00:00')
+const now = ref(Date.now())
+let timer: ReturnType<typeof setInterval> | null = null
+
+onMounted(() => {
+  now.value = Date.now()
+  timer = setInterval(() => {
+    now.value = Date.now()
+  }, 60_000)
+})
+
+onUnmounted(() => {
+  if (timer) clearInterval(timer)
+})
+
+function formatDate(datetime: string): string {
+  const date = new Date(datetime)
+  const diff = now.value - date.getTime()
+
+  if (diff < 0) {
+    return formatAbsoluteDate(date)
+  }
+
+  const seconds = Math.floor(diff / 1000)
+  const minutes = Math.floor(seconds / 60)
+  const hours = Math.floor(minutes / 60)
+  const days = Math.floor(hours / 24)
+
+  if (minutes < 1) return '방금 전'
+  if (minutes < 60) return `${minutes}분 전`
+  if (hours < 24) return `${hours}시간 전`
+  if (days < 7) return `${days}일 전`
+
+  return formatAbsoluteDate(date)
+}
+
+function formatAbsoluteDate(date: Date): string {
   return date.toLocaleDateString('ko-KR', {
     year: 'numeric',
     month: 'long',
@@ -23,7 +58,7 @@ function formatDate(dateStr: string): string {
       <article>
         <div class="post-header">
           <span v-if="post.category" class="post-category">{{ post.category }}</span>
-          <time :datetime="post.date">{{ formatDate(post.date) }}</time>
+          <time :datetime="post.datetime">{{ formatDate(post.datetime) }}</time>
           <span class="post-reading-time">{{ post.readingTime }}분</span>
         </div>
         <h2>{{ post.title }}</h2>
