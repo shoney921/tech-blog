@@ -59,7 +59,6 @@ function formatAbsoluteDate(date: Date): string {
         <div class="post-header">
           <span v-if="post.category" class="post-category">{{ post.category }}</span>
           <time :datetime="post.datetime">{{ formatDate(post.datetime) }}</time>
-          <span class="post-reading-time">{{ post.readingTime }}분</span>
         </div>
         <h2>{{ post.title }}</h2>
       </article>
@@ -124,13 +123,4 @@ function formatAbsoluteDate(date: Date): string {
   color: var(--vp-c-text-3);
 }
 
-.post-reading-time {
-  font-size: 0.75rem;
-  color: var(--vp-c-text-3);
-}
-
-.post-reading-time::before {
-  content: '·';
-  margin: 0 0.4rem;
-}
 </style>
