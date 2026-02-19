@@ -5,7 +5,7 @@ hero:
   text: 개발 경험과 기술 이야기
   tagline: AI, 웹 개발, DevOps — 직접 부딪히며 배운 것들을 기록합니다
   image:
-    src: /images/hero-banner.svg
+    src: /images/hero-banner.png
     alt: 삽질 테크 블로그 배너
   actions:
     - theme: brand
