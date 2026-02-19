@@ -31,8 +31,8 @@ export const categories: Category[] = [
     ],
   },
   {
-    id: 'dearme',
-    label: 'DearMe',
+    id: 'nadarm',
+    label: '나닮',
     order: 4,
     children: [
       { id: 'frontend', label: '프론트엔드', order: 1 },
