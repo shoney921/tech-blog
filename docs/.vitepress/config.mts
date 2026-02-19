@@ -101,7 +101,7 @@ function getSidebarFromPosts() {
 }
 
 export default defineConfig({
-  title: 'Shoney Tech Blog',
+  title: '삽질 테크 블로그',
   description: '개발 경험과 기술 이야기를 공유합니다',
   lang: 'ko-KR',
   cleanUrls: true,
@@ -116,7 +116,7 @@ export default defineConfig({
   head: [
     ['link', { rel: 'icon', type: 'image/png', href: '/favicon.png' }],
     ['meta', { name: 'theme-color', content: '#5b6af0' }],
-    ['meta', { property: 'og:site_name', content: 'Shoney Tech Blog' }],
+    ['meta', { property: 'og:site_name', content: '삽질 테크 블로그' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { property: 'og:image', content: 'https://blog.shoneylife.com/og-image.svg' }],
     ['meta', { name: 'twitter:image', content: 'https://blog.shoneylife.com/og-image.svg' }],
@@ -124,7 +124,7 @@ export default defineConfig({
     ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'RSS', href: '/feed.xml' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
-    ['link', { href: 'https://fonts.googleapis.com/css2?family=Intel+One+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap', rel: 'stylesheet' }],
+    ['link', { href: 'https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Intel+One+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap', rel: 'stylesheet' }],
   ],
 
   transformHead({ pageData }) {
@@ -180,7 +180,7 @@ export default defineConfig({
         },
         publisher: {
           '@type': 'Organization',
-          name: 'Shoney Tech Blog',
+          name: '삽질 테크 블로그',
           url: siteHostname,
         },
       }
@@ -253,7 +253,7 @@ export default defineConfig({
     },
 
     footer: {
-      message: 'Shoney Tech Blog',
+      message: '삽질 테크 블로그',
       copyright: `© ${new Date().getFullYear()} Shoney. All rights reserved.`,
     },
   },

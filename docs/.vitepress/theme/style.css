@@ -17,6 +17,12 @@
   --vp-c-brand-soft: rgba(124, 140, 245, 0.16);
 }
 
+/* 블로그 타이틀: Do Hyeon 폰트 적용 */
+.VPNavBarTitle .title,
+.VPHome .VPHero .name {
+  font-family: 'Do Hyeon', sans-serif;
+}
+
 /* 홈 히어로: 한글/모노스페이스로 인한 과도한 줄바꿈 방지 */
 .VPHome .VPHero .name,
 .VPHome .VPHero .text {
