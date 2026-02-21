@@ -34,7 +34,10 @@ function scanPosts(dir: string, baseUrl: string, recursive = true): PostEntry[] 
   return posts
 }
 
-function buildSidebarCategory(cat: Category, postsDir: string, baseUrl: string): any | null {
+function buildSidebarCategory(
+  cat: Category, postsDir: string, baseUrl: string,
+  expandedIds?: string[],
+): any | null {
   const catDir = path.join(postsDir, cat.id)
   if (!fs.existsSync(catDir)) return null
 
@@ -46,10 +49,13 @@ function buildSidebarCategory(cat: Category, postsDir: string, baseUrl: string):
 
   const items: any[] = posts.map(p => ({ text: p.title, link: p.link }))
 
+  const isExpanded = expandedIds?.[0] === cat.id
+  const childExpandedIds = isExpanded ? expandedIds.slice(1) : undefined
+
   // 서브카테고리 처리
   if (cat.children) {
     for (const child of [...cat.children].sort((a, b) => a.order - b.order)) {
-      const childSection = buildSidebarCategory(child, catDir, `${baseUrl}/${cat.id}`)
+      const childSection = buildSidebarCategory(child, catDir, `${baseUrl}/${cat.id}`, childExpandedIds)
       if (childSection) items.push(childSection)
     }
   }
@@ -58,44 +64,68 @@ function buildSidebarCategory(cat: Category, postsDir: string, baseUrl: string):
 
   return {
     text: cat.label,
-    collapsed: false,
+    collapsed: !isExpanded,
     items,
   }
 }
 
+function collectCategoryPaths(cats: Category[], prefix: string[] = []): string[][] {
+  const paths: string[][] = []
+  for (const cat of cats) {
+    const current = [...prefix, cat.id]
+    paths.push(current)
+    if (cat.children) paths.push(...collectCategoryPaths(cat.children, current))
+  }
+  return paths
+}
+
 function getSidebarFromPosts() {
   const postsDir = path.resolve(__dirname, '../posts')
-  const sidebar: any[] = [
-    { text: '전체 글', link: '/' },
-  ]
-
-  // categories.ts에 정의된 카테고리 순서대로
   const sortedCategories = [...categories].sort((a, b) => a.order - b.order)
   const knownIds = new Set(categories.map(c => c.id))
 
-  for (const cat of sortedCategories) {
-    const section = buildSidebarCategory(cat, postsDir, '/posts')
-    if (section) sidebar.push(section)
+  function buildFullSidebar(expandedIds?: string[]) {
+    const items: any[] = [
+      { text: '전체 글', link: '/' },
+    ]
+
+    for (const cat of sortedCategories) {
+      const section = buildSidebarCategory(cat, postsDir, '/posts', expandedIds)
+      if (section) items.push(section)
+    }
+
+    // categories.ts에 없는 디렉토리 → "기타"
+    const dirs = fs.readdirSync(postsDir, { withFileTypes: true })
+      .filter(d => d.isDirectory() && !knownIds.has(d.name))
+
+    if (dirs.length > 0) {
+      const etcPosts: PostEntry[] = []
+      for (const dir of dirs) {
+        etcPosts.push(...scanPosts(path.join(postsDir, dir.name), `/posts/${dir.name}`))
+      }
+      if (etcPosts.length > 0) {
+        etcPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        items.push({
+          text: '기타',
+          collapsed: true,
+          items: etcPosts.map(p => ({ text: p.title, link: p.link })),
+        })
+      }
+    }
+
+    return items
   }
 
-  // categories.ts에 없는 디렉토리 → "기타"
-  const dirs = fs.readdirSync(postsDir, { withFileTypes: true })
-    .filter(d => d.isDirectory() && !knownIds.has(d.name))
+  const sidebar: Record<string, any[]> = {}
+  const allPaths = collectCategoryPaths(categories)
 
-  if (dirs.length > 0) {
-    const etcPosts: PostEntry[] = []
-    for (const dir of dirs) {
-      etcPosts.push(...scanPosts(path.join(postsDir, dir.name), `/posts/${dir.name}`))
-    }
-    if (etcPosts.length > 0) {
-      etcPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      sidebar.push({
-        text: '기타',
-        collapsed: false,
-        items: etcPosts.map(p => ({ text: p.title, link: p.link })),
-      })
-    }
+  // 각 카테고리 경로별 사이드바 (해당 카테고리만 펼침)
+  for (const catPath of allPaths) {
+    sidebar[`/posts/${catPath.join('/')}/`] = buildFullSidebar(catPath)
   }
+
+  // 글 목록 페이지 및 기본: 전부 접힘
+  sidebar['/posts/'] = buildFullSidebar()
 
   return sidebar
 }
