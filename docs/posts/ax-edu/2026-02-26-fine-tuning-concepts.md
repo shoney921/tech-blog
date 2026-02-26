@@ -1,6 +1,6 @@
 ---
-title: Fine-Tuning의 개념
-date: 2026-02-26T09:04:00
+title: 5. Fine-Tuning의 개념
+date: 2026-02-26T09:02:00
 ---
 
 # 1 Fine-Tuning의 개념

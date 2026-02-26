@@ -1,6 +1,6 @@
 ---
-title: LLM과 Foundation Model
-date: 2026-02-26T09:01:00
+title: 2. LLM과 Foundation Model
+date: 2026-02-26T09:05:00
 ---
 
 # 1 LLM과 Foundation Model
