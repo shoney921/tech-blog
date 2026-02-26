@@ -50,6 +50,11 @@ export const categories: Category[] = [
     label: '테스트',
     order: 100,
   },
+  {
+    id: 'ax-edu',
+    label: 'AX 교육',
+    order: 101,
+  },
 ]
 
 const categoryMap = new Map<string, Category>()
