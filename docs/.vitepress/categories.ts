@@ -54,6 +54,9 @@ export const categories: Category[] = [
     id: 'ax-edu',
     label: 'AX 교육',
     order: 101,
+    children: [
+      { id: 'restructured', label: '재구성', order: 1 },
+    ],
   },
 ]
 
