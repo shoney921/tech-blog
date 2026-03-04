@@ -1,5 +1,5 @@
 ---
-title: Chapter 1. AI 모델: 생성형 AI부터 모델 최적화까지
+title: "Chapter 1. AI 모델: 생성형 AI부터 모델 최적화까지"
 date: 2026-03-02T09:00:00
 ---
 
