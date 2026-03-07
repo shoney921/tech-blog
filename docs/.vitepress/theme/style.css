@@ -158,3 +158,59 @@
     padding: 2px 10px !important;
   }
 }
+
+/* 소개 페이지: 접기 블록 스타일 */
+.vp-doc details {
+  margin: 0.75em 0;
+  padding: 0.6em 1em;
+  border-radius: 8px;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+}
+
+.vp-doc details summary {
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+  user-select: none;
+}
+
+.vp-doc details summary::-webkit-details-marker {
+  display: none;
+}
+
+.vp-doc details summary::before {
+  content: '▶';
+  display: inline-block;
+  margin-right: 0.4em;
+  font-size: 0.75em;
+  transition: transform 0.2s;
+}
+
+.vp-doc details[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.vp-doc details[open] {
+  padding-bottom: 1em;
+}
+
+.vp-doc details .details-content {
+  margin-top: 0.6em;
+  padding-left: 1.2em;
+}
+
+/* 소개 페이지: 고객사 로고 아이콘 */
+.vp-doc .company-logo {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.35em;
+  vertical-align: middle;
+}
+
+.vp-doc .company-logo img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  border-radius: 4px;
+}
