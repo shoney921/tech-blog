@@ -237,9 +237,17 @@ export default defineConfig({
     nav: [
       { text: '홈', link: '/' },
       { text: '소개', link: '/about' },
+      { text: '포트폴리오', link: '/portfolio' },
     ],
 
-    sidebar: getSidebarFromPosts(),
+    sidebar: {
+      '/portfolio/': [
+        { text: '포트폴리오', link: '/portfolio' },
+        { text: '블로그 홈', link: '/' },
+        { text: '소개', link: '/about' },
+      ],
+      ...getSidebarFromPosts(),
+    },
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/shoney' },
