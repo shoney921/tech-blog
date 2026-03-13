@@ -164,6 +164,71 @@ date: 2026-03-13T18:00:00
   font-size: 12px;
   text-decoration: line-through;
 }
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 28px 0;
+}
+@media (max-width: 640px) {
+  .stat-row { grid-template-columns: 1fr; }
+}
+.stat-card {
+  border-radius: 14px;
+  padding: 22px 20px;
+  text-align: center;
+  border: 1px solid var(--vp-c-divider);
+}
+.stat-card.gpu {
+  background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(99,102,241,0.02));
+  border-color: rgba(99,102,241,0.25);
+}
+.stat-card.power {
+  background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(245,158,11,0.02));
+  border-color: rgba(245,158,11,0.25);
+}
+.stat-card.cost {
+  background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.02));
+  border-color: rgba(239,68,68,0.25);
+}
+.stat-number {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.stat-card.gpu .stat-number { color: rgb(99,102,241); }
+.stat-card.power .stat-number { color: rgb(245,158,11); }
+.stat-card.cost .stat-number { color: rgb(239,68,68); }
+.stat-unit {
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+  line-height: 1.4;
+}
+
+.quote-block {
+  border-left: 4px solid rgba(59,130,246,0.5);
+  background: rgba(59,130,246,0.04);
+  border-radius: 0 12px 12px 0;
+  padding: 20px 24px;
+  margin: 28px 0;
+}
+.quote-block .quote-text {
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.7;
+  margin: 0 0 10px 0;
+  color: var(--vp-c-text-1);
+}
+.quote-block .quote-source {
+  font-size: 13px;
+  color: var(--vp-c-text-3);
+  margin: 0;
+}
+.quote-block .quote-source a {
+  color: var(--vp-c-brand-1);
+}
 </style>
 
 # 비개발자가 AI를 배우면 개발자가 불안해지는 이유
@@ -172,11 +237,33 @@ date: 2026-03-13T18:00:00
 
 여러분이 ChatGPT나 Claude한테 "이거 요약해줘"라고 한 줄 치면 뭐가 일어나는지 생각해 본 적 있나?
 
-그 질문은 바다 건너 미국 텍사스 — OpenAI의 데이터센터에 도착한다. 그 안에서 여러분의 질문을 처리하는 건 NVIDIA라는 회사의 GPU라는 부품인데, 이게 한 장에 3,500만~5,500만 원짜리다. 크기는 두꺼운 책 한 권 정도. 그런데 이걸 서버 한 대에 8장씩 꽂고, 그런 서버를 수만 대 쌓아놓는다. 올해 기준으로 OpenAI가 보유한 GPU만 **100만 장 이상**이다. 금액으로 치면 수십조 원어치 하드웨어가 한곳에 모여 있는 거다.
+그 질문은 바다 건너 미국 텍사스 — OpenAI의 데이터센터에 도착한다. 여러분의 질문을 처리하는 건 NVIDIA의 GPU라는 부품인데, 이게 한 장에 3,500만~5,500만 원짜리다. 크기는 두꺼운 책 한 권 정도. 그런데 이걸 서버 한 대에 8장씩 꽂고, 그런 서버를 수만 대 쌓아놓는다.
 
-이걸 공간으로 환산하면 좀 실감이 난다. 서버 랙 하나가 원룸 냉장고만 한 크기인데, 이걸 수천 대씩 줄 세워놓은 건물이 여러 동이다. OpenAI의 텍사스 스타게이트 데이터센터는 현재 **300MW** 전력을 먹고 있고, 내년까지 **1.2GW**로 늘린다. 1.2GW면 원룸 약 400만 개에 전기를 공급할 수 있는 양이다. 원룸 400만 개 분의 전기를 AI 답변 생성하는 데 쓴다는 거다.
+<div class="stat-row">
+  <div class="stat-card gpu">
+    <div class="stat-number">100만+</div>
+    <div class="stat-unit">OpenAI 보유 GPU 수<br>(장당 3,500만~5,500만 원)</div>
+  </div>
+  <div class="stat-card power">
+    <div class="stat-number">1.2GW</div>
+    <div class="stat-unit">스타게이트 데이터센터 전력<br>(원룸 400만 개 분량)</div>
+  </div>
+  <div class="stat-card cost">
+    <div class="stat-number">수십조 원</div>
+    <div class="stat-unit">하드웨어 비용<br>(한 곳에 모여 있는)</div>
+  </div>
+</div>
 
-여러분의 "이거 요약해줘" 한 줄이 이 인프라를 잠깐 빌려 쓰는 거다. 물론 한 사람이 한 번 질문하는 비용은 크지 않다. 문제는 이걸 전 세계에서 수억 명이 동시에 하고 있다는 거다. 그러면 아무리 작은 비용도 곱하기 수억이 되니까 — 작년에 이런 [기사](https://www.hankookilbo.com/News/Read/A2025042216170002752)가 화제였다. OpenAI의 CEO 샘 알트만이 "사용자들이 AI한테 '감사합니다'라고 입력하는 것만으로 수천만 달러(수백억 원)의 비용이 발생하고 있다"고 한 거다. "고마워" 두 글자도 GPU가 처리해야 하는 연산이니까, 수억 명이 매번 붙이면 그게 수백억이 된다는 이야기.
+서버 랙 하나가 원룸 냉장고만 한 크기인데, 이걸 수천 대씩 줄 세워놓은 건물이 여러 동이다. 여러분의 "이거 요약해줘" 한 줄이 이 인프라를 잠깐 빌려 쓰는 거다.
+
+물론 한 사람이 한 번 질문하는 비용은 크지 않다. 문제는 이걸 전 세계에서 수억 명이 동시에 하고 있다는 거다. 그러면 아무리 작은 비용도 곱하기 수억이 되니까 —
+
+<div class="quote-block">
+  <p class="quote-text">"사용자들이 AI한테 '감사합니다'라고 입력하는 것만으로 수천만 달러(수백억 원)의 비용이 발생하고 있다."</p>
+  <p class="quote-source">— 샘 알트만(Sam Altman), OpenAI CEO · <a href="https://www.hankookilbo.com/News/Read/A2025042216170002752">한국일보 기사</a></p>
+</div>
+
+"고마워" 두 글자도 GPU가 처리해야 하는 연산이니까, 수억 명이 매번 붙이면 그게 수백억이 된다는 이야기.
 
 솔직히 말하면, 나는 요즘 좀 불안하다.
 
@@ -192,7 +279,24 @@ date: 2026-03-13T18:00:00
 
 AI에게 "이런 기능 만들어줘"라고 말하면 코드가 나온다. 그것도 꽤 잘 돌아가는 코드가. 이걸 **바이브 코딩(Vibe Coding)**이라고 부른다. 분위기로 코딩한다는 건데, 농담 같지만 실제로 이렇게 서비스를 만들어서 출시하는 사람들이 이미 있다.
 
-개발자 입장에서 무서운 건 이거다 — 코드를 잘 짜는 건 이제 경쟁력이 아니다. AI가 더 잘 짠다. 그러면 남는 건 뭐냐. **"무엇을 만들어야 하는지 아는 것"**, 즉 도메인 지식이다.
+<div class="benefit-grid">
+  <div class="benefit-card company">
+    <h4>예전의 개발자 경쟁력</h4>
+    <ul>
+      <li>코드를 잘 짜는 능력</li>
+      <li>프레임워크·라이브러리 숙련도</li>
+      <li>복잡한 환경 세팅 경험</li>
+    </ul>
+  </div>
+  <div class="benefit-card personal">
+    <h4>지금 진짜 경쟁력</h4>
+    <ul>
+      <li><strong>"무엇을 만들어야 하는지"</strong> 아는 것</li>
+      <li>업무 맥락과 도메인 지식</li>
+      <li>문제를 정의하고 판단하는 감각</li>
+    </ul>
+  </div>
+</div>
 
 그리고 그 도메인 지식은... 여러분이 가지고 있다.
 
