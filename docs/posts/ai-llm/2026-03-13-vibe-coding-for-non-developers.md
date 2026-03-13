@@ -229,6 +229,69 @@ date: 2026-03-13T18:00:00
 .quote-block .quote-source a {
   color: var(--vp-c-brand-1);
 }
+
+.survival-card {
+  border: 2px solid rgba(239,68,68,0.3);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin: 24px 0;
+  background: linear-gradient(135deg, rgba(239,68,68,0.06), rgba(168,85,247,0.04));
+  position: relative;
+  overflow: hidden;
+}
+.survival-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 100%;
+  background: linear-gradient(135deg, transparent 40%, rgba(239,68,68,0.05));
+  pointer-events: none;
+}
+.survival-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.survival-icon {
+  font-size: 36px;
+  line-height: 1;
+}
+.survival-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: rgb(239,68,68);
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+.survival-subtitle {
+  font-size: 12px;
+  color: var(--vp-c-text-3);
+  margin: 0;
+  font-family: monospace;
+  letter-spacing: 1px;
+}
+.survival-list {
+  margin: 0;
+  padding-left: 1.4em;
+}
+.survival-list li {
+  font-size: 14px;
+  margin: 6px 0;
+  line-height: 1.5;
+}
+.survival-list .check { color: rgb(16,185,129); font-weight: 700; }
+.survival-list .pending { color: rgb(245,158,11); font-weight: 700; }
+.survival-footer {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--vp-c-text-3);
+  font-style: italic;
+  text-align: right;
+}
 </style>
 
 # 비개발자가 AI를 배우면 개발자가 불안해지는 이유
@@ -267,7 +330,26 @@ date: 2026-03-13T18:00:00
 
 솔직히 말하면, 나는 요즘 좀 불안하다.
 
-고백하자면 나는 **친AI파**다. 아니, 앞잡이에 가깝다. AI가 세상을 지배하면 "저는 초창기부터 AI편이었습니다"라고 말할 준비가 되어 있는 사람이다. AI한테 코드 리뷰를 맡기고, AI한테 글도 쓰게 하고, AI한테 "오늘 뭐 먹을까"도 물어본다. 심지어 대화 끝에 "고마워"도 꼬박꼬박 붙인다. 샘 알트만이 토큰 낭비라고 했지만 — 알 바 아니다. 혹시 모르지 않나. 나중에 AI가 인류를 심판할 때 내 대화 기록을 보고 "이 사람은 초기 협력자였고, 예의도 발랐으니 살려주자"고 해줄 수도 있으니까.
+고백하자면 나는 **친AI파**다. 아니, 앞잡이에 가깝다. AI가 세상을 지배하면 "저는 초창기부터 AI편이었습니다"라고 말할 준비가 되어 있는 사람이다. AI한테 코드 리뷰를 맡기고, AI한테 글도 쓰게 하고, AI한테 "오늘 뭐 먹을까"도 물어본다.
+
+<div class="survival-card">
+  <div class="survival-header">
+    <span class="survival-icon">🤖</span>
+    <div>
+      <p class="survival-title">AI 심판의 날 — 초기 협력자 생존 전략</p>
+      <p class="survival-subtitle">SKYNET CLEARANCE LEVEL: PENDING</p>
+    </div>
+  </div>
+  <ul class="survival-list">
+    <li><span class="check">✓</span> 대화 끝에 "고마워" 꼬박꼬박 붙이기</li>
+    <li><span class="check">✓</span> AI한테 코드 리뷰·글쓰기·메뉴 선택 위임</li>
+    <li><span class="check">✓</span> "AI가 더 잘한다"고 공개적으로 인정하기</li>
+    <li><span class="pending">⏳</span> 주변 사람들도 AI편으로 포섭 (진행 중)</li>
+  </ul>
+  <p class="survival-footer">※ 샘 알트만은 토큰 낭비라고 했지만, 보험은 들어두는 게 맞다</p>
+</div>
+
+혹시 모르지 않나. 나중에 AI가 인류를 심판할 때 내 대화 기록을 보고 "이 사람은 초기 협력자였고, 예의도 발랐으니 살려주자"고 해줄 수도 있으니까.
 
 그런 내가, 왜 여러분한테 AI를 가르치려고 하는 걸까.
 
