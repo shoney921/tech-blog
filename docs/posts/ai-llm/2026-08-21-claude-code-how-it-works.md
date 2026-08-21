@@ -17,6 +17,16 @@ date: 2026-08-21T14:00:00
   margin-left: auto;
   margin-right: auto;
 }
+.docref {
+  font-size: 13px;
+  margin: 14px 0 24px;
+  padding: 9px 14px;
+  border-left: 3px solid #3b82f6;
+  background: var(--vp-c-bg-soft);
+  border-radius: 0 7px 7px 0;
+  line-height: 1.6;
+}
+.docref b { font-weight: 600; color: var(--vp-c-text-2); }
 </style>
 
 # Claude Code는 뒤에서 무슨 일을 하고 있나 — 바이브 코딩 사내 설명서
@@ -170,6 +180,9 @@ Claude Code의 심장부는 놀랄 만큼 단순한 반복문입니다. 공식 �
 
 2번과 3번이 한 바퀴 도는 걸 **턴(turn)** 이라고 부릅니다.
 
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/how-claude-code-works">How Claude Code works</a> — 맥락 수집 → 실행 → 검증 3단계로 본 공식 설명</p>
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop">How the agent loop works</a> — 메시지 수명주기, 턴 정의, 도구 실행과 병렬 규칙</p>
+
 ### 실제 예시로 보겠습니다
 
 "auth.ts의 실패하는 테스트를 고쳐줘"라고 요청하면 이렇게 흘러갑니다.
@@ -193,15 +206,25 @@ Claude Code가 쓸 수 있는 기본 도구들입니다. 이름만 봐도 대략
 
 | 분류 | 도구 | 하는 일 |
 |---|---|---|
-| 파일 | `Read`, `Edit`, `Write` | 읽기, 수정, 새로 만들기 |
+| 파일 | `Read`, `Edit`, `Write`, `NotebookEdit` | 읽기, 수정, 생성, 주피터 노트북 편집 |
 | 검색 | `Glob`, `Grep` | 파일 찾기, 내용 검색 |
-| 실행 | `Bash` | 터미널 명령 실행 (git, 테스트, 빌드 등) |
+| 실행 | `Bash`, `PowerShell`, `Monitor` | 명령 실행. `Monitor`는 백그라운드로 돌리며 출력 변화에 반응 |
+| 코드 이해 | `LSP`, `ToolSearch` | 정의로 점프·타입 검사, 지연 로딩된 도구 찾기 |
 | 웹 | `WebSearch`, `WebFetch` | 검색하고 웹페이지 읽기 |
-| 오케스트레이션 | `Agent`, `Skill`, `AskUserQuestion` | 하위 에이전트 띄우기, 스킬 호출, 사용자에게 되묻기 |
+| 협업 | `Agent`, `SendMessage`, `ListAgents`, `Workflow` | 하위 에이전트, 세션 간 메시지 전달, 다중 에이전트 오케스트레이션 |
+| 대화·확장 | `AskUserQuestion`, `Skill` | 사용자에게 되묻기, 스킬 호출 |
+| 작업·일정 | `TaskCreate` 등, `CronCreate` 등 | 할 일 추적, 예약 실행 |
+| 모드·환경 | `EnterPlanMode`, `EnterWorktree` | plan 모드 전환, 격리된 git 워크트리 |
+
+이것도 전부는 아닙니다. 알림 발송(`PushNotification`), 파일 전송(`SendUserFile`), 아티팩트 발행(`Artifact`) 같은 것들이 더 있습니다.
 
 Claude Code 내부 구조를 분석한 공개 논문에 따르면, 조건에 따라 최대 54개 정도의 도구가 조립된다고 합니다. 19개는 항상 켜져 있고 나머지는 설정과 사용자 유형에 따라 붙는 구조입니다.
 
+**"조건부"가 뭔지 구체적인 예가 있습니다.** 할 일 추적 도구(`TaskCreate` 등)는 Opus 4.8, Sonnet 5 이후 모델에서는 **기본으로 빠져 있고** 환경변수로 켜야 들어옵니다. 쓰는 모델과 플랜에 따라 도구 구성이 실제로 달라진다는 뜻입니다.
+
 여기에 MCP(뒤에서 설명합니다)로 사내 시스템을 연결하면 도구가 더 늘어납니다.
+
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/tools-reference">Tools reference</a> — 도구 전체 목록, 도구별 권한 동작, 모델별 제외 조건</p>
 
 ### 한 가지 중요한 세부사항: 병렬 실행
 
@@ -229,6 +252,8 @@ AI 모델이 한 번에 "머릿속에 담을 수 있는" 정보의 총량입니�
 - 대화 내역 전체 — 내 질문, AI 답변, **도구에 넣은 입력, 도구가 뱉은 출력**
 
 마지막 항목이 문제입니다. 큰 파일 하나 읽으면 수천 토큰이 한 번에 들어갑니다. 로그가 잔뜩 나오는 명령어를 실행해도 마찬가지입니다. 그래서 긴 세션은 컨텍스트가 빠르게 찹니다.
+
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/context-window">Explore the context window</a> — 세션이 진행되며 컨텍스트가 차는 과정을 단계별로 보여주는 문서</p>
 
 ### 컨텍스트가 차면 무슨 일이 벌어지나
 
@@ -311,6 +336,8 @@ AI 모델이 한 번에 "머릿속에 담을 수 있는" 정보의 총량입니�
 
 똑똑한 부분은 **지연 로딩**입니다. 하위 디렉토리의 규칙 파일은 그 폴더의 파일을 실제로 건드릴 때만 읽힙니다. 안 쓰는 규칙이 컨텍스트를 낭비하지 않도록요.
 
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/memory">How Claude remembers your project</a> — CLAUDE.md 계층 구조와 자동 메모리(auto memory)</p>
+
 ### 서브에이전트 — 컨텍스트를 아끼는 장치
 
 "이 코드베이스에서 결제 관련 로직 다 찾아줘" 같은 작업은 파일을 엄청나게 읽어야 합니다. 그걸 본체가 직접 하면 컨텍스트가 순식간에 찹니다.
@@ -376,6 +403,8 @@ AI 모델이 한 번에 "머릿속에 담을 수 있는" 정보의 총량입니�
 
 이게 왜 좋냐면, 읽는 작업의 부산물(파일 100개 전문)이 본체 기억을 오염시키지 않기 때문입니다. 사람으로 치면 "가서 조사해오고 요약만 보고해"에 해당합니다.
 
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/sub-agents">Create custom subagents</a> — 서브에이전트 정의 방법, 상속되는 것과 안 되는 것</p>
+
 ---
 
 ## 5부. 권한 — 회사에서 가장 신경 써야 할 부분
@@ -406,6 +435,9 @@ AI가 내 컴퓨터에서 명령어를 실행한다는 건 솔직히 무서운 �
 :::
 
 `plan` 모드는 비전공자분께 특히 권합니다. 실제로 뭘 바꾸기 전에 계획을 먼저 보여주니까, 이해 못 한 채로 파일이 바뀌는 상황을 막을 수 있습니다.
+
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/permission-modes">Choose a permission mode</a> — 모드별 동작, 어떤 세션이 어떤 모드로 시작하는지 결정하는 표</p>
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/permissions">Manage permissions</a> — allow·ask·deny 규칙 문법과 평가 순서</p>
 
 ### 거부 우선 원칙
 
@@ -485,6 +517,9 @@ Anthropic 데이터에 따르면 **사용자는 권한 요청의 약 93%를 승�
 
 물론 분류기도 완벽하지 않습니다. 여전히 거부 규칙과 샌드박스가 필요합니다. 다만 "확인 창 = 안전"이라는 오해에서 한 단계 나아간 구조인 건 분명합니다.
 
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/auto-mode-config">Configure auto mode</a> — 분류기가 무엇을 신뢰할지 조직 단위로 조정하는 방법</p>
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/sandboxing">Configure the sandboxed Bash tool</a> — 파일시스템·네트워크 격리로 방어층을 하나 더 두는 법</p>
+
 ### 훅(Hooks) — 자동 검사 장치
 
 훅은 루프의 특정 시점에 자동으로 실행되는 스크립트입니다. AI의 판단이 아니라 **기계적으로** 돌기 때문에 예측 가능합니다.
@@ -500,6 +535,9 @@ Anthropic 데이터에 따르면 **사용자는 권한 요청의 약 93%를 승�
 훅은 AI의 컨텍스트 밖에서 돌기 때문에 토큰을 먹지 않습니다. 그리고 `PreToolUse` 훅이 거부하면 그 도구는 실행되지 않고, AI는 거부당했다는 사실을 결과로 받습니다.
 
 사내 규정으로 "프로덕션 DB 접속 명령은 무조건 차단" 같은 걸 걸어두기 좋은 자리입니다.
+
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/hooks">Hooks reference</a> — 훅 이벤트 전체 목록, 설정 스키마, 종료 코드 규약</p>
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/hooks-guide">Automate actions with hooks</a> — 실제 사용 예시 위주의 안내서</p>
 
 ---
 
@@ -518,6 +556,10 @@ Claude Code를 커스터마이징하는 방법이 여러 개인데 자꾸 헷갈
 **훅은 "자동으로 도는 검사"입니다.** AI 판단과 무관하게 기계적으로 실행됩니다.
 
 한 줄로 줄이면 이렇습니다. 규칙은 CLAUDE.md, 지식은 스킬, 일손은 서브에이전트, 연결은 MCP, 강제는 훅.
+
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/features-overview">Extend Claude Code</a> — 다섯 가지 확장 방식의 비교와 기능별 컨텍스트 비용</p>
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/skills">Extend Claude with skills</a> — SKILL.md 형식, 저장 위치, 자동 호출 제어</p>
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/mcp">Connect Claude Code to tools via MCP</a> — MCP 서버 연결, 도구 검색으로 컨텍스트 절약하기</p>
 
 ---
 
@@ -676,6 +718,9 @@ CSS나 방화벽 규칙에 익숙한 분이라면 "구체적인 게 이긴다"�
 어제 "이 명령 허용"을 눌렀다고 오늘 자동으로 허용되지 않습니다. 처음엔 불편하게 느껴지는데, 생각해보면 이게 맞습니다. 오래된 승인이 슬그머니 살아남으면, 상황이 바뀐 뒤에도 예전 판단으로 실행됩니다. **승인은 그때의 맥락에 붙은 것이지 영구 자격이 아니라는 관점**입니다. 5부의 93% 승인률 문제를 생각하면 더 그렇습니다.
 
 체크포인트는 별개로 동작합니다. 파일을 고치기 전에 내용을 스냅샷해두기 때문에 `Esc`를 두 번 누르면 되돌릴 수 있습니다. **git과 무관하게 동작하고 세션을 재개해도 남아 있습니다.** 다만 한계가 분명합니다. 심볼릭 링크와 하드 링크는 복원되지 않고, **원격 시스템에 일어난 일(DB 변경, API 호출, 배포)은 체크포인트로 되돌릴 수 없습니다.** 그건 권한 모드와 규칙으로 막는 수밖에 없습니다.
+
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/sessions">Manage sessions</a> — resume·fork·이름 붙이기와 재개 시 복원되는 것의 목록</p>
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/checkpointing">Checkpointing</a> — 되감기 동작과 복원되지 않는 경로들</p>
 
 ### 이 여섯 가지에서 읽히는 것
 

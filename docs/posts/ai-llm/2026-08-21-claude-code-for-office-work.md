@@ -17,6 +17,16 @@ date: 2026-08-21T18:00:00
   margin-left: auto;
   margin-right: auto;
 }
+.docref {
+  font-size: 13px;
+  margin: 14px 0 24px;
+  padding: 9px 14px;
+  border-left: 3px solid #3b82f6;
+  background: var(--vp-c-bg-soft);
+  border-radius: 0 7px 7px 0;
+  line-height: 1.6;
+}
+.docref b { font-weight: 600; color: var(--vp-c-text-2); }
 </style>
 
 # 내 업무 폴더에 Claude Code 앉히기 — 비개발자용 파일 관리 실전
@@ -97,6 +107,9 @@ date: 2026-08-21T18:00:00
 이게 예전보다 더 중요해졌습니다. 2026년 8월부터 Pro·Max·Team 플랜은 **`auto` 모드로 시작합니다.** 분류기가 뒤에서 위험한 것만 걸러주고 나머지는 확인 없이 실행된다는 뜻입니다. 편하지만, 무슨 일이 벌어지는지 배우는 중인 분께는 너무 빠릅니다. **익숙해지기 전까지는 plan이나 Manual로 낮춰 쓰세요.**
 :::
 
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/checkpointing">Checkpointing</a> — 되감기와 체크포인트가 무엇을 복원하고 무엇을 못 하는지</p>
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/permission-modes">Choose a permission mode</a> — 모드별 동작과 세션이 어떤 모드로 시작하는지</p>
+
 ---
 
 ## 엑셀은 어떻게 다뤄지나
@@ -154,6 +167,8 @@ date: 2026-08-21T18:00:00
 핵심은 세 덩어리입니다. **이 폴더가 뭐 하는 곳인지, 파일이 어떻게 생겼는지, 절대 하면 안 되는 게 뭔지.** 특히 마지막이 중요합니다.
 
 앞서 말씀드린 "원본 건드리지 않기" 규칙은 반드시 여기 적으세요. 대화가 길어지면 초반에 말한 내용은 요약되면서 흐려질 수 있는데, `CLAUDE.md`는 매번 다시 읽히기 때문에 사라지지 않습니다.
+
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/memory">How Claude remembers your project</a> — CLAUDE.md 위치와 계층, 자동 메모리</p>
 
 ---
 
@@ -231,6 +246,8 @@ description: 원본 폴더의 주간 매출 엑셀을 팀 보고 양식으로 �
 ```
 
 윗부분의 `description`이 중요합니다. **Claude가 "언제 이 스킬을 꺼내 쓸지" 판단하는 근거**라서, 어떤 요청일 때 쓰는 건지 구체적으로 적어야 합니다.
+
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/skills">Extend Claude with skills</a> — SKILL.md 형식, frontmatter 필드, 저장 위치별 적용 범위</p>
 
 다음 주부터는 이렇게만 하면 됩니다.
 
@@ -455,6 +472,9 @@ AI에게 추측을 시키면 그럴듯하게 틀립니다. 그리고 그런 오�
 
 더 세밀하게 막고 싶으면 훅(`PreToolUse`)까지 갈 수 있는데, 그건 도구가 실행되기 직전에 검사 스크립트를 돌리는 방식입니다. 대부분의 사무 업무에는 위 권한 규칙만으로 충분합니다.
 
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/permissions">Manage permissions</a> — deny·allow·ask 규칙 문법과 경로 패턴</p>
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/hooks-guide">Automate actions with hooks</a> — 훅으로 자동 검사를 거는 실제 예시</p>
+
 ### 2. "매주 자동으로"는 생각보다 까다롭습니다
 
 Case 1을 스킬로 굳히고 나면 자연스럽게 이런 생각이 듭니다. *"월요일 아침에 알아서 돌게 할 수 없나?"*
@@ -472,6 +492,10 @@ Case 1을 스킬로 굳히고 나면 자연스럽게 이런 생각이 듭니다.
 클라우드 Routines가 제일 그럴듯해 보이는데 **함정이 있습니다.** 클라우드에서 도는 거라 내 PC의 `원본/` 폴더를 볼 수 없습니다. 로컬 엑셀 파일을 다루는 우리 용도에는 맞지 않습니다.
 
 **데스크톱 예약 작업**이 정답입니다. 내 컴퓨터에서 돌고, 로컬 파일에 접근하고, 세션을 열어두지 않아도 됩니다. PC가 켜져 있어야 한다는 조건만 있습니다.
+
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/scheduled-tasks">Run prompts on a schedule</a> — `/loop`와 세션 범위 예약, cron 문법</p>
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/desktop-scheduled-tasks">Schedule recurring tasks in Desktop</a> — 로컬 파일에 접근하면서 지속되는 예약 실행</p>
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/routines">Automate work with routines</a> — 클라우드에서 도는 자동화 — 로컬 파일 접근은 안 됨</p>
 
 다만 솔직히 말씀드리면, **자동 실행은 결과를 안 보게 만듭니다.** 매주 알아서 돌면 어느 순간부터 결과 파일을 안 열어봅니다. 원본 양식이 조용히 바뀌어도 모릅니다. 저는 처음 두세 달은 그냥 월요일에 `/주간리포트` 한 줄 치는 걸 권합니다. 그게 5초 걸리고, 결과를 볼 수밖에 없습니다.
 
@@ -500,6 +524,8 @@ Case 2처럼 파일이 수백 개인 작업에서, 그냥 시키면 Claude가 �
 > 서브에이전트를 써서 `원본/` 폴더를 조사하고, 파일명 규칙 분석 결과만 요약해서 알려줘.
 
 서브에이전트는 별도의 기억 공간에서 실컷 읽고 **요약만 돌려줍니다.** 본체 기억은 깨끗하게 유지됩니다. 파일이 100개를 넘어가면 눈에 띄게 차이가 납니다.
+
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/sub-agents">Create custom subagents</a> — 서브에이전트를 직접 정의하고 도구 범위를 좁히는 법</p>
 
 ### 5. 말로 설명하지 말고 보여주기
 
@@ -534,6 +560,8 @@ Case 1에서 `양식/` 폴더를 두라고 한 것도 같은 이유입니다. �
 **`!` 접두사** — `! dir`처럼 앞에 느낌표를 붙이면 명령을 직접 실행하고, 그 결과를 Claude가 그대로 봅니다. 직접 확인하고 싶을 때 편합니다.
 
 이 목록은 금방 낡습니다. `/doctor`나 "요즘 새로 생긴 기능 알려줘"라고 물어보시는 게 더 정확할 겁니다.
+
+<p class="docref"><b>공식 문서</b> → <a href="https://code.claude.com/docs/en/whats-new/">What's new</a> — 주 단위로 새 기능을 정리한 공식 다이제스트</p>
 
 ### 그다음은
 
