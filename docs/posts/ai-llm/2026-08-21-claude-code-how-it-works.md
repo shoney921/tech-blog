@@ -4,6 +4,21 @@ description: 비전공자도 읽을 수 있게 쓴 Claude Code 동작 원리 설
 date: 2026-08-21T14:00:00
 ---
 
+<style>
+.dg { margin: 30px 0; text-align: center; }
+.dg svg { max-width: 100%; height: auto; }
+.dg figcaption {
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+  margin-top: 12px;
+  line-height: 1.7;
+  text-align: left;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
 # Claude Code는 뒤에서 무슨 일을 하고 있나 — 바이브 코딩 사내 설명서
 
 요즘 사내에서 "바이브 코딩"이라는 말이 자주 들립니다. 그런데 막상 "그게 정확히 뭐냐"고 물으면 설명이 제각각입니다. 어떤 분은 "AI한테 말로 시키면 코드가 나오는 것"이라고 하고, 어떤 분은 "위험해서 회사에선 못 쓰는 것"이라고 합니다. 둘 다 반쯤 맞습니다.
@@ -55,6 +70,47 @@ Claude Code는 그 왕복을 없앱니다. 터미널에서 실행되며, **내 �
 
 > 채팅 AI가 "이렇게 하세요"라고 알려주는 상담원이라면, Claude Code는 내 컴퓨터 앞에 앉아서 직접 작업하는 인턴입니다. 어깨너머로 지켜보다가 "그건 하지 마"라고 말릴 수 있는 인턴이요.
 
+<figure class="dg">
+<svg viewBox="0 0 760 300" role="img" aria-label="채팅 AI와 행동 AI 비교. 채팅 AI에서는 사람이 AI와 컴퓨터 사이를 오가며 결과를 나르고 AI와 컴퓨터는 직접 연결되지 않는다. 행동 AI에서는 AI가 컴퓨터를 직접 다루고 사람은 요청과 승인만 한다.">
+  <defs>
+    <marker id="a2" markerWidth="9" markerHeight="7" refX="8" refY="3" orient="auto-start-reverse"><polygon points="0 0, 9 3, 0 6" fill="currentColor"/></marker>
+    <marker id="a2b" markerWidth="9" markerHeight="7" refX="8" refY="3" orient="auto-start-reverse"><polygon points="0 0, 9 3, 0 6" fill="#3b82f6"/></marker>
+  </defs>
+
+  <text x="195" y="34" text-anchor="middle" font-size="13" fill="currentColor" font-weight="600">채팅 AI</text>
+  <rect x="50" y="70" width="110" height="48" rx="8" fill="none" stroke="currentColor" stroke-opacity=".4"/>
+  <text x="105" y="100" text-anchor="middle" font-size="13" fill="currentColor">AI</text>
+  <rect x="230" y="70" width="110" height="48" rx="8" fill="none" stroke="currentColor" stroke-opacity=".4"/>
+  <text x="285" y="100" text-anchor="middle" font-size="13" fill="currentColor">내 컴퓨터</text>
+  <rect x="140" y="190" width="110" height="48" rx="8" fill="none" stroke="currentColor" stroke-opacity=".4"/>
+  <text x="195" y="220" text-anchor="middle" font-size="13" fill="currentColor">사람</text>
+  <line x1="170" y1="186" x2="118" y2="122" stroke="currentColor" stroke-opacity=".6" marker-start="url(#a2)" marker-end="url(#a2)"/>
+  <text x="136" y="150" text-anchor="end" font-size="11" fill="currentColor" fill-opacity=".7">질문 · 답변</text>
+  <line x1="222" y1="186" x2="272" y2="122" stroke="currentColor" stroke-opacity=".6" marker-start="url(#a2)" marker-end="url(#a2)"/>
+  <text x="256" y="150" font-size="11" fill="currentColor" fill-opacity=".7">복사 · 붙여넣기</text>
+  <line x1="164" y1="94" x2="226" y2="94" stroke="currentColor" stroke-opacity=".25" stroke-dasharray="4 4"/>
+  <text x="195" y="99" text-anchor="middle" font-size="15" fill="#ef4444" fill-opacity=".85">✕</text>
+  <text x="195" y="270" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity=".75">사람이 결과를 나른다</text>
+
+  <line x1="380" y1="30" x2="380" y2="280" stroke="currentColor" stroke-opacity=".15"/>
+
+  <text x="570" y="34" text-anchor="middle" font-size="13" fill="currentColor" font-weight="600">행동 AI (Claude Code)</text>
+  <rect x="418" y="70" width="110" height="48" rx="8" fill="none" stroke="currentColor" stroke-opacity=".4"/>
+  <text x="473" y="100" text-anchor="middle" font-size="13" fill="currentColor">AI</text>
+  <rect x="612" y="70" width="110" height="48" rx="8" fill="none" stroke="currentColor" stroke-opacity=".4"/>
+  <text x="667" y="100" text-anchor="middle" font-size="13" fill="currentColor">내 컴퓨터</text>
+  <rect x="508" y="190" width="110" height="48" rx="8" fill="none" stroke="currentColor" stroke-opacity=".4"/>
+  <text x="563" y="220" text-anchor="middle" font-size="13" fill="currentColor">사람</text>
+  <line x1="532" y1="94" x2="608" y2="94" stroke="#3b82f6" marker-start="url(#a2b)" marker-end="url(#a2b)"/>
+  <text x="570" y="82" text-anchor="middle" font-size="11" fill="#3b82f6">직접 실행</text>
+  <line x1="540" y1="186" x2="486" y2="122" stroke="currentColor" stroke-opacity=".6" marker-start="url(#a2)" marker-end="url(#a2)"/>
+  <text x="504" y="150" text-anchor="end" font-size="11" fill="currentColor" fill-opacity=".7">요청 · 승인</text>
+  <text x="570" y="270" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity=".75">AI가 직접 다룬다</text>
+</svg>
+<figcaption>달라지는 건 선 하나입니다. 사람과 컴퓨터를 잇던 연결이 <strong>AI와 컴퓨터 사이로 옮겨갑니다.</strong> 사람은 나르는 역할에서 요청하고 승인하는 역할로 이동합니다.</figcaption>
+</figure>
+
+
 이 차이가 왜 결정적이냐면, **AI가 자기 결과를 스스로 확인할 수 있게 되기 때문**입니다. 코드를 고쳤으면 테스트를 돌려보고, 실패하면 다시 고칩니다. 사람이 중간에서 결과를 전달해줄 필요가 없습니다. 이걸 검증 루프라고 부르는데, 뒤에서 자세히 다루겠습니다.
 
 ---
@@ -72,6 +128,43 @@ Claude Code의 심장부는 놀랄 만큼 단순한 반복문입니다. 공식 �
 3. **도구 실행** — 요청한 도구를 실제로 실행하고 결과를 모읍니다
 4. **반복** — 2번과 3번을 계속 돕니다. 도구를 더 이상 쓰지 않는 답변이 나올 때까지요
 5. **결과 반환** — 최종 답변과 함께 토큰 사용량, 비용, 세션 ID를 돌려줍니다
+
+<figure class="dg">
+<svg viewBox="0 -14 760 316" role="img" aria-label="에이전트 루프 구조도. 프롬프트가 판단으로 들어가고, 판단이 도구를 호출하면 실행 결과가 다시 판단으로 되먹여진다. 도구 호출이 없는 답변이 나오면 최종 답변으로 빠져나간다.">
+  <defs>
+    <marker id="a1" markerWidth="9" markerHeight="7" refX="8" refY="3" orient="auto"><polygon points="0 0, 9 3, 0 6" fill="currentColor"/></marker>
+    <marker id="a1b" markerWidth="9" markerHeight="7" refX="8" refY="3" orient="auto"><polygon points="0 0, 9 3, 0 6" fill="#3b82f6"/></marker>
+  </defs>
+  <rect x="290" y="26" width="180" height="250" rx="12" fill="none" stroke="currentColor" stroke-opacity=".22" stroke-dasharray="5 5"/>
+  <text x="380" y="17" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity=".55">이 왕복 한 번 = 1턴</text>
+
+  <rect x="40" y="48" width="130" height="54" rx="8" fill="none" stroke="currentColor" stroke-opacity=".4"/>
+  <text x="105" y="80" text-anchor="middle" font-size="14" fill="currentColor">프롬프트</text>
+
+  <rect x="310" y="40" width="140" height="70" rx="8" fill="none" stroke="currentColor" stroke-opacity=".4"/>
+  <text x="380" y="72" text-anchor="middle" font-size="14" fill="currentColor">판단</text>
+  <text x="380" y="92" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity=".6">무엇을 할지 결정</text>
+
+  <rect x="310" y="200" width="140" height="64" rx="8" fill="none" stroke="currentColor" stroke-opacity=".4"/>
+  <text x="380" y="228" text-anchor="middle" font-size="14" fill="currentColor">도구 실행</text>
+  <text x="380" y="248" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity=".6">Read · Edit · Bash</text>
+
+  <rect x="590" y="48" width="140" height="54" rx="8" fill="none" stroke="currentColor" stroke-opacity=".4"/>
+  <text x="660" y="80" text-anchor="middle" font-size="14" fill="currentColor">최종 답변</text>
+
+  <line x1="172" y1="75" x2="302" y2="75" stroke="currentColor" stroke-opacity=".6" marker-end="url(#a1)"/>
+  <line x1="452" y1="75" x2="582" y2="75" stroke="currentColor" stroke-opacity=".6" marker-end="url(#a1)"/>
+  <text x="517" y="64" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity=".7">도구 호출 없음</text>
+
+  <line x1="418" y1="112" x2="418" y2="192" stroke="currentColor" stroke-opacity=".6" marker-end="url(#a1)"/>
+  <text x="428" y="157" font-size="11" fill="currentColor" fill-opacity=".7">도구 호출</text>
+
+  <line x1="342" y1="198" x2="342" y2="118" stroke="#3b82f6" marker-end="url(#a1b)"/>
+  <text x="332" y="157" text-anchor="end" font-size="11" fill="#3b82f6">결과 되먹임</text>
+</svg>
+<figcaption>루프를 빠져나가는 조건은 단 하나입니다. <strong>도구를 더 이상 호출하지 않는 답변</strong>이 나올 때입니다. 그전까지는 도구 결과가 계속 판단 단계로 되먹여집니다.</figcaption>
+</figure>
+
 
 2번과 3번이 한 바퀴 도는 걸 **턴(turn)** 이라고 부릅니다.
 
@@ -147,6 +240,59 @@ AI 모델이 한 번에 "머릿속에 담을 수 있는" 정보의 총량입니�
 4. **컨텍스트 콜랩스** — 저장된 원본은 두고, 읽을 때만 축약해서 봅니다
 5. **자동 압축(auto-compact)** — 최후의 수단. 모델이 지금까지의 대화를 통째로 요약합니다
 
+<figure class="dg">
+<svg viewBox="0 0 760 320" role="img" aria-label="컨텍스트 압축 5단계 파이프라인. 예산 축소와 스닙은 결정적으로 동작하고, 마이크로컴팩트와 컨텍스트 콜랩스는 의미를 이해해 줄이며, 마지막 자동 압축은 전체를 요약해 정보 손실이 발생한다.">
+  <defs>
+    <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#10b981" stop-opacity=".55"/>
+      <stop offset="55%" stop-color="#f59e0b" stop-opacity=".6"/>
+      <stop offset="100%" stop-color="#ef4444" stop-opacity=".8"/>
+    </linearGradient>
+  </defs>
+  <rect x="20" y="52" width="6" height="240" rx="3" fill="url(#g3)"/>
+
+  <rect x="44" y="52" width="440" height="40" rx="7" fill="none" stroke="currentColor" stroke-opacity=".35"/>
+  <circle cx="70" cy="72" r="13" fill="currentColor" fill-opacity=".1"/>
+  <text x="70" y="77" text-anchor="middle" font-size="12" fill="currentColor">1</text>
+  <text x="94" y="77" font-size="13" fill="currentColor">예산 축소</text>
+  <text x="468" y="77" text-anchor="end" font-size="11" fill="currentColor" fill-opacity=".6">도구 결과 크기 제한</text>
+  <text x="502" y="77" font-size="11" fill="#10b981">결정적</text>
+
+  <rect x="44" y="100" width="440" height="40" rx="7" fill="none" stroke="currentColor" stroke-opacity=".35"/>
+  <circle cx="70" cy="120" r="13" fill="currentColor" fill-opacity=".1"/>
+  <text x="70" y="125" text-anchor="middle" font-size="12" fill="currentColor">2</text>
+  <text x="94" y="125" font-size="13" fill="currentColor">스닙</text>
+  <text x="468" y="125" text-anchor="end" font-size="11" fill="currentColor" fill-opacity=".6">오래된 구간 잘라내기</text>
+  <text x="502" y="125" font-size="11" fill="#10b981">결정적</text>
+
+  <rect x="44" y="148" width="440" height="40" rx="7" fill="none" stroke="currentColor" stroke-opacity=".35"/>
+  <circle cx="70" cy="168" r="13" fill="currentColor" fill-opacity=".1"/>
+  <text x="70" y="173" text-anchor="middle" font-size="12" fill="currentColor">3</text>
+  <text x="94" y="173" font-size="13" fill="currentColor">마이크로컴팩트</text>
+  <text x="468" y="173" text-anchor="end" font-size="11" fill="currentColor" fill-opacity=".6">세밀한 단위로 압축</text>
+  <text x="502" y="173" font-size="11" fill="#f59e0b">의미 기반</text>
+
+  <rect x="44" y="196" width="440" height="40" rx="7" fill="none" stroke="currentColor" stroke-opacity=".35"/>
+  <circle cx="70" cy="216" r="13" fill="currentColor" fill-opacity=".1"/>
+  <text x="70" y="221" text-anchor="middle" font-size="12" fill="currentColor">4</text>
+  <text x="94" y="221" font-size="13" fill="currentColor">컨텍스트 콜랩스</text>
+  <text x="468" y="221" text-anchor="end" font-size="11" fill="currentColor" fill-opacity=".6">읽을 때만 축약</text>
+  <text x="502" y="221" font-size="11" fill="#f59e0b">의미 기반</text>
+
+  <rect x="44" y="244" width="440" height="40" rx="7" fill="#ef4444" fill-opacity=".07" stroke="#ef4444" stroke-opacity=".55"/>
+  <circle cx="70" cy="264" r="13" fill="#ef4444" fill-opacity=".15"/>
+  <text x="70" y="269" text-anchor="middle" font-size="12" fill="currentColor">5</text>
+  <text x="94" y="269" font-size="13" fill="currentColor">자동 압축</text>
+  <text x="468" y="269" text-anchor="end" font-size="11" fill="currentColor" fill-opacity=".6">대화 전체를 요약</text>
+  <text x="502" y="269" font-size="11" fill="#ef4444">정보 손실</text>
+
+  <text x="614" y="261" font-size="11" fill="#ef4444" fill-opacity=".9">← 초반 지시가</text>
+  <text x="626" y="276" font-size="11" fill="#ef4444" fill-opacity=".9">사라지는 지점</text>
+</svg>
+<figcaption>위에서부터 순서대로 시도하고, 공간이 확보되면 멈춥니다. 아래로 갈수록 비싸지고 정보가 사라지기 때문에 <strong>5단계는 최후의 수단</strong>입니다. 반드시 지켜야 할 규칙을 <code>CLAUDE.md</code>에 적어야 하는 이유가 여기 있습니다.</figcaption>
+</figure>
+
+
 앞의 두 개는 기계적이고 예측 가능합니다. 뒤로 갈수록 의미를 이해해서 줄이는 대신 **정보 손실이 생깁니다.**
 
 :::warning 여기서 실무적으로 중요한 함의가 나옵니다
@@ -174,6 +320,57 @@ AI 모델이 한 번에 "머릿속에 담을 수 있는" 정보의 총량입니�
 - 부모의 컨텍스트는 그 요약본만큼만 늘어납니다
 - 하위 에이전트의 권한은 부모를 넘을 수 없습니다
 - 실패해도 부모 세션은 멀쩡합니다
+
+<figure class="dg">
+<svg viewBox="0 0 760 300" role="img" aria-label="서브에이전트 컨텍스트 격리 구조도. 서브에이전트는 별도 컨텍스트에서 파일을 대량으로 읽지만, 부모에게는 요약 한 건만 돌려주므로 부모 컨텍스트는 그 요약만큼만 늘어난다.">
+  <defs>
+    <marker id="a4" markerWidth="9" markerHeight="7" refX="8" refY="3" orient="auto"><polygon points="0 0, 9 3, 0 6" fill="currentColor"/></marker>
+    <marker id="a4b" markerWidth="9" markerHeight="7" refX="8" refY="3" orient="auto"><polygon points="0 0, 9 3, 0 6" fill="#3b82f6"/></marker>
+  </defs>
+
+  <rect x="40" y="60" width="230" height="190" rx="10" fill="none" stroke="currentColor" stroke-opacity=".45"/>
+  <text x="155" y="84" text-anchor="middle" font-size="13" fill="currentColor" font-weight="600">본체 (부모)</text>
+  <rect x="60" y="100" width="190" height="22" rx="4" fill="currentColor" fill-opacity=".09"/>
+  <text x="70" y="115" font-size="11" fill="currentColor" fill-opacity=".75">대화 내역</text>
+  <rect x="60" y="130" width="190" height="22" rx="4" fill="currentColor" fill-opacity=".09"/>
+  <text x="70" y="145" font-size="11" fill="currentColor" fill-opacity=".75">프로젝트 규칙</text>
+  <rect x="60" y="160" width="190" height="22" rx="4" fill="#3b82f6" fill-opacity=".18" stroke="#3b82f6" stroke-opacity=".5"/>
+  <text x="70" y="175" font-size="11" fill="#3b82f6">+ 요약 1건</text>
+  <text x="155" y="212" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity=".65">늘어나는 건 이만큼뿐</text>
+
+  <rect x="430" y="60" width="290" height="190" rx="10" fill="none" stroke="currentColor" stroke-opacity=".45" stroke-dasharray="6 5"/>
+  <text x="575" y="84" text-anchor="middle" font-size="13" fill="currentColor" font-weight="600">서브에이전트</text>
+  <text x="575" y="101" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity=".6">별도 컨텍스트 (부모 내역 없음)</text>
+  <rect x="450" y="116" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="498" y="116" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="546" y="116" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="594" y="116" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="642" y="116" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="450" y="138" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="498" y="138" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="546" y="138" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="594" y="138" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="642" y="138" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="450" y="160" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="498" y="160" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="546" y="160" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="594" y="160" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="642" y="160" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="450" y="182" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="498" y="182" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="546" y="182" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="594" y="182" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <rect x="642" y="182" width="40" height="14" rx="3" fill="currentColor" fill-opacity=".16"/>
+  <text x="575" y="218" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity=".65">파일을 수십 개 읽어도 여기서 끝</text>
+
+  <line x1="274" y1="130" x2="424" y2="130" stroke="currentColor" stroke-opacity=".6" marker-end="url(#a4)"/>
+  <text x="349" y="122" text-anchor="middle" font-size="11" fill="currentColor" fill-opacity=".7">작업 지시</text>
+  <line x1="424" y1="190" x2="276" y2="190" stroke="#3b82f6" marker-end="url(#a4b)"/>
+  <text x="349" y="206" text-anchor="middle" font-size="11" fill="#3b82f6">요약만 반환</text>
+</svg>
+<figcaption>조사하느라 읽은 파일 전문은 서브에이전트 안에서 소멸합니다. 본체로 돌아오는 건 <strong>최종 요약 한 건뿐</strong>이라, 읽기 작업의 부산물이 본체 기억을 오염시키지 않습니다.</figcaption>
+</figure>
+
 
 이게 왜 좋냐면, 읽는 작업의 부산물(파일 100개 전문)이 본체 기억을 오염시키지 않기 때문입니다. 사람으로 치면 "가서 조사해오고 요약만 보고해"에 해당합니다.
 
@@ -209,6 +406,45 @@ AI가 내 컴퓨터에서 명령어를 실행한다는 건 솔직히 무서운 �
 Anthropic 데이터에 따르면 **사용자는 권한 요청의 약 93%를 승인**한다고 합니다.
 
 이게 무슨 뜻이냐면, 확인 창을 아무리 띄워도 사람은 결국 습관적으로 "예"를 누른다는 겁니다. 승인 피로(approval habituation)라고 부릅니다. **확인 창만으로는 안전장치가 되지 않는다**는 얘기입니다.
+
+<figure class="dg">
+<svg viewBox="0 0 620 400" role="img" aria-label="권한 방어 계층도. 도구 호출은 사전 필터, 거부 규칙, 권한 모드 제약, 샌드박스와 훅을 차례로 통과해야 실행된다. 마지막 확인 창은 사용자가 93퍼센트를 승인하기 때문에 거의 걸러내지 못한다.">
+  <defs>
+    <marker id="a5" markerWidth="9" markerHeight="7" refX="8" refY="3" orient="auto"><polygon points="0 0, 9 3, 0 6" fill="currentColor"/></marker>
+  </defs>
+
+  <rect x="150" y="24" width="300" height="38" rx="8" fill="none" stroke="currentColor" stroke-opacity=".45"/>
+  <text x="300" y="48" text-anchor="middle" font-size="13" fill="currentColor">도구 호출 요청</text>
+  <line x1="300" y1="64" x2="300" y2="84" stroke="currentColor" stroke-opacity=".5" marker-end="url(#a5)"/>
+
+  <rect x="150" y="88" width="300" height="34" rx="7" fill="currentColor" fill-opacity=".05" stroke="currentColor" stroke-opacity=".35"/>
+  <text x="300" y="110" text-anchor="middle" font-size="12" fill="currentColor">도구 사전 필터</text>
+  <line x1="300" y1="124" x2="300" y2="140" stroke="currentColor" stroke-opacity=".5" marker-end="url(#a5)"/>
+
+  <rect x="165" y="144" width="270" height="34" rx="7" fill="currentColor" fill-opacity=".05" stroke="currentColor" stroke-opacity=".35"/>
+  <text x="300" y="166" text-anchor="middle" font-size="12" fill="currentColor">거부 규칙 (거부 우선)</text>
+  <line x1="300" y1="180" x2="300" y2="196" stroke="currentColor" stroke-opacity=".5" marker-end="url(#a5)"/>
+
+  <rect x="178" y="200" width="244" height="34" rx="7" fill="currentColor" fill-opacity=".05" stroke="currentColor" stroke-opacity=".35"/>
+  <text x="300" y="222" text-anchor="middle" font-size="12" fill="currentColor">권한 모드 제약</text>
+  <line x1="300" y1="236" x2="300" y2="252" stroke="currentColor" stroke-opacity=".5" marker-end="url(#a5)"/>
+
+  <rect x="189" y="256" width="222" height="34" rx="7" fill="currentColor" fill-opacity=".05" stroke="currentColor" stroke-opacity=".35"/>
+  <text x="300" y="278" text-anchor="middle" font-size="12" fill="currentColor">셸 샌드박스 · 훅</text>
+  <line x1="300" y1="292" x2="300" y2="308" stroke="currentColor" stroke-opacity=".5" marker-end="url(#a5)"/>
+
+  <rect x="191" y="312" width="218" height="34" rx="7" fill="#ef4444" fill-opacity=".07" stroke="#ef4444" stroke-opacity=".55" stroke-dasharray="5 4"/>
+  <text x="300" y="334" text-anchor="middle" font-size="12" fill="currentColor">확인 창</text>
+  <text x="421" y="330" font-size="11" fill="#ef4444">93%가</text>
+  <text x="421" y="344" font-size="11" fill="#ef4444">그대로 통과</text>
+  <line x1="300" y1="348" x2="300" y2="364" stroke="currentColor" stroke-opacity=".5" marker-end="url(#a5)"/>
+
+  <rect x="210" y="368" width="180" height="30" rx="7" fill="none" stroke="currentColor" stroke-opacity=".45"/>
+  <text x="300" y="388" text-anchor="middle" font-size="12" fill="currentColor">실행</text>
+</svg>
+<figcaption>각 층은 독립적이라 <strong>어느 하나만 막아도 실행되지 않습니다.</strong> 다만 폭이 거의 줄지 않는 마지막 층이 문제입니다 — 확인 창은 사람이 습관적으로 승인하기 때문에 실질적인 방어선이 되지 못합니다.</figcaption>
+</figure>
+
 
 :::danger 사내 도입 시 시사점
 "확인 창이 뜨니까 안전하다"는 전제를 버려야 합니다. 진짜 방어선은 그 아래에 있어야 합니다. 위험한 명령을 아예 규칙으로 차단하고, 격리된 환경에서 돌리고, 훅으로 자동 검사를 걸고, 최종적으로 사람이 코드 리뷰를 하는 구조여야 합니다.
