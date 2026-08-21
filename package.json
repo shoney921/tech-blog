@@ -11,8 +11,5 @@
   "devDependencies": {
     "@playwright/test": "^1.49.0",
     "vitepress": "^1.6.4"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": ["esbuild"]
   }
 }
