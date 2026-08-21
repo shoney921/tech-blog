@@ -636,6 +636,16 @@ Claude Code를 이해하는 데 필요한 건 결국 세 가지입니다.
 
 ---
 
+## 이어지는 글
+
+이 글은 원리 쪽이었습니다. **실제로 내 업무 폴더에 어떻게 앉히는지**는 따로 정리했습니다.
+
+→ [내 업무 폴더에 Claude Code 앉히기 — 비개발자용 파일 관리 실전](/posts/ai-llm/2026-08-21-claude-code-for-office-work)
+
+폴더를 어떻게 나누고, `CLAUDE.md`에 뭘 적고, 반복되는 일을 어떻게 스킬로 굳히는지를 업무 유형 세 가지(리포트 생성 / 파일 정리 / 데이터 대조)로 나눠 다룹니다.
+
+---
+
 ## 참고 자료
 
 - [How the agent loop works — Claude Code 공식 문서](https://code.claude.com/docs/en/agent-sdk/agent-loop) — 루프, 턴, 도구, 권한 모드, 컨텍스트 관리의 1차 출처
