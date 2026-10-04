@@ -24,8 +24,12 @@ for (const width of [375, 768, 1200]) {
     const figure = await page.locator(".hero-artwork").boundingBox();
     expect(titleBox!.y).toBeGreaterThanOrEqual(figure!.y);
     expect(titleBox!.y + titleBox!.height).toBeLessThan(art!.y + art!.height);
-    if (width < 960) expect(main!.y).toBeGreaterThanOrEqual(art!.y + art!.height);
-    else expect(art!.x).toBeGreaterThanOrEqual(main!.x + main!.width);
+    // Copy and actions occupy the same image banner, with no separate column.
+    expect(main!.x).toBeGreaterThanOrEqual(art!.x);
+    expect(main!.y).toBeGreaterThanOrEqual(figure!.y);
+    expect(main!.x + main!.width).toBeLessThanOrEqual(art!.x + art!.width + 1);
+    expect(main!.y + main!.height).toBeLessThanOrEqual(figure!.y + figure!.height + 1);
+    expect(titleBox!.y + titleBox!.height).toBeLessThan(main!.y + 150);
     await page.screenshot({ path: `test-results/brand-${width}.png`, fullPage: false });
     await page.evaluate(() => document.documentElement.classList.add('dark'));
     await expect(page.locator('html')).toHaveClass(/dark/);
