@@ -10,6 +10,9 @@ export const categories: Category[] = [
     id: 'ai-llm',
     label: 'AI / LLM',
     order: 1,
+    children: [
+      { id: 'ai-systems', label: 'AI 시스템 설계 연재', order: 1 },
+    ],
   },
   {
     id: 'physical-ai',
