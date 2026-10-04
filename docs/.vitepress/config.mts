@@ -130,6 +130,33 @@ function getSidebarFromPosts() {
   return sidebar
 }
 
+
+const SITE_DESCRIPTION = 'AI 시대에도 일단 실행. 개발과 삽질의 생존 기록.'
+const docsRoot = path.resolve(__dirname, '..')
+
+function readPostSource(relativePath: string): { date?: string; description?: string } {
+  const file = path.join(docsRoot, relativePath)
+  if (!fs.existsSync(file)) return {}
+  const content = fs.readFileSync(file, 'utf-8')
+  const fm = content.match(/^---\s*\n([\s\S]*?)\n---/)?.[1] ?? ''
+  const date = fm.match(/^date:\s*["']?(.+?)["']?\s*$/m)?.[1]
+  const body = content.replace(/^---\s*\n[\s\S]*?\n---/, '')
+  const text = body
+    .replace(/<style[\s\S]*?<\/style>/g, '')
+    .replace(/<script[\s\S]*?<\/script>/g, '')
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/<[^>]+>/g, '')
+    .replace(/^:::.*$/gm, '')
+    .replace(/^#{1,6}\s.*$/gm, '')
+    .replace(/^\s*[-*>|].*$/gm, line => line.replace(/^\s*[-*>|]+\s*/, ''))
+    .replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/[*_`~]/g, '')
+    .replace(/^---+$/gm, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+  return { date, description: text ? text.slice(0, 150) : undefined }
+}
+
 export default defineConfig({
   title: '멸종 위기 개발자',
   description: 'AI 시대에도 일단 실행. 개발과 삽질의 생존 기록.',
@@ -139,6 +166,14 @@ export default defineConfig({
 
   sitemap: {
     hostname: 'https://blog.shoneylife.com',
+    transformItems: items =>
+      items.map(item => {
+        const rel = item.url.replace(/\/$/, '') || 'index'
+        const date = [`${rel}.md`, `${rel}/index.md`]
+          .map(f => readPostSource(f).date)
+          .find(Boolean)
+        return date ? { ...item, lastmod: new Date(date).getTime() } : item
+      }),
   },
 
   buildEnd: genFeed,
@@ -169,8 +204,16 @@ export default defineConfig({
 
     // Per-page Open Graph
     const title = pageData.frontmatter.title || pageData.title
-    const description = pageData.frontmatter.description || pageData.description || 'AI 시대에도 일단 실행. 개발과 삽질의 생존 기록.'
     const isPost = pageData.relativePath.startsWith('posts/') && pageData.relativePath !== 'posts/index.md'
+    const description = pageData.frontmatter.description
+      || pageData.description
+      || (isPost ? readPostSource(pageData.relativePath).description : undefined)
+      || SITE_DESCRIPTION
+
+    // 프론트매터에 description이 없는 글은 본문 앞부분을 meta description으로 사용
+    if (isPost && !pageData.frontmatter.description) {
+      head.push(['meta', { name: 'description', content: description }])
+    }
 
     head.push(['meta', { property: 'og:title', content: title }])
     head.push(['meta', { property: 'og:description', content: description }])
