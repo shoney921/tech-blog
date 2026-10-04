@@ -51,54 +51,61 @@
   --vp-c-bg-alt: #262320;
   --vp-c-text-1: #f3eadf;
 }
-.VPNavBarTitle .logo { width: 38px; height: 38px; object-fit: contain; }
-.VPNavBarTitle .title { gap: 8px; }
-.VPHome .VPHero { margin-top: 0; padding: 40px 32px 48px; }
-.VPHome .VPHero .container { position: relative; isolation: isolate; max-width: 1152px; min-height: 500px; display: flex; align-items: stretch; border: 3px solid #30271f; border-radius: 28px; overflow: hidden; box-shadow: 8px 8px 0 #e8d6b9; }
-.VPHome .VPHero .main { position: relative; z-index: 2; flex: none; width: 43%; padding: 176px 36px 40px; text-align: left; }
-.VPHome .VPHero.has-image .text { font-size: clamp(28px, 2.6vw, 34px); line-height: 1.3; color: #30271f; }
-.VPHome .VPHero.has-image .tagline { font-size: 16px; line-height: 1.85; padding-top: 16px; max-width: 350px; color: #514336; }
-.VPHome .VPHero.has-image .text, .VPHome .VPHero.has-image .tagline { word-break: keep-all; }
-.VPHome .VPHero.has-image .actions { justify-content: flex-start; padding-top: 26px; gap: 12px; margin: 0; }
-.VPHome .VPHero.has-image .text, .VPHome .VPHero.has-image .tagline { margin: 0; }
+/* The illustrated lettering is an image in both the masthead and hero. */
+.VPNavBarTitle .logo { width: clamp(160px, 18vw, 210px); height: 54px; object-fit: contain; margin: 0; }
+.VPHome .VPHero { margin-top: 0; padding: 36px 32px 44px; }
+.VPHome .VPHero .container { position: relative; isolation: isolate; max-width: 1152px; min-height: 600px; display: flex; align-items: stretch; border: 2px solid #49382b; border-radius: 24px; overflow: hidden; background: #fff5e3; box-shadow: 7px 8px 0 #e8d6b9; }
+.VPHome .VPHero .main { position: relative; z-index: 2; flex: none; width: 45%; padding: 272px 36px 48px; text-align: left; }
+.VPHome .VPHero.has-image .text { font-size: clamp(28px, 2.7vw, 36px); line-height: 1.3; color: #30271f; }
+.VPHome .VPHero.has-image .tagline { font-size: 15px; line-height: 1.9; padding-top: 18px; max-width: 350px; color: #594637; }
+.VPHome .VPHero.has-image .text, .VPHome .VPHero.has-image .tagline { word-break: keep-all; margin: 0; }
+.VPHome .VPHero.has-image .actions { justify-content: flex-start; padding-top: 28px; gap: 12px; margin: 0; }
 .VPHome .VPHero .action { padding: 0; }
 .VPHome .VPHero .VPButton { font-size: 14px; }
-.hero-topics { display: inline-block; margin-top: 12px; font-size: 12px; letter-spacing: .05em; font-weight: 600; color: #80624a; }
+.VPHome .VPHero .VPButton.alt { color: #49382b; background: #eee6d9; border-color: #eee6d9; }
+.VPHome .VPHero .VPButton.alt:hover { background: #e3d5c2; border-color: #e3d5c2; }
+.hero-topics { display: inline-block; margin-top: 14px; font-size: 12px; letter-spacing: .06em; font-weight: 600; color: #80624a; }
 .VPHome .VPHero .image { position: absolute; inset: 0; margin: 0; width: 100%; height: 100%; z-index: 0; }
 .VPHome .VPHero .image-container { width: 100%; height: 100%; transform: none; }
 .hero-artwork { position: absolute; inset: 0; margin: 0; width: 100%; height: 100%; }
-.VPHome .VPHero .hero-artwork .image-src { display: block; position: absolute; inset: 0; transform: none; width: 100%; height: 100%; max-width: none; max-height: none; object-fit: cover; object-position: center; }
-.hero-artwork::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,249,233,.97) 0%, rgba(255,249,233,.92) 25%, rgba(255,249,233,.88) 36%, rgba(255,249,233,0) 57%); }
-.hero-artwork-title { position: absolute; z-index: 1; top: 32px; left: 20px; width: 43%; height: 106px; display: grid; place-items: center; transform: rotate(-2deg); }
-.title-sticker { position: absolute; inset: 0; width: 100%; height: 100%; fill: #fff9e9; filter: drop-shadow(0 3px 0 #30271f); }
-.title-words { position: relative; display: flex; justify-content: center; gap: .25em; padding: 0 20px 5px; font-family: 'Do Hyeon', sans-serif; font-size: clamp(34px, 3.9vw, 50px); line-height: 1.15; white-space: nowrap; color: #23140e; text-shadow: 1px 2px 0 #ebcfad; }
-.title-words span:first-child { color: #dd482e; }
+.hero-scene { position: absolute; inset: 0 0 0 auto; width: 58%; overflow: hidden; }
+.VPHome .VPHero .hero-artwork .image-src { display: block; position: absolute; inset: 0; transform: none; width: 108%; height: 100%; max-width: none; max-height: none; object-fit: cover; object-position: center 72%; }
+.hero-scene::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, #fff5e3 0%, rgba(255,245,227,.6) 9%, transparent 24%); }
+.hero-artwork-title { position: absolute; z-index: 1; top: 58px; left: 18px; width: 46%; margin: 0; transform: rotate(-3deg); }
+.hero-artwork-title img { display: block; width: 100%; height: auto; filter: drop-shadow(0 5px 0 rgba(73,56,43,.12)); }
 .VPHome .VPHero .image-bg { display: none; }
 .home-note { border-top: 1px solid var(--vp-c-divider); border-bottom: 1px solid var(--vp-c-divider); padding: 20px 0; margin-bottom: 40px; display: flex; gap: 24px; align-items: center; }
 .home-note span { color: var(--vp-c-brand-1); font-weight: 600; white-space: nowrap; }
 .home-note p { margin: 0; color: var(--vp-c-text-2); font-size: 14px; }
 .about-mascot { float: right; margin: 0 0 24px 24px; }
+.dark .VPHome .VPHero .container { box-shadow: 7px 8px 0 #483b2e; }
 @media (max-width: 959px) {
-  .VPHome .VPHero .container { min-height: 650px; align-items: flex-end; }
-  .VPHome .VPHero .main { width: 100%; max-width: none; padding: 350px 32px 32px; text-align: left; }
-  .VPHome .VPHero .hero-artwork .image-src { object-position: 70% top; }
-  .hero-artwork::after { background: linear-gradient(0deg, #fff9e9 0%, rgba(255,249,233,.97) 29%, rgba(255,249,233,.65) 43%, rgba(255,249,233,0) 58%); }
-  .hero-artwork-title { top: 20px; left: 4%; width: 92%; height: 88px; }
-  .title-words { font-size: clamp(28px, 5vw, 42px); }
+  .VPHome .VPHero .container { min-height: 0; flex-direction: column; }
+  .VPHome .VPHero .image { position: relative; order: -1; height: auto; flex: none; }
+  .VPHome .VPHero .image-container { height: auto; display: block; }
+  .hero-artwork { position: relative; height: auto; padding-top: 100px; }
+  .hero-scene { position: relative; width: 100%; aspect-ratio: 1.08; }
+  .hero-scene::after { background: linear-gradient(0deg, #fff5e3, transparent 14%); }
+  .hero-artwork-title { top: 12px; left: 9%; width: 82%; max-width: 570px; transform: rotate(-2deg); }
+  .VPHome .VPHero .main { width: 100%; max-width: none; padding: 20px 32px 36px; }
+  .VPHome .VPHero.has-image .tagline { max-width: none; }
+}
+@media (min-width: 640px) and (max-width: 959px) {
+  .hero-artwork { padding-top: 145px; }
+  .hero-scene { aspect-ratio: 1.08; }
+  .hero-artwork-title { left: 50%; transform: translateX(-50%) rotate(-2deg); }
 }
 @media (max-width: 480px) {
-  .VPHome .VPHero { padding: 24px 20px 32px; }
-  .VPHome .VPHero .container { min-height: 572px; border-radius: 24px; }
-  .hero-artwork { background: #f6e6ce; }
-  .VPHome .VPHero .hero-artwork .image-src { height: 420px; top: 32px; }
-  .VPHome .VPHero .main { padding: 330px 24px 28px; }
-  .VPHome .VPHero.has-image .text { font-size: 26px; letter-spacing: -.02em; }
-  .VPHome .VPHero.has-image .tagline { font-size: 14px; line-height: 1.8; padding-top: 14px; }
-  .VPHome .VPHero.has-image .actions { padding-top: 22px; gap: 8px; }
+  .VPNavBarTitle .logo { width: 172px; height: 50px; }
+  .VPHome .VPHero { padding: 20px 18px 32px; }
+  .VPHome .VPHero .container { border-radius: 18px; box-shadow: 4px 5px 0 #e8d6b9; }
+  .hero-artwork { padding-top: 75px; }
+  .hero-artwork-title { left: 3%; width: 94%; top: 8px; }
+  .VPHome .VPHero .main { padding: 12px 22px 28px; }
+  .VPHome .VPHero.has-image .text { font-size: 28px; }
+  .VPHome .VPHero.has-image .tagline { font-size: 13px; padding-top: 12px; }
+  .VPHome .VPHero.has-image .actions { padding-top: 20px; gap: 8px; }
   .VPHome .VPHero .VPButton { padding: 0 16px; font-size: 13px; }
-  .hero-topics { margin-top: 10px; font-size: 11px; }
-  .hero-artwork-title { height: 76px; }
-  .title-words { font-size: clamp(27px, 8vw, 34px); padding: 0 12px 3px; }
   .home-note { display: block; }
   .home-note p { margin-top: 8px; }
   .about-mascot { float: none; margin: 0 auto 24px; }

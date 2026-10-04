@@ -21,3 +21,10 @@ Use case: background-extraction. Asset type: square blog mascot/avatar and favic
 
 ### 작업실 배너
 Use case: illustration-story. Asset type: landscape website hero illustration, aspect ratio 3:2. Reference image: preserve same developer identity and drawing style. Recompose scene with same brown wavy haired glasses blue hoodie developer eating a chip at keyboard, cute white cyan robot holding insect net behind him, yellow rubber chicken, warm cluttered coding desk and monitors. Warm cream tan palette, rich blue hoodie, dark hand-drawn outlines. Medium shot of developer and robot, both faces fully visible with breathing room on edges. NO text anywhere, no Korean headline, no lettering on mugs robot monitors, no watermarks. Polished playful editorial illustration for Korean developer blog.
+
+## 원본 중심 새단장
+
+- `original-artwork.png`: 사용자 첨부 원본 그대로 복사. 홈 그림은 CSS로 표시 영역만 조절.
+- `title-sticker.png`: 내장 image_gen으로 원본의 타이틀을 투명 배경 이미지로 분리. 헤더와 홈 배너에서 같은 자산 사용.
+
+프롬프트: Use case: background-extraction. Extract ONLY the existing top Korean title sticker "멸종위기개발자", preserving its hand drawn lettering, red-orange 멸종위기 and near-black 개발자, cream cloud sticker backing and small dark decorative strokes. Remove all scenery, net, characters and other objects. Wide horizontal tightly framed logo, real transparent background. Do not redesign or typeset or add text. Preserve original appearance as faithfully as possible.

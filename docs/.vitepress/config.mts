@@ -236,7 +236,8 @@ export default defineConfig({
   },
 
   themeConfig: {
-    logo: { src: '/brand/avatar-96.png', alt: '파란 후드의 개발자 캐릭터' },
+    logo: { src: '/brand/title-sticker.png', alt: '멸종 위기 개발자' },
+    siteTitle: false,
     nav: [
       { text: '홈', link: '/' },
       { text: '소개', link: '/about' },

@@ -6,7 +6,7 @@ for (const width of [375, 768, 1330]) {
     await page.goto('/');
     await page.evaluate(() => document.fonts.ready);
     await expect(page).toHaveTitle(/멸종 위기 개발자/);
-    await expect(page.locator('.VPNavBarTitle')).toContainText('멸종 위기 개발자');
+    await expect(page.locator('.VPNavBarTitle img')).toHaveAttribute('alt', '멸종 위기 개발자');
     await expect(page.locator('.VPHero .tagline')).toBeVisible();
     const image = page.locator('.VPHero .image-src');
     await expect(image).toBeVisible();
@@ -19,26 +19,22 @@ for (const width of [375, 768, 1330]) {
     expect(main!.y).toBeGreaterThanOrEqual(nav!.y + nav!.height);
     expect(art).not.toBeNull();
     const title = page.locator(".hero-artwork-title");
-    await expect(title).toContainText("멸종 위기");
-    await expect(title).toContainText("개발자");
+    await expect(title.locator('img')).toHaveAttribute('alt', '멸종 위기 개발자');
+    expect(await title.locator('img').evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBeTruthy();
     const titleBox = await title.boundingBox();
-    const figure = await page.locator(".hero-artwork").boundingBox();
+    const figure = await page.locator('.hero-artwork').boundingBox();
+    expect(titleBox!.x).toBeGreaterThanOrEqual(figure!.x);
+    expect(titleBox!.x + titleBox!.width).toBeLessThanOrEqual(figure!.x + figure!.width);
     expect(titleBox!.y).toBeGreaterThanOrEqual(figure!.y);
-    expect(titleBox!.y + titleBox!.height).toBeLessThan(art!.y + art!.height);
-    // Copy and actions occupy the same image banner, with no separate column.
-    expect(main!.x).toBeGreaterThanOrEqual(art!.x);
-    expect(main!.y).toBeGreaterThanOrEqual(figure!.y);
-    expect(main!.x + main!.width).toBeLessThanOrEqual(art!.x + art!.width + 1);
-    expect(main!.y + main!.height).toBeLessThanOrEqual(figure!.y + figure!.height + 1);
     const heading = await page.locator(".VPHero .heading").boundingBox();
     expect(titleBox!.y + titleBox!.height).toBeLessThan(heading!.y);
     const tagline = await page.locator(".VPHero .tagline").boundingBox();
     const button = await page.locator(".VPHero .actions a").first().boundingBox();
     expect(Math.abs(heading!.x - tagline!.x)).toBeLessThan(1);
     expect(Math.abs(heading!.x - button!.x)).toBeLessThan(1);
-    await page.screenshot({ path: `test-results/brand-${width}.png`, fullPage: false });
+    await page.screenshot({ path: `test-results/redesign-${width}.png`, fullPage: false });
     await page.evaluate(() => document.documentElement.classList.add('dark'));
     await expect(page.locator('html')).toHaveClass(/dark/);
-    await page.screenshot({ path: `test-results/brand-${width}-dark.png`, fullPage: false });
+    await page.screenshot({ path: `test-results/redesign-${width}-dark.png`, fullPage: false });
   });
 }

@@ -6,10 +6,10 @@ hero:
   text: 그래도, 일단 실행.
   tagline: 'AI가 코드를 짜는 시대,<br>직접 부딪히며 배우는 개발자의 생존 기록.<br><span class="hero-topics">AI · 웹 개발 · DevOps</span>'
   image:
-    src: /brand/hero.jpg
+    src: /brand/original-artwork.png
     alt: 파란 후드의 개발자와 장난스러운 AI 로봇이 함께하는 작업실
-    width: 960
-    height: 640
+    width: 1122
+    height: 1402
   actions:
     - theme: brand
       text: 생존 기록 읽기 →
