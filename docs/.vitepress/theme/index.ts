@@ -3,6 +3,7 @@ import type { Theme } from 'vitepress'
 import { h } from 'vue'
 import PostList from './PostList.vue'
 import GiscusComment from './GiscusComment.vue'
+import HeroArtwork from './HeroArtwork.vue'
 import { useRoute } from 'vitepress'
 import './style.css'
 
@@ -13,6 +14,7 @@ export default {
     const isPost = route.path.startsWith('/posts/') && route.path !== '/posts/'
 
     return h(DefaultTheme.Layout, null, {
+      'home-hero-image': () => h(HeroArtwork),
       ...(isPost ? { 'doc-after': () => h(GiscusComment) } : {}),
     })
   },

@@ -17,7 +17,14 @@ for (const width of [375, 768, 1200]) {
     const nav = await page.locator(".VPNav").boundingBox();
     expect(main!.y).toBeGreaterThanOrEqual(nav!.y + nav!.height);
     expect(art).not.toBeNull();
-    if (width < 960) expect(art!.y).toBeGreaterThanOrEqual(main!.y + main!.height);
+    const title = page.locator(".hero-artwork-title");
+    await expect(title).toContainText("멸종 위기");
+    await expect(title).toContainText("개발자");
+    const titleBox = await title.boundingBox();
+    const figure = await page.locator(".hero-artwork").boundingBox();
+    expect(titleBox!.y).toBeGreaterThanOrEqual(figure!.y);
+    expect(titleBox!.y + titleBox!.height).toBeLessThan(art!.y + art!.height);
+    if (width < 960) expect(main!.y).toBeGreaterThanOrEqual(art!.y + art!.height);
     else expect(art!.x).toBeGreaterThanOrEqual(main!.x + main!.width);
     await page.screenshot({ path: `test-results/brand-${width}.png`, fullPage: false });
     await page.evaluate(() => document.documentElement.classList.add('dark'));
