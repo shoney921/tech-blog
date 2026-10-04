@@ -131,8 +131,8 @@ function getSidebarFromPosts() {
 }
 
 export default defineConfig({
-  title: '삽질 테크 블로그',
-  description: '개발 경험과 기술 이야기를 공유합니다',
+  title: '멸종 위기 개발자',
+  description: 'AI 시대에도 일단 실행. 개발과 삽질의 생존 기록.',
   lang: 'ko-KR',
   cleanUrls: true,
   lastUpdated: false,
@@ -144,12 +144,14 @@ export default defineConfig({
   buildEnd: genFeed,
 
   head: [
-    ['link', { rel: 'icon', type: 'image/png', href: '/favicon.png' }],
-    ['meta', { name: 'theme-color', content: '#5b6af0' }],
-    ['meta', { property: 'og:site_name', content: '삽질 테크 블로그' }],
+    ['link', { rel: 'icon', type: 'image/png', href: '/brand/favicon-32.png', sizes: '32x32' }],
+    ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/brand/favicon-16.png' }],
+    ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/brand/apple-touch-icon.png' }],
+    ['meta', { name: 'theme-color', content: '#f7f0e4' }],
+    ['meta', { property: 'og:site_name', content: '멸종 위기 개발자' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
-    ['meta', { property: 'og:image', content: 'https://blog.shoneylife.com/og-image.png' }],
-    ['meta', { name: 'twitter:image', content: 'https://blog.shoneylife.com/og-image.png' }],
+    ['meta', { property: 'og:image', content: 'https://blog.shoneylife.com/brand/social-card.png' }],
+    ['meta', { name: 'twitter:image', content: 'https://blog.shoneylife.com/brand/social-card.png' }],
     ['meta', { name: 'twitter:site', content: '@shoney' }],
     ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'RSS', href: '/feed.xml' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
@@ -167,7 +169,7 @@ export default defineConfig({
 
     // Per-page Open Graph
     const title = pageData.frontmatter.title || pageData.title
-    const description = pageData.frontmatter.description || pageData.description || '개발 경험과 기술 이야기를 공유합니다'
+    const description = pageData.frontmatter.description || pageData.description || 'AI 시대에도 일단 실행. 개발과 삽질의 생존 기록.'
     const isPost = pageData.relativePath.startsWith('posts/') && pageData.relativePath !== 'posts/index.md'
 
     head.push(['meta', { property: 'og:title', content: title }])
@@ -210,7 +212,7 @@ export default defineConfig({
         },
         publisher: {
           '@type': 'Organization',
-          name: '삽질 테크 블로그',
+          name: '멸종 위기 개발자',
           url: siteHostname,
         },
       }
@@ -219,9 +221,9 @@ export default defineConfig({
       const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'WebSite',
-        name: 'Shoney Tech Blog',
+        name: '멸종 위기 개발자',
         url: siteHostname,
-        description: '개발 경험과 기술 이야기를 공유합니다',
+        description: 'AI 시대에도 일단 실행. 개발과 삽질의 생존 기록.',
         author: {
           '@type': 'Person',
           name: 'Shoney',
@@ -234,6 +236,7 @@ export default defineConfig({
   },
 
   themeConfig: {
+    logo: { src: '/brand/avatar-96.png', alt: '파란 후드의 개발자 캐릭터' },
     nav: [
       { text: '홈', link: '/' },
       { text: '소개', link: '/about' },
@@ -291,7 +294,7 @@ export default defineConfig({
     },
 
     footer: {
-      message: '삽질 테크 블로그',
+      message: '멸종 위기 개발자',
       copyright: `© ${new Date().getFullYear()} Shoney. All rights reserved.`,
     },
   },

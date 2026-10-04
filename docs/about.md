@@ -2,7 +2,9 @@
 sidebar: false
 ---
 
-# 소개
+# 멸종 위기 개발자를 소개합니다
+
+<img class="about-mascot" src="/brand/avatar-256.png" alt="파란 후드와 안경을 쓴 블로그 주인장 캐릭터" width="160" height="160" />
 
 안녕하세요, **Shoney**입니다.
 

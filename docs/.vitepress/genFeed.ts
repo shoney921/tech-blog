@@ -66,9 +66,9 @@ export async function genFeed(siteConfig: SiteConfig) {
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Shoney Tech Blog</title>
+    <title>멸종 위기 개발자</title>
     <link>${hostname}</link>
-    <description>개발 경험과 기술 이야기를 공유합니다</description>
+    <description>AI 시대에도 일단 실행. 개발과 삽질의 생존 기록.</description>
     <language>ko</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${hostname}/feed.xml" rel="self" type="application/rss+xml"/>
