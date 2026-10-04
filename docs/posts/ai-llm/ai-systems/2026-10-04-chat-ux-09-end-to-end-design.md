@@ -63,7 +63,7 @@ date: 2026-10-04T11:20:00
 
 연재를 마치며 솔직하게 남는 질문들을 적는다.
 
-- LLM의 확신 신호를 어떻게 믿을 만하게 만들 것인가. 이번 조사에서 근거를 확인하지 못했다
+- LLM의 확신 신호를 어떻게 믿을 만하게 만들 것인가. 형식이 정리된 과제에서는 잘 보정된다는 연구가 있지만(3편), 자유 형식 대화에서는 확인하지 못했다
 - 사람 검토의 자동화 편향을 설계로 얼마나 줄일 수 있는가. 규제 문서는 문제를 지적하지만 해법은 현장이 찾아야 한다
 - 동적 UI 프로토콜 중 무엇에 걸어야 하는가. 대부분 아직 0.x이거나 막 안정화된 단계다
 - MCP 2026-07-28 개정에 각 SDK가 얼마나 빨리 맞출지는 모른다
@@ -71,6 +71,8 @@ date: 2026-10-04T11:20:00
 이 연재에서 가장 마음에 남은 문장은 "필요에 맞는 올바른 시스템"이다. 화려한 에이전트나 최신 프로토콜보다, 어디서 틀릴 수 있고 그때 누가 알아채는지를 설계에 넣는 쪽이 더 오래 간다고 생각한다. 이건 이 연재를 쓰며 굳어진 내 의견이다.
 
 글에서 인용한 수치와 날짜는 작성일(2026-10-04)에 공식 문서와 저장소를 열어 확인한 것이다. 다만 일부는 요약 도구를 거쳤으니, 실제로 쓰기 전에는 원문을 한 번 더 확인해 주길 바란다.
+
+**보강 글**: "보상"이라는 말이 가리킬 수 있는 여러 관점을 따로 정리했다. [관점 지도부터](/posts/ai-llm/ai-systems/2026-10-04-supplement-10-perspective-map) 보면 된다.
 
 **연재 목차**: [1편](/posts/ai-llm/ai-systems/2026-10-04-ai-pipeline-01-stages-structured-output) · [2편](/posts/ai-llm/ai-systems/2026-10-04-ai-pipeline-02-evals-observability) · [3편](/posts/ai-llm/ai-systems/2026-10-04-ai-pipeline-03-high-stakes-decisions) · [4편](/posts/ai-llm/ai-systems/2026-10-04-ai-agent-04-workflow-vs-agent) · [5편](/posts/ai-llm/ai-systems/2026-10-04-ai-agent-05-rag-pipeline) · [6편](/posts/ai-llm/ai-systems/2026-10-04-ai-agent-06-agent-deep-dive) · [7편](/posts/ai-llm/ai-systems/2026-10-04-chat-ux-07-limits) · [8편](/posts/ai-llm/ai-systems/2026-10-04-chat-ux-08-generative-ui) · 9편(현재)
 
