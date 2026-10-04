@@ -1,9 +1,10 @@
 import { expect, test } from '@playwright/test';
 
-for (const width of [375, 768, 1200]) {
+for (const width of [375, 768, 1330]) {
   test(`브랜드와 반응형 홈 (${width}px)`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/');
+    await page.evaluate(() => document.fonts.ready);
     await expect(page).toHaveTitle(/멸종 위기 개발자/);
     await expect(page.locator('.VPNavBarTitle')).toContainText('멸종 위기 개발자');
     await expect(page.locator('.VPHero .tagline')).toBeVisible();
@@ -29,7 +30,12 @@ for (const width of [375, 768, 1200]) {
     expect(main!.y).toBeGreaterThanOrEqual(figure!.y);
     expect(main!.x + main!.width).toBeLessThanOrEqual(art!.x + art!.width + 1);
     expect(main!.y + main!.height).toBeLessThanOrEqual(figure!.y + figure!.height + 1);
-    expect(titleBox!.y + titleBox!.height).toBeLessThan(main!.y + 150);
+    const heading = await page.locator(".VPHero .heading").boundingBox();
+    expect(titleBox!.y + titleBox!.height).toBeLessThan(heading!.y);
+    const tagline = await page.locator(".VPHero .tagline").boundingBox();
+    const button = await page.locator(".VPHero .actions a").first().boundingBox();
+    expect(Math.abs(heading!.x - tagline!.x)).toBeLessThan(1);
+    expect(Math.abs(heading!.x - button!.x)).toBeLessThan(1);
     await page.screenshot({ path: `test-results/brand-${width}.png`, fullPage: false });
     await page.evaluate(() => document.documentElement.classList.add('dark'));
     await expect(page.locator('html')).toHaveClass(/dark/);
