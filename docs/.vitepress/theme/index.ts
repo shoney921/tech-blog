@@ -2,6 +2,7 @@ import DefaultTheme from 'vitepress/theme'
 import type { Theme } from 'vitepress'
 import { h } from 'vue'
 import PostList from './PostList.vue'
+import CategoryGrid from './CategoryGrid.vue'
 import GiscusComment from './GiscusComment.vue'
 import HeroArtwork from './HeroArtwork.vue'
 import { useRoute } from 'vitepress'
@@ -11,7 +12,8 @@ export default {
   extends: DefaultTheme,
   Layout() {
     const route = useRoute()
-    const isPost = route.path.startsWith('/posts/') && route.path !== '/posts/'
+    // /posts/, /posts/<cat>/ 같은 목록 페이지는 글이 아님
+    const isPost = route.path.startsWith('/posts/') && !route.path.endsWith('/')
 
     return h(DefaultTheme.Layout, null, {
       'home-hero-image': () => h(HeroArtwork),
@@ -20,5 +22,6 @@ export default {
   },
   enhanceApp({ app }) {
     app.component('PostList', PostList)
+    app.component('CategoryGrid', CategoryGrid)
   },
 } satisfies Theme

@@ -37,6 +37,7 @@ function scanPosts(dir: string, baseUrl: string, recursive = true): PostEntry[] 
 function buildSidebarCategory(
   cat: Category, postsDir: string, baseUrl: string,
   expandedIds?: string[],
+  seriesContext = false,
 ): any | null {
   const catDir = path.join(postsDir, cat.id)
   if (!fs.existsSync(catDir)) return null
@@ -45,7 +46,11 @@ function buildSidebarCategory(
   const posts = cat.children
     ? scanPosts(catDir, `${baseUrl}/${cat.id}`, false)
     : scanPosts(catDir, `${baseUrl}/${cat.id}`)
-  posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  // 연재(series)는 1편부터, 나머지는 최신순
+  posts.sort((a, b) => {
+    const diff = new Date(b.date).getTime() - new Date(a.date).getTime()
+    return seriesContext || cat.series ? -diff : diff
+  })
 
   const items: any[] = posts.map(p => ({ text: p.title, link: p.link }))
 
@@ -55,7 +60,9 @@ function buildSidebarCategory(
   // 서브카테고리 처리
   if (cat.children) {
     for (const child of [...cat.children].sort((a, b) => a.order - b.order)) {
-      const childSection = buildSidebarCategory(child, catDir, `${baseUrl}/${cat.id}`, childExpandedIds)
+      const childSection = buildSidebarCategory(
+        child, catDir, `${baseUrl}/${cat.id}`, childExpandedIds, seriesContext || !!cat.series,
+      )
       if (childSection) items.push(childSection)
     }
   }
@@ -64,6 +71,7 @@ function buildSidebarCategory(
 
   return {
     text: cat.label,
+    link: `${baseUrl}/${cat.id}/`,
     collapsed: !isExpanded,
     items,
   }
@@ -204,7 +212,7 @@ export default defineConfig({
 
     // Per-page Open Graph
     const title = pageData.frontmatter.title || pageData.title
-    const isPost = pageData.relativePath.startsWith('posts/') && pageData.relativePath !== 'posts/index.md'
+    const isPost = pageData.relativePath.startsWith('posts/') && !pageData.relativePath.endsWith('index.md')
     const description = pageData.frontmatter.description
       || pageData.description
       || (isPost ? readPostSource(pageData.relativePath).description : undefined)
@@ -283,6 +291,17 @@ export default defineConfig({
     siteTitle: false,
     nav: [
       { text: '홈', link: '/' },
+      {
+        text: '글',
+        activeMatch: '^/posts/',
+        items: [
+          { text: '전체 글', link: '/posts/' },
+          ...[...categories]
+            .sort((a, b) => a.order - b.order)
+            .filter(c => fs.existsSync(path.resolve(__dirname, '../posts', c.id)))
+            .map(c => ({ text: c.label, link: `/posts/${c.id}/` })),
+        ],
+      },
       { text: '소개', link: '/about' },
       { text: '포트폴리오', link: '/portfolio' },
     ],

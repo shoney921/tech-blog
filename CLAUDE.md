@@ -8,23 +8,48 @@ VitePress 기반 기술 블로그. Cloudflare Pages로 `blog.shoneylife.com`에 
 
 ```
 docs/
-├── index.md                    # 홈페이지
+├── index.md                    # 홈 (처음이라면 / 주제별 카드 / 최근 글 6개)
 ├── about.md                    # 소개 페이지
 ├── posts/
-│   ├── index.md                # 글 목록 (PostList 컴포넌트로 자동 생성)
+│   ├── index.md                # 전체 글 (카테고리 필터 칩)
 │   ├── ai-llm/                 # AI / LLM 카테고리
+│   │   ├── index.md            # 카테고리 랜딩 (소개 + <PostList category="ai-llm" />)
+│   │   ├── ai-systems/         # 하위 카테고리 (연재)
+│   │   │   ├── index.md
+│   │   │   └── YYYY-MM-DD-제목.md
 │   │   └── YYYY-MM-DD-제목.md
-│   ├── blog/                   # 블로그 카테고리
-│   │   └── YYYY-MM-DD-제목.md
+│   ├── dev-notes/              # 개발 노트 (DevOps·모바일·백엔드 잡기술)
 │   └── <카테고리>/              # 카테고리별 디렉토리
+│       ├── index.md
 │       └── YYYY-MM-DD-제목.md
+├── public/_redirects           # 글 이동 시 301 (Cloudflare Pages)
 └── .vitepress/
-    ├── config.mts              # VitePress 설정
-    ├── categories.ts           # 카테고리 설정 (한글명, 순서)
+    ├── config.mts              # VitePress 설정 (nav '글' 드롭다운, 사이드바 자동 생성)
+    ├── categories.ts           # 카테고리 설정 (라벨, 순서, description, series)
     └── theme/
         ├── index.ts            # 테마 진입점
+        ├── posts.data.ts       # 글 메타데이터 로더 (description 발췌, 읽는 시간)
+        ├── PostList.vue        # 글 목록 (category/limit/order/show-filter props)
+        ├── CategoryGrid.vue    # 홈 주제별 카드
         └── style.css           # 커스텀 CSS
 ```
+
+## 방문자 동선
+
+```
+홈            → 처음이라면 여기부터 + 주제별 카드 + 최근 글 6개
+/posts/       → 전체 글, 카테고리 칩으로 필터 (?cat=)
+/posts/<cat>/ → 카테고리 랜딩. 연재(series)는 1편부터 정렬
+글 상세        → 사이드바 현재 카테고리 펼침, 연재면 이전/다음이 편 순서
+```
+
+### 카테고리 기준
+- **AI / LLM**: 개념·실무 글. 운영 설계 관점의 연재는 `ai-llm/ai-systems`
+- **랭체인 & 랭그래프**: 책 학습 연재. `langchain-langgraph/index.md`에 읽는 순서가 있으니 새 글 추가 시 거기도 갱신
+- **나닮**: 서비스 개발 기록. `frontend` / `backend`
+- **피지컬 AI**, **AX 교육**(강의 노트, 챕터 순), **블로그**(블로그 자체 이야기)
+- **개발 노트(`dev-notes`)**: DevOps·모바일·백엔드 잡기술. AI와 무관한 기술 글은 여기로
+- 글을 다른 카테고리로 옮기면 `docs/public/_redirects`에 구 경로 → 새 경로 301 추가
 
 ## 새 글 작성 절차
 
@@ -41,10 +66,12 @@ docs/
 ---
 title: 글 제목
 date: YYYY-MM-DDThh:mm:ss
+description: 한두 문장 요약 (목록 카드·OG·RSS에 노출)
 ---
 ```
 
-- `date`: 시간까지 포함 (정렬 순서 결정에 사용)
+- `date`: 시간까지 포함 (정렬 순서 결정에 사용). 연재는 편 순서대로 시간을 올려서 준다
+- `description`: 글 목록 카드에 그대로 보이므로 꼭 쓴다. 없으면 본문 앞 120자를 자동 발췌하는데, 보통 어색하다
 - 카테고리는 디렉토리로 결정되므로 프론트매터에 `category` 불필요
 
 ### 글쓰기 톤 & 스타일 가이드
@@ -75,9 +102,10 @@ date: YYYY-MM-DDThh:mm:ss
 
 ### 카테고리 추가 방법
 
-1. `docs/.vitepress/categories.ts`에 새 카테고리 추가 (id, label, order)
+1. `docs/.vitepress/categories.ts`에 새 카테고리 추가 (id, label, order, description). 연재면 `series: true` (목록·사이드바·이전/다음이 1편부터)
 2. `docs/posts/<새카테고리>/` 디렉토리 생성
-3. 해당 디렉토리에 포스트 파일 작성
+3. `docs/posts/<새카테고리>/index.md` 랜딩 페이지 작성 (다른 카테고리 index.md 패턴 복사)
+4. 해당 디렉토리에 포스트 파일 작성
 
 ### 2. 로컬 빌드 확인
 
