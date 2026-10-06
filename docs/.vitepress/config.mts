@@ -86,7 +86,7 @@ function getSidebarFromPosts() {
 
   function buildFullSidebar(expandedIds?: string[]) {
     const items: any[] = [
-      { text: '전체 글', link: '/' },
+      { text: '전체 글', link: '/posts/' },
     ]
 
     for (const cat of sortedCategories) {

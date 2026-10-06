@@ -36,7 +36,8 @@ export default createContentLoader('posts/**/*.md', {
   render: true,
   transform(raw): Post[] {
     return raw
-      .filter(({ url }) => !url.endsWith('/posts/'))
+      // index 페이지(/posts/, /posts/<cat>/)와 프론트매터 없는 파일은 제외
+      .filter(({ url, frontmatter }) => !url.endsWith('/') && !!frontmatter.title && !!frontmatter.date)
       .map(({ url, frontmatter, html }) => {
         const dateValue = frontmatter.date instanceof Date
           ? frontmatter.date.toISOString()

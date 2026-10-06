@@ -40,18 +40,12 @@ export const categories: Category[] = [
     children: [
       { id: 'frontend', label: '프론트엔드', order: 1 },
       { id: 'backend', label: '백엔드', order: 2 },
-      { id: 'ai', label: 'AI', order: 3 },
     ],
   },
   {
     id: 'blog',
     label: '블로그',
     order: 5,
-  },
-  {
-    id: 'test',
-    label: '테스트',
-    order: 100,
   },
   {
     id: 'ax-edu',
