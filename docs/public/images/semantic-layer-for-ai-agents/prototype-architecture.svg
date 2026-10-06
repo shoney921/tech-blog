@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1080" viewBox="0 0 1000 1080" role="img" aria-labelledby="title desc">
+<title id="title">시멘틱 레이어와 기존 RAG를 함께 쓰는 프로토타입</title>
+<desc id="desc">YAML로 엔터티, 관계, 용어, 규칙을 정의하고 PostgreSQL 뷰와 도구 API로 구현한다. Agent는 도구 API의 계산 결과와 기존 RAG의 문서 근거를 함께 받아 답변한다.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526875"/></marker></defs>
+<rect width="1000" height="1080" rx="24" fill="#f8f6ef"/>
+<g font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" text-anchor="middle" fill="#213b48">
+<text x="500" y="60" font-size="30" font-weight="700">플랫폼 없이 시작하는 최소 구성</text>
+<text x="500" y="98" font-size="20" fill="#526875">계산은 SQL에서, 문서 근거는 RAG에서</text>
+<rect x="50" y="140" width="900" height="120" rx="18" fill="#ece8dc" stroke="#becdd1" stroke-width="2"/>
+<text x="500.0" y="179" font-size="25" font-weight="700">온톨로지 YAML · Git으로 관리</text>
+<text x="500.0" y="214" font-size="20">엔터티 · 관계 · 용어 · 규칙의 정의</text>
+<path d="M 285 260 V 330" fill="none" stroke="#526875" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="430" y="302" font-size="18">정의를 뷰·API로 구현</text>
+<rect x="50" y="330" width="470" height="120" rx="18" fill="#e6f0f2" stroke="#becdd1" stroke-width="2"/>
+<text x="285.0" y="369" font-size="25" font-weight="700">PostgreSQL</text>
+<text x="285.0" y="404" font-size="20">원천 데이터 + SQL 규칙 VIEW</text>
+<path d="M 285 450 V 510" fill="none" stroke="#526875" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="50" y="510" width="470" height="160" rx="18" fill="#e6f0f2" stroke="#becdd1" stroke-width="2"/>
+<text x="285.0" y="549" font-size="25" font-weight="700">도구 API</text>
+<text x="285.0" y="584" font-size="20">find_entity · traverse</text>
+<text x="285.0" y="614" font-size="20">evaluate_rule</text>
+<rect x="600" y="510" width="350" height="160" rx="18" fill="#fff0d3" stroke="#becdd1" stroke-width="2"/>
+<text x="775.0" y="549" font-size="25" font-weight="700">기존 RAG</text>
+<text x="775.0" y="584" font-size="20">정책 · 매뉴얼 · 회의록</text>
+<text x="775.0" y="614" font-size="20">search_documents</text>
+<path d="M 285 670 V 735 H 420 V 790" fill="none" stroke="#526875" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 775 670 V 735 H 580 V 790" fill="none" stroke="#526875" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="200" y="713" font-size="20">조회·계산 결과</text><text x="826" y="713" font-size="20">문서 근거</text>
+<rect x="250" y="790" width="500" height="120" rx="18" fill="#e6f0f2" stroke="#becdd1" stroke-width="2"/>
+<text x="500.0" y="829" font-size="25" font-weight="700">LLM Agent</text>
+<text x="500.0" y="864" font-size="20">도구 선택 · 결과와 근거 설명</text>
+<path d="M 500 910 V 965" fill="none" stroke="#526875" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="500" y="1001" font-size="25" font-weight="700">답변 = 숫자 + 판단 근거 + 문서 맥락</text><text x="500" y="1042" font-size="18" fill="#526875">화살표는 정의의 구현 및 결과 전달 방향 · Agent가 필요할 때 도구를 호출</text></g></svg>

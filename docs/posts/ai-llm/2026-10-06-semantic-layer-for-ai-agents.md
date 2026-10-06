@@ -13,6 +13,11 @@ date: 2026-10-06T14:00:00
 
 미리 밝혀 두면, 여기 나오는 모든 플랫폼을 직접 다 써 본 건 아니다. 플랫폼 기능과 출시 상태는 2026년 10월 초 기준으로 찾아본 자료를 바탕으로 정리했고, 이 분야는 몇 달 단위로 바뀐다. 고객 앞에서 쓰기 전에 한 번 더 확인하는 게 좋다.
 
+<figure>
+  <img src="/images/semantic-layer-for-ai-agents/document-and-rules.jpg" alt="문서 더미에서 나온 근거와 엔터티 관계·계산 규칙을 거친 결과가 AI 에이전트의 답변으로 모이는 개념 그림" width="1536" height="1024" />
+  <figcaption>문서에서 맥락을 찾고, 정의된 관계와 규칙으로 숫자와 판단의 근거를 보탠다.</figcaption>
+</figure>
+
 ## 먼저, RAG는 뭐가 부족했나
 
 대부분의 사내 RAG는 이렇게 돈다.
@@ -416,18 +421,10 @@ Fabric IQ의 핵심 기능 중 하나가 Graph다. 엔터티 연결을 따라 �
 
 고객이 아직 플랫폼을 정하지 않았거나, 우리가 빨리 가치를 보여 줘야 할 때 쓰는 구성이다. 우리 팀이 POC에서 쓰기 가장 현실적인 형태라고 생각한다.
 
-```
-[온톨로지 YAML]  엔터티·관계·용어·규칙 정의 (Git으로 관리)
-      │
-      ▼
-[PostgreSQL]     원천 데이터 적재 + 규칙은 VIEW로
-      │
-      ▼
-[도구 API]       find_entity / traverse / evaluate_rule
-      │                                      ╲
-      ▼                                       ▼
-[LLM Agent] ◀──────────────────────── [문서 검색 (기존 RAG)]
-```
+<figure>
+  <img src="/images/semantic-layer-for-ai-agents/prototype-architecture.svg" alt="YAML 정의를 PostgreSQL 규칙 뷰와 도구 API로 구현하고, LLM Agent가 API의 계산 결과와 기존 RAG의 문서 근거를 함께 받아 답변하는 구조" width="1000" height="1080" loading="lazy" />
+  <figcaption>YAML은 정의를 관리하고, SQL 뷰와 도구 API는 조회·계산을 맡는다. Agent는 기존 RAG의 문서 근거까지 합쳐 답한다.</figcaption>
+</figure>
 
 온톨로지 YAML은 이 정도 모양이면 시작하기 충분하다.
 
