@@ -166,3 +166,29 @@
   object-fit: contain;
   border-radius: 4px;
 }
+
+/* 사이드바 계층 표현
+   기본 테마는 2단계(level-2)부터만 들여쓰기해서 최상위 카테고리 제목, 그 아래 글,
+   하위 카테고리 헤더가 같은 선에 붙어 보인다. 최상위 자식에도 들여쓰기와 가이드선을 준다. */
+.VPSidebarItem.level-0.collapsible > .items {
+  margin-top: 4px;
+  padding-left: 16px;
+  border-left: 1px solid var(--vp-c-divider);
+}
+
+/* 하위 카테고리(접을 수 있는 중간 그룹) 헤더는 글 링크보다 굵게, 위아래 여백으로 분리 */
+.VPSidebarItem.level-1.collapsible,
+.VPSidebarItem.level-2.collapsible {
+  margin-top: 8px;
+}
+
+.VPSidebarItem.level-1.collapsible > .item .text,
+.VPSidebarItem.level-2.collapsible > .item .text {
+  font-weight: 700;
+  color: var(--vp-c-text-1);
+}
+
+/* 가이드선이 현재 글 표시줄(indicator)과 겹치므로 활성 그룹의 선은 살짝 진하게 */
+.VPSidebarItem.has-active > .items {
+  border-left-color: var(--vp-c-brand-soft);
+}
