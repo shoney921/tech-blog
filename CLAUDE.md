@@ -2,7 +2,7 @@
 
 VitePress 기반 기술 블로그. Cloudflare Pages로 `blog.shoneylife.com`에 배포.
 
-> **Cursor 사용 시**: 동일 내용이 `.cursor/rules/`에 룰로 등록되어 있어, 채팅/에이전트에서 자동으로 참고됩니다. 프로젝트 룰(`shoney-tech-blog.mdc`)은 항상 적용, 글쓰기 스타일(`post-writing-style.mdc`)은 `docs/posts/**/*.md` 작업 시 적용됩니다.
+> **다른 에이전트(Codex·Cursor)**: 이 파일이 원본이다. `AGENTS.md`·`.cursor/rules/*.mdc` 는 이 파일을 가리키기만 하고 내용을 복제하지 않는다(2026-10-09 — 예전 `.cursor/rules` 사본은 이 파일과 어긋나 있었다). 규칙은 여기서만 고친다.
 
 ## 프로젝트 구조
 
