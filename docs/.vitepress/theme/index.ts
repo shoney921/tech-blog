@@ -5,6 +5,7 @@ import PostList from './PostList.vue'
 import CategoryGrid from './CategoryGrid.vue'
 import GiscusComment from './GiscusComment.vue'
 import HeroArtwork from './HeroArtwork.vue'
+import ReadingProgress from './ReadingProgress.vue'
 import { useRoute } from 'vitepress'
 import './style.css'
 
@@ -17,7 +18,12 @@ export default {
 
     return h(DefaultTheme.Layout, null, {
       'home-hero-image': () => h(HeroArtwork),
-      ...(isPost ? { 'doc-after': () => h(GiscusComment) } : {}),
+      ...(isPost
+        ? {
+            'doc-before': () => h(ReadingProgress),
+            'doc-after': () => h(GiscusComment),
+          }
+        : {}),
     })
   },
   enhanceApp({ app }) {

@@ -127,9 +127,10 @@ function formatAbsoluteDate(date: Date): string {
 
     <div class="post-list">
       <article
-        v-for="post in posts"
+        v-for="(post, i) in posts"
         :key="post.url"
         class="post-item"
+        :style="{ '--i': Math.min(i, 8) }"
       >
         <div class="post-header">
           <a
@@ -201,16 +202,45 @@ function formatAbsoluteDate(date: Date): string {
   margin-bottom: 0.75rem;
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
-  transition: border-color 0.25s, box-shadow 0.25s;
+  transition: border-color 0.2s, box-shadow 0.2s, translate 0.2s;
+  /* 목록이 위에서부터 차례로 올라온다. 9번째 이후는 같은 시점에 (--i 상한 8) */
+  animation: post-item-in 0.4s ease-out calc(var(--i, 0) * 45ms) backwards;
 }
 
-.post-item:hover {
+/* 히어로 카드와 같은 '스티커' 그림자. 마우스가 있는 기기에서만 들썩인다 */
+.post-item:hover,
+.post-item:has(.post-title:focus-visible) {
   border-color: var(--vp-c-brand-1);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 4px 4px 0 #e8d6b9;
 }
 
-.dark .post-item:hover {
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.24);
+.dark .post-item:hover,
+.dark .post-item:has(.post-title:focus-visible) {
+  box-shadow: 4px 4px 0 #483b2e;
+}
+
+@media (hover: hover) {
+  .post-item:hover {
+    translate: -2px -2px;
+  }
+}
+
+@keyframes post-item-in {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-item {
+    animation: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .post-item:hover {
+    translate: none;
+  }
 }
 
 .post-header {

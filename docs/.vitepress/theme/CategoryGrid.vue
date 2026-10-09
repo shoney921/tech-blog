@@ -50,12 +50,34 @@ const cards = computed(() =>
   background: var(--vp-c-bg-soft);
   text-decoration: none;
   color: inherit;
-  transition: border-color 0.25s, box-shadow 0.25s;
+  transition: border-color 0.2s, box-shadow 0.2s, translate 0.2s;
 }
 
-.category-card:hover {
+.category-card:hover,
+.category-card:focus-visible {
   border-color: var(--vp-c-brand-1);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 4px 4px 0 #e8d6b9;
+}
+
+.dark .category-card:hover,
+.dark .category-card:focus-visible {
+  box-shadow: 4px 4px 0 #483b2e;
+}
+
+@media (hover: hover) {
+  .category-card:hover {
+    translate: -2px -2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .category-card {
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .category-card:hover {
+    translate: none;
+  }
 }
 
 .category-head {
