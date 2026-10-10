@@ -27,7 +27,7 @@ export const categories: Category[] = [
         id: 'design-cases',
         label: 'AI 아키텍처 설계 심화',
         order: 2,
-        description: '데이터 파이프라인·근거 데이터, 에이전트 워크플로우·RAG, 동적 UI 연동. 세 주제를 케이스별로 어떻게 다르게 설계하는지 3편으로 정리했다.',
+        description: '데이터 파이프라인·근거 데이터, 에이전트 워크플로우·RAG, 동적 UI 연동. 세 주제를 케이스별로 어떻게 다르게 설계하는지 3편, 그리고 도메인마다 무엇을 깊이 고민해야 하는지 1편.',
         series: true,
       },
     ],

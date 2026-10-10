@@ -1,10 +1,10 @@
 ---
-title: "설계 심화 2/3 — 에이전트 워크플로우와 LLM/RAG 아키텍처: 어떤 케이스에 어떤 모양을 고르나"
+title: "설계 심화 2/4 — 에이전트 워크플로우와 LLM/RAG 아키텍처: 어떤 케이스에 어떤 모양을 고르나"
 date: 2026-10-10T09:30:00
 description: 워크플로우와 에이전트의 선택 기준, 2026년의 프레임워크·하네스 지형, 컨텍스트 엔지니어링, agentic RAG, 메모리, 멀티에이전트 논쟁의 수렴, 내구성 있는 실행과 보안, MCP·A2A 현황을 정리하고 고객지원·사내 문서 Q&A·코딩 에이전트·백오피스 자동화 네 케이스의 추천 아키텍처와 서술형 답안 뼈대를 적었다.
 ---
 
-# 설계 심화 2/3 — 에이전트 워크플로우와 LLM/RAG 아키텍처: 어떤 케이스에 어떤 모양을 고르나
+# 설계 심화 2/4 — 에이전트 워크플로우와 LLM/RAG 아키텍처: 어떤 케이스에 어떤 모양을 고르나
 
 [연재 4편](/posts/ai-llm/ai-systems/2026-10-04-ai-agent-04-workflow-vs-agent)과 [6편](/posts/ai-llm/ai-systems/2026-10-04-ai-agent-06-agent-deep-dive)에서 워크플로우와 에이전트의 차이, 도구·상태·interrupt·MCP·보안을 다뤘다. 그 글들은 "부품 설명서"였다. 이번 글은 조립 순서다. 케이스가 주어졌을 때 어떤 모양을 고르고, 왜 그 모양인지 말할 수 있어야 한다. 2026년 들어 바뀐 것도 꽤 있다. 프레임워크 세대가 한 번 갈렸고, 멀티에이전트 논쟁이 수렴했고, MCP 스펙이 크게 개정됐다. 그 변화를 반영해서 쓴다.
 
@@ -150,7 +150,7 @@ OWASP는 2026년 두 목록을 냈다. LLM 앱 Top 10 2026(2026-08)에서 Excess
 
 다음 편은 이 에이전트가 화면과 만나는 방식이다.
 
-**연재 목차**: [1편](/posts/ai-llm/design-cases/2026-10-10-01-data-pipeline-and-evidence-design) · 2편(현재) · [3편 동적 UI 연동](/posts/ai-llm/design-cases/2026-10-10-03-agent-driven-dynamic-ui)
+**연재 목차**: [1편](/posts/ai-llm/design-cases/2026-10-10-01-data-pipeline-and-evidence-design) · 2편(현재) · [3편 동적 UI 연동](/posts/ai-llm/design-cases/2026-10-10-03-agent-driven-dynamic-ui) · [4편 도메인별 고민](/posts/ai-llm/design-cases/2026-10-10-04-domain-specific-deep-dives)
 
 ## 참고자료
 

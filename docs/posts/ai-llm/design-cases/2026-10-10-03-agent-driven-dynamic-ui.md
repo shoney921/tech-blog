@@ -1,10 +1,10 @@
 ---
-title: "설계 심화 3/3 — 에이전트 기반 동적 UI 연동: 정적·선언형·자유생성 중 무엇을, 어느 앱에"
+title: "설계 심화 3/4 — 에이전트 기반 동적 UI 연동: 정적·선언형·자유생성 중 무엇을, 어느 앱에"
 date: 2026-10-10T10:00:00
 description: Generative UI를 정적 매핑·선언형 스펙·자유 생성 세 단계와 전송 프로토콜로 나누고, 2026년 10월 기준 A2UI·json-render·MCP Apps·OpenAI Apps SDK·AG-UI 1.0·Vercel AI SDK 6의 위치를 정리했다. 스트리밍, 승인 UI, 양방향 상태 동기화, 안전·접근성·테스트까지 다루고 챗 중심 SaaS·기존 웹앱 코파일럿·생성 대시보드 세 케이스와 서술형 답안 뼈대를 적었다.
 ---
 
-# 설계 심화 3/3 — 에이전트 기반 동적 UI 연동: 정적·선언형·자유생성 중 무엇을, 어느 앱에
+# 설계 심화 3/4 — 에이전트 기반 동적 UI 연동: 정적·선언형·자유생성 중 무엇을, 어느 앱에
 
 [연재 8편](/posts/ai-llm/ai-systems/2026-10-04-chat-ux-08-generative-ui)에서 동적 UI를 세 층위(정적 매핑, 선언형 스키마, 샌드박스 앱)로 나누고 프로토콜 지형을 표로 그렸다. 그때 "1년 뒤에 이 표가 그대로 남아 있을 자신이 없다"고 썼는데, 일주일 만에 고칠 게 생겼다. AG-UI 1.0이 2026-09-30에 나왔고, 8편에서 버전을 확인 못 했던 그 프로토콜이다. 이번 글은 8편의 지형도를 갱신하고, 그 위에서 "어떤 앱에 어떤 층위를 고르는가"를 케이스로 푼다.
 
@@ -139,9 +139,9 @@ widgetState의 modelContent/privateContent, MCP Apps의 update-model-context, Sa
 
 A2UI와 MCP Apps 중 무엇이 남을지 8편에서 모르겠다고 했는데 지금도 모르겠다. 다만 CopilotKit이 둘 다 렌더하고 OpenAI가 MCP Apps 표준을 채택한 걸 보면, 선언형은 앱 안에서, 샌드박스는 호스트 간에, 이렇게 공존할 가능성이 커 보인다. 그리고 computer use나 브라우저 에이전트가 기존 앱을 직접 조작하는 네 번째 방식은 이번에 조사하지 못했다. 코파일럿 사이드바 대신 에이전트가 그냥 클릭하면 되는 것 아닌가 하는 질문에 아직 답이 없다.
 
-세 편이 끝났다. 1편의 근거 데이터 위에서 2편의 워크플로우가 돌고 3편의 화면으로 나온다. 시험이든 설계 문서든, 케이스에서 가장 무서운 실패 하나를 먼저 고르고 거기서부터 쓰면 된다.
+기술 세 편이 끝났다. 1편의 근거 데이터 위에서 2편의 워크플로우가 돌고 3편의 화면으로 나온다. 다음 편은 축을 돌려서, 같은 기술이 도메인마다 왜 다른 질문을 받는지 본다.
 
-**연재 목차**: [1편](/posts/ai-llm/design-cases/2026-10-10-01-data-pipeline-and-evidence-design) · [2편](/posts/ai-llm/design-cases/2026-10-10-02-agent-workflow-and-rag-architecture) · 3편(현재)
+**연재 목차**: [1편](/posts/ai-llm/design-cases/2026-10-10-01-data-pipeline-and-evidence-design) · [2편](/posts/ai-llm/design-cases/2026-10-10-02-agent-workflow-and-rag-architecture) · 3편(현재) · [4편 도메인별 고민](/posts/ai-llm/design-cases/2026-10-10-04-domain-specific-deep-dives)
 
 ## 참고자료
 
