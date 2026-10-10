@@ -23,6 +23,13 @@ export const categories: Category[] = [
         description: 'LLM 호출 하나를 운영 가능한 시스템으로 키워가는 9편 + 보강 5편. 1편부터 순서대로 읽는 걸 권한다.',
         series: true,
       },
+      {
+        id: 'design-cases',
+        label: 'AI 아키텍처 설계 심화',
+        order: 2,
+        description: '데이터 파이프라인·근거 데이터, 에이전트 워크플로우·RAG, 동적 UI 연동. 세 주제를 케이스별로 어떻게 다르게 설계하는지 3편으로 정리했다.',
+        series: true,
+      },
     ],
   },
   {
