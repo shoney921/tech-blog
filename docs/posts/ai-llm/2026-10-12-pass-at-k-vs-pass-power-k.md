@@ -5,7 +5,7 @@ description: 여러 번 시켜서 하나만 맞으면 되는 Pass@k와, 매번 �
 ---
 
 <script setup>
-import PassKPlayground from '../../.vitepress/theme/PassKPlayground.vue'
+import PassKPlayground from '../../.vitepress/theme/playground/PassKPlayground.vue'
 </script>
 
 # Pass@k와 Pass^k, 슬라이더로 직접 만져 보기

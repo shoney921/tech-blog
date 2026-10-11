@@ -1,0 +1,154 @@
+/* "직접 만져 보기" 위젯 공통 스타일. 색은 두 계열(A 파랑 / B 주황)만 쓰고, 둘 다 라벨과 같이 나온다 */
+.pg {
+  --pg-a: #285ea7;
+  --pg-b: #c2410c;
+  --pg-n: #9a928a;
+  margin: 24px 0;
+  padding: 20px 20px 14px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  background: var(--vp-c-bg-soft);
+}
+.dark .pg {
+  --pg-a: #5a8fd8;
+  --pg-b: #d06a2a;
+  --pg-n: #77706a;
+}
+.pg-title {
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.pg-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 12px;
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+.pg-row strong {
+  font-variant-numeric: tabular-nums;
+}
+.pg-row input {
+  grid-column: 1 / -1;
+  width: 100%;
+  accent-color: var(--vp-c-brand-1);
+}
+.pg-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin: 6px 0 16px;
+}
+.pg-card {
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--vp-c-bg);
+  border-left: 4px solid var(--vp-c-divider);
+}
+.pg-card.a { border-color: var(--pg-a); }
+.pg-card.b { border-color: var(--pg-b); }
+.pg-card.n { border-color: var(--pg-n); }
+.pg-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+.pg-label small {
+  font-weight: 400;
+  color: var(--vp-c-text-2);
+  margin-left: 4px;
+}
+.pg-value {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+}
+.pg-sub {
+  font-size: 12px;
+  color: var(--vp-c-text-2);
+}
+.pg-verdict {
+  margin: 4px 0 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--vp-c-bg);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.pg-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.pg-presets button {
+  padding: 4px 10px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 999px;
+  background: var(--vp-c-bg);
+  font-size: 12px;
+  cursor: pointer;
+}
+.pg-presets button:hover {
+  border-color: var(--vp-c-brand-1);
+}
+.pg-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.pg-svg text {
+  fill: var(--vp-c-text-2);
+  font-size: 11px;
+}
+.pg-svg .axis {
+  stroke: var(--vp-c-divider);
+  stroke-width: 1;
+}
+.pg-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--vp-c-text-2);
+}
+.pg-legend i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  margin-right: 5px;
+  vertical-align: -1px;
+}
+.pg-note {
+  margin: 12px 0 0;
+  font-size: 12px;
+  color: var(--vp-c-text-2);
+}
+.pg table {
+  display: table;
+  width: 100%;
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.pg th,
+.pg td {
+  padding: 6px 8px;
+  text-align: center;
+}
+@media (max-width: 480px) {
+  .pg {
+    padding: 16px 14px 12px;
+  }
+  .pg-value {
+    font-size: 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pg * {
+    transition: none !important;
+  }
+}

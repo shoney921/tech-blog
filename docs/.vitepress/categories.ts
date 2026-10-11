@@ -30,6 +30,13 @@ export const categories: Category[] = [
         description: '데이터 파이프라인·근거 데이터, 에이전트 워크플로우·RAG, 동적 UI 연동. 세 주제를 케이스별로 어떻게 다르게 설계하는지 3편, 그리고 도메인마다 무엇을 깊이 고민해야 하는지 1편.',
         series: true,
       },
+      {
+        id: 'agent-eval',
+        label: '에이전트 평가, 만져 보며',
+        order: 3,
+        description: '오차 막대, LLM 판정자, 검증기 문턱값, 검증과 재시도. 슬라이더를 직접 움직여 보며 에이전트 평가 숫자를 읽는 법을 익히는 4편.',
+        series: true,
+      },
     ],
   },
   {
