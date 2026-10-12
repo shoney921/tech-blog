@@ -5,3 +5,6 @@
 /posts/ai-llm/ai-agent-with-langchain-langgraph-toc  /posts/langchain-langgraph/  301
 # 삭제된 중복 목록 페이지
 /posts/list  /posts/  301
+
+# 검색 페이지 확장 (2026-10-12)
+/anthropic  /ai-search  301

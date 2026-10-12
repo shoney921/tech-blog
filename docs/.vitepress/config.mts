@@ -304,7 +304,7 @@ export default defineConfig({
             .map(c => ({ text: c.label, link: `/posts/${c.id}/` })),
         ],
       },
-      { text: 'Anthropic 검색', link: '/anthropic' },
+      { text: 'AI 글 검색', link: '/ai-search' },
       { text: '소개', link: '/about' },
       { text: '포트폴리오', link: '/portfolio' },
     ],
