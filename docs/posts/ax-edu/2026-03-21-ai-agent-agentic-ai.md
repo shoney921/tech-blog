@@ -5,6 +5,15 @@ date: 2026-03-21T09:30:00
 
 # Chapter 4. AI Agent & Agentic AI
 
+::: info 2026년 하반기 업데이트 안내 · 2026-10-12 기준
+이 글은 2026년 상반기에 작성한 원문을 그대로 두고, 바뀐 내용을 각 섹션 아래 '2026년 하반기 업데이트' 박스로 덧붙였습니다. 핵심 변화:
+- 원문 표의 추론 모델 상당수가 세대교체되었습니다. OpenAI는 GPT-6 계열이 현행이고 o1·o4-mini는 2026-10-23, o3 스냅샷은 2026-12-11 API 종료 예정이며, Anthropic은 수동 Extended Thinking(`budget_tokens`)을 adaptive thinking + effort 방식으로 대체했습니다.
+- OpenAI Assistants API가 2026-08-26에 종료되었고(대체: Responses API + Conversations API), 노코드 Agent Builder도 2026-11-30 종료 예정입니다.
+- MCP 스펙의 현행 버전이 2026-07-28로 바뀌면서 `initialize` 핸드셰이크와 프로토콜 세션이 없는 무상태(stateless) 구조가 되었고, Roots·Sampling·Logging은 Deprecated 되었습니다.
+- A2A는 v1.0(첫 안정 스펙)이 나왔고, 2026-08-17 MCP와 같은 Agentic AI Foundation(AAIF) 산하로 옮겨졌습니다.
+- 프레임워크·코딩 에이전트 이름이 여럿 바뀌었습니다. Microsoft Agent Framework 1.0 GA(AutoGen은 유지보수 모드), Windsurf는 Devin Desktop으로 개명, Amazon Q Developer IDE 플러그인은 Kiro로 이전(2027-04-30 지원 종료), GitHub Copilot의 원격 에이전트는 'Copilot cloud agent'로 불립니다.
+:::
+
 ## AI Agent의 개념
 
 ### AI Agent란?
@@ -183,6 +192,17 @@ LLM은 도구의 **이름(name)**과 **설명(description)**을 보고 어떤 �
 예를 들어 LangChain에서는 @tool 데코레이터의 docstring이 곧 LLM이 참고하는 도구 설명이 되며, 이 설명이 모호하면 LLM이 잘못된 도구를 선택할 수 있다.
 OpenAI, Anthropic, Google 등 주요 플랫폼 모두 이와 동일한 방식(도구 목록을 JSON Schema로 정의하여 API에 전달)으로 Function Calling을 지원한다.
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — Function Calling 원리는 그대로지만, 이를 감싸는 API 표면이 바뀌어 OpenAI Assistants API 기반 실습은 더 이상 동작하지 않습니다.
+
+- 확인된 사실: OpenAI Assistants API는 2025-08-26에 지원 중단이 공지되었고 2026-08-26에 종료되었습니다. 공식 대체 경로는 Responses API와 Conversations API입니다. ([OpenAI Deprecations](https://developers.openai.com/api/docs/deprecations), 2026-10-12 확인)
+- 확인된 사실: Anthropic은 Client SDK에서 도구 호출 루프를 직접 짜는 방식 외에, 루프를 대신 돌려 주는 베타 기능 tool runner와 Claude Code의 에이전트 루프를 라이브러리로 쓰는 Claude Agent SDK를 함께 안내하고 있습니다. ([Claude Agent SDK overview](https://code.claude.com/docs/en/agent-sdk/overview), 2026-10-12 확인)
+- 확인된 사실: MCP 현행 스펙(2026-07-28)은 도구의 `inputSchema`·`outputSchema`에 JSON Schema 2020-12 키워드를 모두 허용하도록 완화했습니다. 즉 'JSON Schema로 도구를 정의한다'는 원문 설명은 MCP 쪽에서도 그대로 유효합니다. ([MCP 2026-07-28 Key Changes](https://modelcontextprotocol.io/specification/2026-07-28/changelog), 2026-10-12 확인)
+- 해석·전망: 벤더들이 '도구 정의 → 모델이 호출 생성 → 런타임 실행 → 결과 반환'이라는 저수준 루프를 SDK·관리형 런타임 안으로 숨기는 방향이라, 입문 교육에서는 원리를 한 번 손으로 구현해 보고 실무에서는 SDK 루프를 쓰는 2단계 구성이 적절해 보입니다.
+
+교육·실습 관점: Assistants API(`threads`·`runs`)로 작성된 Function Calling 실습 코드는 종료된 API이므로 Responses API의 `tools` 파라미터 기반 예제로 다시 써야 합니다. 강의 자료에 Assistants API 화면이나 코드 캡처가 있다면 '종료된 API'임을 명시하거나 교체하는 것을 권장합니다.
+:::
+
 ### 메모리 (Memory)
 
 에이전트의 **상태와 맥락을 유지**하는 저장소입니다. 메모리를 통해 에이전트는 이전 상호작용의 결과를 기억하고, 일관된 행동을 유지합니다.
@@ -323,6 +343,17 @@ ReAct는 **추론(Reasoning)**과 **행동(Acting)**을 번갈아 수행하며 �
 
 - **대표 서비스**: OpenAI Deep Research, Google Gemini Deep Research, Perplexity Deep Research
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 심층 리서치가 '채팅 앱 기능'에서 '개발자가 API로 호출하는 에이전트'로 넘어가는 중이며, OpenAI의 전용 deep research 모델은 API에서 종료되었습니다.
+
+- 확인된 사실: OpenAI API의 `o3-deep-research`·`o4-mini-deep-research` 모델은 2026-04-22에 지원 중단이 공지되었고 2026-07-23에 종료되었습니다. 공식 대체 모델로는 GPT-5.6 계열(`gpt-5.6-sol`)이 안내되어 있습니다. ([OpenAI Deprecations](https://developers.openai.com/api/docs/deprecations), 2026-10-12 확인)
+- 확인된 사실: Google은 Gemini 모델과 에이전트를 함께 다루는 Interactions API를 정식 출시(GA)하고 이를 '주력 인터페이스'로 소개했습니다. Deep Research 에이전트의 속도형·깊이형 두 버전, 원격 Linux 샌드박스를 띄우는 Managed Agents, `background=True` 비동기 실행이 함께 언급됩니다. ([Google Blog, Interactions API GA](https://blog.google/innovation-and-ai/technology/developers-tools/interactions-api-general-availability), 2026-10-12 확인)
+- 해석·전망: 심층 리서치는 실행 시간이 수 분 이상 걸리므로, 백그라운드 실행 + 폴링 같은 비동기 API 설계가 사실상 기본이 되어 가는 흐름으로 보입니다.
+- 확인하지 못한 것: Perplexity의 현재 제품명·요금, ChatGPT 앱 내 deep research 기능의 현재 이름과 사용 한도는 공식 문서로 확인하지 못했습니다.
+
+교육·실습 관점: `o3-deep-research` 모델 ID를 호출하는 실습은 이제 오류가 납니다. 실습은 (1) 앱에서 결과물 비교하기, (2) Interactions API 같은 현행 API로 비동기 리서치 작업 생성·조회하기, (3) LangGraph 등으로 '검색 → 읽기 → 후속 질문' 루프를 직접 구현하기 중에서 고르는 편이 안전합니다.
+:::
+
 ### Reasoning Model이 에이전트 패턴에 미치는 영향
 
 Reasoning Model은 LLM이 응답을 생성하기 전에 추가적인 계산(test-time compute)을 활용하여 문제를 단계적으로 분석하고, 보다 정확한 결과를 생성하도록 설계된 모델 계열이다.
@@ -342,6 +373,19 @@ Reasoning Model은 LLM이 응답을 생성하기 전에 추가적인 계산(test
 
 이처럼 **추론은 점점 '별도 모델'이라기보다, 모델 내부에서 필요에 따라 활성화되는 기능(capability)**으로 발전하는 추세이다.
 다만, 고성능 추론이 필요한 경우에는 여전히 별도의 설정이나 리소스 사용이 요구되기도 한다.
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 위 표의 세 회사 모두 모델이 세대교체되었고, '추론 토큰 예산을 개발자가 숫자로 지정'하던 방식이 '노력 수준(effort/level)을 고르는' 방식으로 정리되었습니다.
+
+- 확인된 사실(OpenAI): 현재 공식 모델 페이지의 대표 모델은 GPT-6 Astra, GPT-6.1 Sol, GPT-6 Luna이며 o-시리즈는 목록에 없습니다. 추론 강도는 low~max 수준으로 조절합니다. ([OpenAI Models](https://developers.openai.com/api/docs/models), 2026-10-12 확인)
+- 확인된 사실(OpenAI): 원문이 '계속 제공 중'이라 쓴 o-시리즈는 단계적으로 종료됩니다. `o1`·`o4-mini`는 2026-10-23, `o3-2025-04-16`·`o3-pro-2025-06-10` 스냅샷은 2026-12-11에 API에서 종료 예정이고, 대체 모델은 GPT-5.6 계열로 안내됩니다. ([OpenAI Deprecations](https://developers.openai.com/api/docs/deprecations), 2026-10-12 확인)
+- 확인된 사실(Anthropic): 현행 라인업은 Claude Fable 5.1, Opus 5.5, Sonnet 5.5, Haiku 5.5이고, Opus 4.6·Sonnet 4.6은 '레거시(아직 사용 가능)'로 분류됩니다. 원문의 'thinking budget' 방식(`thinking.type: "enabled"` + `budget_tokens`)은 Opus 4.6·Sonnet 4.6에서 deprecated, 이후 모델에서는 받지 않으며, 모델이 생각할 양을 스스로 정하는 adaptive thinking을 `effort` 파라미터로 조절합니다. ([Claude Models overview](https://platform.claude.com/docs/en/about-claude/models/overview), 2026-10-12 확인)
+- 확인된 사실(Google): Gemini API 문서는 현행 Gemini 모델(3.x Flash·3.1 Pro 등)의 추론 깊이를 `thinking_level`(모델별로 minimal/low/medium/high 중 일부)로 조절한다고 안내합니다. ([Gemini API Thinking](https://ai.google.dev/gemini-api/docs/thinking), 2026-10-12 확인) 원문의 `thinkingBudget`(0/-1/토큰 수)은 Gemini 2.5 이전 세대 방식이며, Gemini 3 모델에 `thinking_level`과 `thinking_budget`을 함께 넣으면 오류가 난다는 설명은 [Vertex AI Thinking 문서](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/thinking)에서 봤습니다(검색 결과로만 확인).
+- 해석·전망: 원문의 큰 흐름('추론은 별도 모델이 아니라 모델 내부 기능')은 오히려 더 강해졌습니다. 세 회사 모두 '얼마나 생각할지'를 토큰 수가 아니라 단계형 수준값으로 노출하는 쪽으로 수렴했습니다.
+- 확인하지 못한 것: 원문의 'GPT-5.4 스마트 라우터 내장' 설명과 Gemini 3 Deep Think의 현재 제공 상태는 공식 문서에서 확인하지 못했습니다.
+
+교육·실습 관점: 표를 그대로 가르치기보다 '모델명은 반년 단위로 바뀐다'는 점을 먼저 짚고, 실습 코드에서는 `budget_tokens`·`thinkingBudget` 대신 `effort`·`thinking_level`·`reasoning.effort` 같은 현행 파라미터를 쓰도록 바꾸는 것이 좋습니다. 모델 ID를 코드에 고정할 경우 각 사의 deprecation 페이지를 실습 전에 확인하는 습관을 함께 가르치길 권합니다.
+:::
 
 #### 에이전트 패턴에 미치는 영향
 
@@ -512,6 +556,21 @@ AI Agent를 효율적으로 개발하기 위한 다양한 프레임워크가 제
 | **CrewAI** | CrewAI | 에이전트에게 역할(Role), 목표(Goal), 배경(Backstory)을 부여하여 팀처럼 협업하도록 설계 | 역할 기반 멀티 에이전트 시스템, 비즈니스 프로세스 자동화 | Python |
 | **OpenAI Agents SDK** | OpenAI | OpenAI 모델과 통합된 에이전트 개발 SDK, 도구 사용과 핸드오프(Handoff) 기능 내장 | OpenAI 생태계 기반의 에이전트 개발 | Python |
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — Microsoft 쪽은 AutoGen에서 Agent Framework 1.0으로 완전히 넘어갔고, 표에 없던 Google ADK·Claude Agent SDK가 주요 선택지로 자리 잡았으며, OpenAI Agents SDK는 Python 전용이 아닙니다.
+
+- 확인된 사실: AutoGen 저장소 README는 'AutoGen은 유지보수 모드이며 새 기능을 받지 않고 커뮤니티가 관리한다'고 밝히고, 신규 사용자에게 Microsoft Agent Framework(MAF)로 시작하라고 권합니다. ([microsoft/autogen GitHub](https://github.com/microsoft/autogen), 2026-10-12 확인)
+- 확인된 사실: Microsoft Agent Framework는 2026-02 Release Candidate를 거쳐 2026-04-03에 .NET·Python 1.0(안정 API)으로 출시되었고, Semantic Kernel의 엔터프라이즈 기능과 AutoGen의 멀티 에이전트 오케스트레이션을 합친 후속작이며 A2A·MCP를 지원합니다. ([Microsoft Agent Framework 1.0 블로그](https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-version-1-0/), 검색 결과로만 확인)
+- 확인된 사실: OpenAI Agents SDK는 Python 외에 TypeScript/JavaScript 판(`@openai/agents`)이 있으며, 핵심 개념(Agents·Handoffs·Guardrails)에 더해 Sessions, Tracing, MCP 연동, 격리된 작업 공간에서 도는 Sandbox Agents를 제공합니다. ([OpenAI Agents SDK 문서](https://openai.github.io/openai-agents-python/), [openai-agents-js GitHub](https://github.com/openai/openai-agents-js), 2026-10-12 확인)
+- 확인된 사실: Google ADK(Agent Development Kit)는 Python·TypeScript·Go·Java·Kotlin을 지원하고, 문서 사이트가 adk.dev로 옮겨졌으며, 'ADK TypeScript 2.0 GA(그래프 워크플로 지원)'를 공지하고 있습니다. A2A 노출·호출 퀵스타트도 제공합니다. ([ADK 공식 문서](https://adk.dev/), 2026-10-12 확인)
+- 확인된 사실: Claude Agent SDK(구 Claude Code SDK)는 Claude Code의 도구·에이전트 루프·컨텍스트 관리를 Python·TypeScript 라이브러리로 제공하며, Anthropic이 에이전트를 호스팅하는 Managed Agents와 구분됩니다. ([Claude Agent SDK overview](https://code.claude.com/docs/en/agent-sdk/overview), 2026-10-12 확인)
+- 확인된 사실: LangChain·LangGraph는 2025-10에 1.0에 도달해 2.0 전까지 호환성 깨짐 없는 안정성을 약속했고, 문서는 docs.langchain.com으로 통합되었습니다. ([LangChain 블로그](https://www.langchain.com/blog/langchain-langgraph-1dot0), 검색 결과로만 확인)
+- 해석·전망: 주요 프레임워크가 '그래프 기반 워크플로 + 자율 에이전트 혼합', 'MCP·A2A 기본 지원'으로 비슷해지고 있어, 프레임워크 선택은 기능 차이보다 주력 모델 벤더·언어·배포 환경에 따라 갈리는 경향이 커 보입니다.
+- 확인하지 못한 것: CrewAI의 현재 버전과 이번 하반기 변경 사항은 공식 출처로 확인하지 못했습니다.
+
+교육·실습 관점: AutoGen 실습은 신규 과정에서는 MAF로 교체하는 것을 권장합니다(MAF 공식 마이그레이션 가이드 활용). 표를 갱신해 쓴다면 Google ADK와 Claude Agent SDK 행을 추가하고, OpenAI Agents SDK의 언어 칸에 TypeScript를 넣는 것이 정확합니다.
+:::
+
 ### No-code/Low-code 에이전트 플랫폼
 
 코드 작성 없이 또는 최소한의 코드로 AI 에이전트를 구축할 수 있는 플랫폼도 등장하고 있다. 비개발자도 에이전트를 설계·배포할 수 있어, 기업 내 AI 에이전트 도입의 진입 장벽을 낮추는 역할을 한다.
@@ -520,6 +579,17 @@ AI Agent를 효율적으로 개발하기 위한 다양한 프레임워크가 제
 | --- | --- | --- |
 | Dify | 오픈소스 LLM 애플리케이션 및 에이전트를 **시각적으로 구축할 수 있는 플랫폼**. 드래그 앤 드롭 방식의 워크플로우 설계 지원 | 프로토타이핑, 사내 AI 애플리케이션 빠른 구축 |
 | n8n | AI 기능이 통합된 **범용 워크플로우 자동화 플랫폼**. 400개 이상의 외부 서비스 커넥터 제공. 에이전트 전용 플랫폼은 아니지만, AI 노드를 활용한 에이전트 워크플로우 구축이 가능 | 기존 업무 시스템과 AI 에이전트 연동 |
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 노코드 영역에서는 벤더 종속 빌더가 정리되는 사례가 나왔고, 오픈소스 빌더는 MCP 양방향 지원으로 '에이전트 런타임'에 가까워지고 있습니다.
+
+- 확인된 사실: OpenAI의 시각적 에이전트 빌더인 Agent Builder는 2026-06-03에 지원 중단이 공지되었고 2026-11-30에 종료 예정입니다. 공식 안내는 Agents SDK(코드) 또는 ChatGPT Workspace Agents로 옮기라는 것입니다. 같은 날 `v1/prompts`(재사용 프롬프트)와 Evals 플랫폼 종료도 함께 공지되었습니다. ([OpenAI Deprecations](https://developers.openai.com/api/docs/deprecations), 2026-10-12 확인)
+- 확인된 사실: Dify는 v1.6.0에서 MCP를 양방향으로 지원한다고 발표했습니다. Dify 앱이 외부 MCP 서버를 쓰는 클라이언트도 되고, Dify 워크플로를 MCP 서버로 노출할 수도 있습니다. ([Dify 블로그, v1.6.0](https://dify.ai/blog/v1-6-0-built-in-two-way-mcp-support), 검색 결과로만 확인)
+- 해석·전망: 특정 모델 벤더가 운영하는 노코드 빌더는 그 회사의 제품 전략에 따라 언제든 접힐 수 있다는 사례가 생겼습니다. 사내 표준 도구를 고를 때 '내보내기(코드·워크플로 정의 이식성)'를 평가 항목에 넣을 필요가 있어 보입니다.
+- 확인하지 못한 것: n8n의 현재 커넥터 수(원문 '400개 이상')와 n8n 2.0의 정확한 출시 시점·AI 노드 수는 공식 출처로 확인하지 못했습니다. Microsoft Copilot Studio 등 다른 노코드 플랫폼의 하반기 변경도 이번에는 확인하지 않았습니다.
+
+교육·실습 관점: OpenAI Agent Builder로 만든 실습은 2026-11-30 이후 쓸 수 없으므로, 노코드 실습은 Dify·n8n처럼 자체 호스팅이 가능한 도구로 진행하고, 같은 시나리오를 Agents SDK 코드로 옮겨 보는 '노코드 → 코드' 전환 실습을 붙이면 교육 효과가 좋습니다.
+:::
 
 ## MCP (Model Context Protocol)
 
@@ -542,6 +612,18 @@ MCP는 **Host-Client-Server 구조**로 동작합니다.
 
 MCP Server는 **Tools(실행 가능한 기능)**, **Resources(참조 데이터)**, **Prompts(프롬프트 템플릿)**의 세 가지 기능을 제공합니다.
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — MCP 현행 스펙이 2025-11-25에서 2026-07-28로 바뀌며 '연결을 맺고 세션을 유지하는' 구조에서 '요청마다 독립적인' 무상태 구조로 크게 재설계되었습니다.
+
+- 확인된 사실: 현행(Current) 프로토콜 버전은 2026-07-28입니다. ([MCP Versioning](https://modelcontextprotocol.io/specification/versioning), 2026-10-12 확인)
+- 확인된 사실: 2026-07-28 개정에서 `initialize`/`notifications/initialized` 핸드셰이크가 제거되어, 모든 요청이 `_meta`에 프로토콜 버전과 클라이언트 capability를 직접 싣습니다. 서버는 지원 버전·기능·정체를 알려 주는 `server/discover` RPC를 반드시 구현해야 합니다. ([MCP 2026-07-28 Key Changes](https://modelcontextprotocol.io/specification/2026-07-28/changelog), 2026-10-12 확인)
+- 확인된 사실: Streamable HTTP에서 프로토콜 수준 세션과 `Mcp-Session-Id` 헤더가 없어졌습니다. 호출 간 상태가 필요하면 서버가 발급한 핸들을 일반 도구 인자로 주고받습니다. SSE 스트림 재개(`Last-Event-ID`)도 제거되어 끊긴 요청은 새 요청으로 다시 보내야 합니다. 서버가 클라이언트에 되묻던 방식(sampling·elicitation 등)은 Multi Round-Trip Requests(MRTR) 패턴으로 대체되었고, 실험 기능이던 tasks는 공식 확장(extension)으로 분리되었습니다. (같은 출처, 2026-10-12 확인)
+- 확인된 사실: 원문 표의 Transport 구분(Stdio 로컬, Streamable HTTP 원격)은 여전히 유효합니다. 구형 HTTP+SSE 전송 방식은 Deprecated 상태로 재분류되었습니다. ([MCP Deprecated Features](https://modelcontextprotocol.io/specification/2026-07-28/deprecated), 2026-10-12 확인)
+- 해석·전망: 무상태화는 MCP 서버를 일반 웹 API처럼 로드밸런서 뒤에 수평 확장하기 쉽게 만드는 변화로 보입니다. 다만 SDK·클라이언트가 새 버전을 따라오는 데 시간이 걸려, 당분간은 구 버전(핸드셰이크 방식)과 신 버전이 섞여 운영될 가능성이 높습니다.
+
+교육·실습 관점: 2025년 기준 튜토리얼처럼 '`initialize` 후 세션 ID를 받아 요청한다'는 흐름을 그대로 가르치면 현행 스펙과 어긋납니다. 원리 설명은 Host-Client-Server와 Tools 중심으로 유지하고, 실습은 SDK 최신 버전을 쓰되 서버·클라이언트가 어느 프로토콜 버전을 협상했는지 로그로 확인하는 단계를 넣는 것을 권장합니다.
+:::
+
 ### MCP 기능 (Primitives)
 
 MCP Server는 다음 세 가지 기능(Primitive)을 제공합니다.
@@ -553,6 +635,18 @@ MCP Server는 다음 세 가지 기능(Primitive)을 제공합니다.
 | **Prompts** | 특정 작업에 최적화된 프롬프트 템플릿 | 사용자(User-controlled) | 코드 리뷰 템플릿, SQL 생성 프롬프트, 장애 분석 템플릿, 문서 요약 프롬프트 |
 
 다만 2026년 현재, MCP 공식 클라이언트 목록(modelcontextprotocol.io/clients) 기준으로 등록된 108개 클라이언트 전체(100%)가 Tools를 지원하는 반면, Resources(약 42%)와 Prompts(약 39%)는 절반에 못 미쳐 실질적으로 Tools 중심의 생태계가 형성되어 있습니다.
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 세 가지 서버 Primitive(Tools·Resources·Prompts)는 그대로지만, 클라이언트 쪽 기능 일부가 공식적으로 퇴출 절차에 들어갔고 원문이 인용한 클라이언트 목록 페이지는 사라졌습니다.
+
+- 확인된 사실: 2026-07-28 스펙에서 클라이언트 기능인 Roots·Sampling과 서버 유틸리티 Logging이 Deprecated 되었습니다. 대안은 각각 '도구 인자·리소스 URI·서버 설정으로 경로 전달', 'LLM 제공사 API 직접 연동', 'stdio는 `stderr`, 그 외는 OpenTelemetry'입니다. 가장 이른 제거 시점은 2027-07-28 이후 첫 개정입니다. ([MCP Deprecated Features](https://modelcontextprotocol.io/specification/2026-07-28/deprecated), 2026-10-12 확인)
+- 확인된 사실: 같은 개정에서 12개월 이상의 유예 기간을 두는 기능 수명주기·폐기 정책이 도입되었고, 목록 응답(`tools/list` 등)에 캐시용 `ttlMs`·`cacheScope` 필드가 필수가 되었습니다. ([MCP 2026-07-28 Key Changes](https://modelcontextprotocol.io/specification/2026-07-28/changelog), 2026-10-12 확인)
+- 확인된 사실: 원문이 인용한 `modelcontextprotocol.io/clients` 주소는 2026-10-12 현재 소개 페이지(`/docs/2026-07-28/getting-started/intro`)로 308 리다이렉트되어, 108개 클라이언트·지원 비율 표를 더 이상 그 주소에서 확인할 수 없습니다. (직접 접속 확인, 2026-10-12)
+- 해석·전망: 'Tools 중심 생태계'라는 원문 관찰은 스펙 방향과도 맞아떨어집니다. 스펙이 클라이언트에 많은 기능을 요구하던 부분을 줄이고 Tools·Resources·Prompts 같은 서버 측 핵심으로 좁히는 흐름으로 읽힙니다.
+- 확인하지 못한 것: 현재 시점의 클라이언트 수와 Resources·Prompts 지원 비율은 공식 집계를 찾지 못했습니다. 원문의 108개·42%·39% 수치는 상반기 기준 값으로만 읽어 주십시오.
+
+교육·실습 관점: Sampling(서버가 클라이언트 LLM을 빌려 쓰기)이나 Roots를 예제로 쓰는 실습은 신규 구현에서 권장되지 않으므로, Tools 위주로 실습하고 Resources·Prompts는 개념 소개 수준으로 다루는 것이 현실적입니다.
+:::
 
 ### 기업 활용 및 현황
 
@@ -570,6 +664,18 @@ MCP는 Anthropic이 2024년 11월 오픈 표준으로 공개한 이후, 1년여 
 
 엔터프라이즈 영역에서도 도입이 시작되고 있습니다. Salesforce는 Agentforce에 네이티브 MCP 클라이언트를 탑재(2025.07 Pilot)하였고, Autodesk는 MCP 스펙의 엔터프라이즈 보안 강화에 직접 참여하는 등 주요 SaaS 벤더들이 자사 플랫폼에 MCP를 통합하는 움직임을 보이고 있습니다. 2025년 12월 기준 공개된 MCP Server는 10,000개 이상으로, 생태계가 빠르게 확장되고 있습니다.
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — AAIF가 MCP만의 재단에서 에이전트 표준 전반(A2A 포함)을 품는 재단으로 커졌고, 기업 도입 수치는 출처마다 크게 엇갈립니다.
+
+- 확인된 사실: AAIF가 현재 호스팅하는 프로젝트는 MCP, goose, AGENTS.md, agentgateway, Agent2Agent(A2A), Agent Router입니다. 출범 당시 3개(MCP·goose·AGENTS.md)에서 늘었습니다. ([AAIF Projects](https://aaif.io/projects), 2026-10-12 확인)
+- 확인된 사실: A2A는 2026-08-17 AAIF의 호스팅 프로젝트가 되었습니다(아래 A2A 섹션 업데이트 참고). ([Techzine](https://www.techzine.eu/news/devops/143659/google-transfers-a2a-to-the-agentic-ai-foundation/), 2026-10-12 확인)
+- 확인된 사실: 공식 MCP Registry(`registry.modelcontextprotocol.io`)는 2025-09-08 프리뷰로 공개되었고 현재 운영 중입니다. ([MCP 블로그, Registry preview](https://blog.modelcontextprotocol.io/posts/2025-09-08-mcp-registry-preview/), 검색 결과로만 확인 / 레지스트리 사이트 접속은 직접 확인)
+- 확인하지 못한 것: AAIF 회원 수(2026-08 기준 242개라는 회원사 보도자료, 250개 이상이라는 언론 보도 등)는 AAIF 공식 페이지에서 직접 확인하지 못했습니다(검색 결과로만 확인). MCP Registry의 정식 GA 여부와 등록 서버 수(약 2,000개 ~ 약 17,000개로 출처마다 다름)도 공식 집계로 확인하지 못했습니다. Salesforce Agentforce의 MCP 클라이언트는 2026-06 기준 여전히 Beta라는 제3자 보도가 있으나 Salesforce 공식 문서로는 확인하지 못했습니다.
+- 해석·전망: 'MCP 서버 N개'라는 숫자는 집계 기준(공식 레지스트리 등록 vs 커뮤니티 목록 vs GitHub 저장소)에 따라 몇 배씩 차이 나므로, 도입 근거로 쓸 때는 출처와 기준을 함께 적는 것이 안전합니다.
+
+교육·실습 관점: 사내 도입 실습에서는 아무 GitHub 저장소의 MCP 서버를 바로 쓰기보다, 공식 레지스트리처럼 네임스페이스 소유 검증을 거친 출처를 우선 쓰고 사내 허용 목록(allowlist)을 운영하는 절차를 함께 가르치길 권합니다.
+:::
+
 #### 엔터프라이즈 적용 시 과제
 
 MCP는 빠르게 성장하고 있으나, 기업 환경 적용을 위해서는 다음과 같은 과제가 남아 있습니다.
@@ -577,6 +683,17 @@ MCP는 빠르게 성장하고 있으나, 기업 환경 적용을 위해서는 �
 - **인증·인가**: 초기 스펙에는 엔터프라이즈급 인증이 부재했으나, 2025년 11월 스펙 업데이트에서 OAuth 2.1 기반 인증 체계(CIMD)가 추가됨
 - **보안**: 경량 MCP 구현에서 API 키가 설정 파일에 평문 저장되는 사례, 프롬프트 인젝션을 통한 토큰 탈취 위험 등이 보고됨
 - **거버넌스**: 감사 로그, RBAC/ABAC 기반 권한 제어, 속도 제한 등 엔터프라이즈 거버넌스 체계 구축이 필요하며, 2026년 공식 로드맵에서 Enterprise Readiness를 핵심 우선순위로 제시하고 있음
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 인증 쪽에서는 CIMD(Client ID Metadata Documents)가 기본 등록 방식으로 굳어지고, 관측성은 OpenTelemetry로 표준화되는 방향이 스펙에 반영되었습니다.
+
+- 확인된 사실: 2026-07-28 스펙은 OAuth 2.0 Dynamic Client Registration(RFC 7591)을 클라이언트 등록 방식으로서 Deprecated 하고 CIMD를 우선 방식으로 지정했습니다. 또한 클라이언트 자격 증명을 발급한 인가 서버(issuer)에 묶어 다른 인가 서버에 재사용하지 못하게 했고, 인가 응답의 `iss` 값 검증(RFC 9207)을 요구합니다. ([MCP 2026-07-28 Key Changes](https://modelcontextprotocol.io/specification/2026-07-28/changelog), 2026-10-12 확인)
+- 확인된 사실: 같은 개정에서 `_meta`를 통한 OpenTelemetry 트레이스 컨텍스트(`traceparent` 등) 전파 규약이 문서화되었고, Logging 기능 대신 OpenTelemetry 사용이 권장됩니다. 즉 원문이 말한 '감사 로그' 요구를 프로토콜 차원에서 분산 트레이싱으로 연결할 수 있게 되었습니다. (같은 출처, 2026-10-12 확인)
+- 해석·전망: 원문의 세 과제 중 '인증·인가'는 스펙상 상당 부분 정리되었고, 남은 과제는 '보안(도구 설명·결과를 통한 프롬프트 인젝션)'과 '거버넌스(누가 어떤 서버를 허용하는가)'처럼 스펙 밖 운영 영역으로 무게가 옮겨 가는 것으로 보입니다.
+- 확인하지 못한 것: 원문이 언급한 '2026년 공식 로드맵'의 현재 우선순위가 바뀌었는지는 확인하지 못했습니다.
+
+교육·실습 관점: 원격 MCP 서버 인증 실습을 Dynamic Client Registration 기준으로 만들었다면 CIMD 흐름으로 바꾸는 것을 권장합니다. 감사 로그 실습은 MCP Logging 대신 OpenTelemetry 트레이스를 수집해 도구 호출 단위로 추적하는 방식으로 구성하면 현행 스펙과 맞습니다.
+:::
 
 ## A2A 프로토콜 (Agent-to-Agent Protocol)
 
@@ -590,6 +707,17 @@ A2A(Agent-to-Agent Protocol)는 Google이 2025년 4월 발표한 오픈 프로�
 | **관계** | 상호 보완 | 상호 보완 |
 
 하나의 에이전트가 내부적으로 MCP를 통해 도구를 사용하면서, 외부적으로 A2A를 통해 다른 에이전트와 협업하는 구조가 일반적입니다.
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — A2A는 첫 안정 버전 v1.0을 냈고, Google 주도 프로젝트에서 MCP와 같은 중립 재단(AAIF) 소속으로 옮겨졌습니다.
+
+- 확인된 사실: A2A 공식 스펙 사이트의 최신 릴리스는 1.0.0이며, 이전 버전으로 0.3.0·0.2.6·0.1.0이 남아 있습니다. ([A2A Specification](https://a2a-protocol.org/latest/specification/), 2026-10-12 확인)
+- 확인된 사실: Linux Foundation은 2026-04-09 발표에서 A2A v1.0의 주요 내용으로 다중 프로토콜 지원, 엔터프라이즈 멀티테넌시, 서명된 Agent Card(암호학적 신원 검증), 초기 도입자용 마이그레이션 경로를 들었고, 150개 이상 조직 참여, 5개 SDK(Python·JavaScript·Java·Go·.NET), Azure AI Foundry·Copilot Studio·Amazon Bedrock AgentCore Runtime 등 주요 클라우드 지원을 밝혔습니다. ([Linux Foundation 보도자료](https://www.linuxfoundation.org/press/a2a-protocol-surpasses-150-organizations-lands-in-major-cloud-platforms-and-sees-enterprise-production-use-in-first-year), 2026-10-12 확인)
+- 확인된 사실: A2A는 2025-06 Linux Foundation으로 이관된 데 이어, 2026-08-17 Agentic AI Foundation(AAIF)의 호스팅 프로젝트가 되었습니다. 이로써 MCP와 A2A가 같은 재단 아래에 있게 되었습니다. ([Techzine](https://www.techzine.eu/news/devops/143659/google-transfers-a2a-to-the-agentic-ai-foundation/), [AAIF Projects](https://aaif.io/projects), 2026-10-12 확인)
+- 해석·전망: 두 프로토콜이 한 재단에 모이면서 원문의 'MCP는 도구, A2A는 에이전트 간'이라는 역할 분담 구도는 더 공식화될 가능성이 큽니다. 다만 MCP 쪽에도 장시간 작업용 tasks 확장이 생기는 등 경계가 일부 겹치는 부분은 계속 지켜볼 필요가 있습니다.
+
+교육·실습 관점: 0.x 시절 예제 코드는 v1.0과 필드·메서드가 다를 수 있으므로, 실습은 v1.0을 지원하는 공식 SDK 버전으로 진행하고 교재에 '기준 스펙 버전: 1.0.0'을 명시하는 것을 권장합니다.
+:::
 
 ### A2A의 핵심 개념
 
@@ -614,6 +742,17 @@ A2A는 단순 메시지 교환을 넘어, 에이전트 간 **작업 위임(Task 
 3. Task 수행 과정에서 **Message**를 주고받으며 협업 진행
 4. Task 완료 후 결과 반환
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — v1.0 스펙 기준으로 핵심 데이터 모델에 Part·Artifact가 명시되어 있고, 전송 방식이 세 가지 바인딩으로 정리되어 있습니다.
+
+- 확인된 사실: v1.0 스펙의 표준 데이터 모델은 Task, Message, Part(텍스트·파일·구조화 데이터를 담는 단위), Artifact(작업 결과물), Agent Card로 구성됩니다. 원문의 3요소(Agent Card·Task·Message)에 Part·Artifact가 더해진 형태로 이해하면 됩니다. ([A2A Specification](https://a2a-protocol.org/latest/specification/), 2026-10-12 확인)
+- 확인된 사실: 프로토콜 바인딩은 JSON-RPC 2.0, gRPC, HTTP+JSON(REST) 세 가지이며, 모두 같은 추상 연산에 대응됩니다. (같은 출처, 2026-10-12 확인)
+- 확인된 사실: v1.0에서는 Agent Card에 서명을 붙여 신원을 검증할 수 있습니다. 원문 1단계 '탐색'에 '신원 검증'이 추가된 셈입니다. ([Linux Foundation 보도자료](https://www.linuxfoundation.org/press/a2a-protocol-surpasses-150-organizations-lands-in-major-cloud-platforms-and-sees-enterprise-production-use-in-first-year), 2026-10-12 확인)
+- 확인하지 못한 것: Agent Card를 게시하는 well-known 경로 등 세부 탐색 규칙은 이번에 스펙 본문에서 확인하지 못했습니다.
+
+교육·실습 관점: 동작 방식 설명에 'Task 결과는 Artifact로, 내용물은 Part로 담긴다'는 한 줄을 보태면 SDK 코드를 읽을 때 혼란이 줄어듭니다. 원격 에이전트를 호출하는 실습에서는 서명된 Agent Card를 검증하는 단계를 보안 체크포인트로 함께 보여 주길 권합니다.
+:::
+
 ## 기업에서의 AI Agent 활용
 
 ### (1) 업무 자동화 에이전트
@@ -634,6 +773,20 @@ A2A는 단순 메시지 교환을 넘어, 에이전트 간 **작업 위임(Task 
 - **Amazon Q Developer**: AWS 기반 AI 코딩 어시스턴트로, AWS 서비스 연동과 코드 변환·보안 스캔 기능 제공
 - **Codex CLI**: OpenAI의 오픈소스 CLI 기반 코딩 에이전트로, 터미널에서 자연어 명령으로 코드 생성·실행 수행. 클라우드 기반 비동기 코딩 에이전트인 Codex(구 codex-1)와는 별개의 제품
 - **활용 분야**: 코드 생성, 코드 리뷰, 버그 수정, 테스트 작성, 문서화, 레거시 코드 현대화
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 목록의 7개 중 Windsurf·Amazon Q Developer는 이름이나 제품 자체가 바뀌었고, Codex·Copilot은 '하나의 제품'이 여러 실행 표면(앱·CLI·IDE·클라우드)으로 확장되었습니다.
+
+- 확인된 사실: Windsurf는 2026-06-02 'Devin Desktop'으로 개명되었습니다. 2026-10-12 현재 `windsurf.com`은 `devin.ai/desktop`으로 308 리다이렉트됩니다(직접 접속 확인). 기본 화면이 로컬·클라우드 에이전트를 관리하는 Agent Command Center로 바뀌었고, 원문에 나온 Cascade 에이전트는 Devin Local로 대체되었습니다(공식 FAQ는 "기존 Cascade는 7월까지 계속 사용 가능"이라고 안내 — [Devin Desktop FAQ](https://docs.devin.ai/desktop/devin-desktop-faq), 2026-10-12 확인). 또한 외부 에이전트를 편집기 안에서 돌리는 ACP(Agent Client Protocol)를 지원합니다. ([Cognition 블로그 'Windsurf is now Devin Desktop'](https://devin.ai/blog/windsurf-is-now-devin-desktop) 검색 결과로만 확인 / Cascade 종료일은 [Carly 정리 글](https://www.usecarly.com/blog/windsurf-is-now-devin-desktop)에서 확인, 2026-10-12)
+- 확인된 사실: AWS는 Amazon Q Developer IDE 플러그인 지원을 2027-04-30에 종료하며, 같은 기능(인라인 제안·채팅·코드 생성)과 에이전틱 코딩·MCP 지원을 Kiro로 이전하라고 안내합니다. ([AWS 문서, Q Developer IDE end of support](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/q-developer-ide-end-of-support.html), 2026-10-12 확인) 신규 가입이 2026-05-15부터 막혔다는 보도도 있습니다(검색 결과로만 확인).
+- 확인된 사실: OpenAI Codex 문서는 이제 `developers.openai.com/codex`에서 `learn.chatgpt.com`으로 리다이렉트되며, Codex를 ChatGPT 데스크톱·모바일·웹 앱, Codex CLI, Codex IDE 확장, Codex Cloud에서 쓸 수 있다고 안내합니다. 오픈소스는 Codex CLI(`openai/codex`)와 Codex SDK 등이고, IDE 확장과 Codex Cloud는 비공개입니다. 원문의 'Codex CLI와 클라우드 Codex는 별개 제품'이라는 구분은 지금은 '같은 Codex의 다른 실행 표면'으로 보는 편이 정확합니다. ([Codex 문서](https://learn.chatgpt.com/docs), [Codex Open Source](https://learn.chatgpt.com/codex/open-source), 2026-10-12 확인)
+- 확인된 사실: GitHub 문서는 원격으로 작업을 맡기는 Copilot 에이전트를 'Copilot cloud agent'라는 이름으로 설명하며, MCP 서버 연결을 지원합니다. 원문의 '코드 자동 완성 및 제안' 설명만으로는 현재 Copilot을 다 담지 못합니다. ([GitHub Docs](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent), 2026-10-12 확인) Copilot CLI가 정식 출시(GA)되었다는 공지도 있습니다(검색 결과로만 확인).
+- 확인된 사실: Claude Code는 CLI 외에 Agent SDK(Python·TypeScript)로 같은 에이전트 루프를 애플리케이션에 내장할 수 있습니다. ([Claude Agent SDK overview](https://code.claude.com/docs/en/agent-sdk/overview), 2026-10-12 확인)
+- 해석·전망: 코딩 에이전트 시장은 'IDE 안의 도우미'에서 '여러 에이전트를 병렬로 돌리고 관리하는 관제 화면' 쪽으로 이동하고 있습니다. 동시에 ACP·MCP·AGENTS.md처럼 도구 간 이식성을 높이는 표준이 늘어, 특정 IDE에 묶이는 정도는 줄어드는 추세로 보입니다.
+- 확인하지 못한 것: Cursor의 현재 제품 구성과 요금, GitHub Copilot의 요금·플랜 변경(사용량 기반 과금 전환 보도 등)은 공식 문서로 확인하지 못했습니다.
+
+교육·실습 관점: 교재의 도구 목록에서 Windsurf는 'Devin Desktop(구 Windsurf)', Amazon Q Developer는 'Kiro(Q Developer IDE 플러그인 후속)'로 표기를 바꾸는 것을 권합니다. 실습용으로는 CLI형(Claude Code, Codex CLI, Copilot CLI) 하나와 원격 위임형(Copilot cloud agent, Codex Cloud, Devin) 하나를 짝지어 '동기 페어 프로그래밍 vs 비동기 작업 위임'을 비교하게 하면 원문의 Plan-and-Execute·Human-in-the-Loop 개념과 자연스럽게 연결됩니다.
+:::
 
 ### (3) 고객 상담 에이전트
 
@@ -715,3 +868,35 @@ AI Agent는 강력한 가능성을 가지고 있지만, 실제 도입 시 다음
 - [A2A Specification](https://a2a-protocol.org)
 - [OWASP, "Top 10 for Agentic Applications 2026"](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
 - [Deloitte, "Autonomous Generative AI Agents Still Under Development"](https://www.deloitte.com/us/en/insights/industry/technology/technology-media-and-telecom-predictions/2025/autonomous-generative-ai-agents-still-under-development.html)
+
+## 2026년 하반기 업데이트 참고자료 (2026-10-12 확인)
+
+- [OpenAI, "Deprecations"](https://developers.openai.com/api/docs/deprecations) — Assistants API 종료(2026-08-26), o1·o4-mini(2026-10-23)·o3 스냅샷(2026-12-11) 종료, deep research 모델 종료(2026-07-23), Agent Builder·`v1/prompts`·Evals 종료(2026-11-30)
+- [OpenAI, "Models"](https://developers.openai.com/api/docs/models) — 현행 대표 모델(GPT-6 Astra, GPT-6.1 Sol, GPT-6 Luna)과 추론 강도 설정
+- [Anthropic, "Models overview"](https://platform.claude.com/docs/en/about-claude/models/overview) — 현행 Claude 라인업, adaptive thinking·effort, `budget_tokens` 방식 deprecated
+- [Google, "Gemini API: Thinking"](https://ai.google.dev/gemini-api/docs/thinking) — Gemini 모델별 `thinking_level` 지원 값
+- [Google Cloud, "Vertex AI: Thinking"](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/thinking) — Gemini 3의 `thinking_level`과 이전 세대 `thinking_budget` 구분(검색 결과로만 확인)
+- [Google Blog, "Interactions API: our primary interface for Gemini models and agents"](https://blog.google/innovation-and-ai/technology/developers-tools/interactions-api-general-availability) — Interactions API GA, Deep Research 에이전트, Managed Agents, 백그라운드 실행
+- [Microsoft AutoGen GitHub](https://github.com/microsoft/autogen) — AutoGen 유지보수 모드, MAF로 이전 권고
+- [Microsoft, "Microsoft Agent Framework Version 1.0"](https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-version-1-0/) — MAF 1.0 GA(2026-04-03, 검색 결과로만 확인)
+- [OpenAI Agents SDK (Python) 문서](https://openai.github.io/openai-agents-python/) — Agents·Handoffs·Guardrails·Sessions·Tracing·MCP·Sandbox Agents
+- [OpenAI Agents SDK (JS/TS) GitHub](https://github.com/openai/openai-agents-js) — TypeScript 판 존재
+- [Google ADK 문서](https://adk.dev/) — 5개 언어 지원, ADK TypeScript 2.0 GA, A2A 퀵스타트
+- [Anthropic, "Agent SDK overview"](https://code.claude.com/docs/en/agent-sdk/overview) — Claude Agent SDK(Python·TypeScript), Managed Agents·tool runner와의 구분
+- [LangChain, "LangChain and LangGraph 1.0"](https://www.langchain.com/blog/langchain-langgraph-1dot0) — 1.0 안정화, docs.langchain.com 통합(검색 결과로만 확인)
+- [Dify, "v1.6.0: Built-in Two-Way MCP Support"](https://dify.ai/blog/v1-6-0-built-in-two-way-mcp-support) — Dify MCP 양방향 지원(검색 결과로만 확인)
+- [MCP, "Versioning"](https://modelcontextprotocol.io/specification/versioning) — 현행 스펙 버전 2026-07-28
+- [MCP, "Key Changes (2026-07-28)"](https://modelcontextprotocol.io/specification/2026-07-28/changelog) — 무상태화, 세션 제거, `server/discover`, MRTR, tasks 확장 분리, 인증·OpenTelemetry 관련 변경
+- [MCP, "Deprecated Features"](https://modelcontextprotocol.io/specification/2026-07-28/deprecated) — Roots·Sampling·Logging·Dynamic Client Registration·HTTP+SSE deprecated
+- [MCP Blog, "Introducing the MCP Registry"](https://blog.modelcontextprotocol.io/posts/2025-09-08-mcp-registry-preview/) — 공식 레지스트리 프리뷰 공개(검색 결과로만 확인)
+- [AAIF, "Projects"](https://aaif.io/projects) — AAIF 호스팅 프로젝트 목록(MCP, goose, AGENTS.md, agentgateway, A2A, Agent Router)
+- [A2A Specification](https://a2a-protocol.org/latest/specification/) — 최신 버전 1.0.0, 데이터 모델, 3개 프로토콜 바인딩
+- [Linux Foundation, "A2A Protocol Surpasses 150 Organizations…"](https://www.linuxfoundation.org/press/a2a-protocol-surpasses-150-organizations-lands-in-major-cloud-platforms-and-sees-enterprise-production-use-in-first-year) — A2A v1.0 주요 기능, 참여 조직·SDK·클라우드 지원(2026-04-09)
+- [Techzine, "Google transfers A2A to the Agentic AI Foundation"](https://www.techzine.eu/news/devops/143659/google-transfers-a2a-to-the-agentic-ai-foundation/) — A2A의 AAIF 이관(2026-08-17)
+- [Cognition, "Windsurf is now Devin Desktop"](https://devin.ai/blog/windsurf-is-now-devin-desktop) — Windsurf 개명(검색 결과로만 확인)
+- [Carly, "Windsurf is now Devin Desktop"](https://www.usecarly.com/blog/windsurf-is-now-devin-desktop) — 개명일(2026-06-02) 정리(제3자 자료). Cascade 종료 시점은 이 글의 '07-01'이 아니라 공식 FAQ의 '7월까지 사용 가능'을 따름
+- [Devin Desktop FAQ](https://docs.devin.ai/desktop/devin-desktop-faq) — Windsurf → Devin Desktop(2026-06-02), Cascade → Devin Local, 기존 Cascade는 7월까지 제공
+- [AWS, "Amazon Q Developer IDE plugins end of support"](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/q-developer-ide-end-of-support.html) — Q Developer IDE 플러그인 2027-04-30 지원 종료, Kiro로 이전
+- [OpenAI, "Codex 문서"](https://learn.chatgpt.com/docs) — Codex 실행 표면(앱·CLI·IDE 확장·Cloud)
+- [OpenAI, "Codex Open Source"](https://learn.chatgpt.com/codex/open-source) — 오픈소스 구성 요소와 비공개 구성 요소
+- [GitHub Docs, "Copilot cloud agent"](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent) — Copilot 원격 에이전트 명칭과 MCP 지원

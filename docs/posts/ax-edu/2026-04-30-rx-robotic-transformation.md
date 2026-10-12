@@ -5,6 +5,16 @@ date: 2026-04-30T10:00:00
 
 # Chapter 7. RX (Robotic Transformation) 이해
 
+::: info 2026년 하반기 업데이트 안내 · 2026-10-12 기준
+이 글은 2026년 상반기에 작성한 원문을 그대로 두고, 바뀐 내용을 각 섹션 아래 '2026년 하반기 업데이트' 박스로 덧붙였습니다. 핵심 변화:
+- 화면 조작형 에이전트는 정리되는 중입니다. OpenAI Operator는 2025년 8월 종료됐고, 이를 흡수했던 ChatGPT agent도 2026년 8월 사라졌으며, Google Project Mariner는 2026년 5월 종료됐습니다. UiPath는 코딩 에이전트를 엮는 오케스트레이션(Maestro Flow)으로 방향을 틀었습니다.
+- 로보택시는 "확장 단계"에 들어섰습니다. Waymo는 2026년 9월 기준 미국 14개 도시에서 완전 무인 운행 중이고, Tesla는 2026년 2분기(Q2)에 Cybercab 생산을 시작했다고 공시했습니다. Cruise는 원문의 "서비스 축소"가 아니라 2024년 12월에 로보택시 사업 자체를 접었습니다.
+- 휴머노이드는 "발표·시범"과 "실제 출하"의 간극이 여전히 큽니다. Tesla Optimus는 2026년 Q2 기준 아직 정식 생산 전, 1X NEO는 2026-10 기준 고객 인도가 공식 확인되지 않았습니다. 반면 Unitree는 2025년 5,500대 이상 출하를 공시하고 상장했고, Agility는 9개 고객 현장 운영 실적을 공개했습니다.
+- 로봇 파운데이션 모델은 세대가 바뀌었습니다. Gemini Robotics 2(2026-07), NVIDIA Isaac GR00T N1.6/N1.7, Physical Intelligence π0.7(2026-04), Figure Helix 02가 현재 기준점입니다.
+- 표준·규제: ISO 10218은 2025년 개정판에서 ISO/TS 15066 내용을 흡수했고, 휴머노이드·사족보행용 ISO 25785-1은 아직 위원회 초안(CD) 단계입니다. EU AI Act 고위험 의무는 Digital Omnibus로 연기됐습니다.
+- 한국: K-휴머노이드 연합 출범은 원문의 2024년이 아니라 2025년 4월 10일이고, 소관 부처 이름은 2025년 10월부터 산업통상부입니다. 국토교통부가 2026년 7월 레벨4 무인차 안전운행 가이드라인을 내놨습니다.
+:::
+
 ## 들어가며 — DX, AX, 그리고 RX
 
 ### 왜 지금 RX인가?
@@ -120,6 +130,19 @@ RX는 종종 "로봇 도입"이라는 좁은 의미로 오해되지만, 실제�
 
 > **실무자가 알아야 할 흐름**: "RPA = 시키는 대로만 하는 봇" → "AI Agent = 목표만 주면 알아서 하는 봇"으로의 전환. 다만 책임 추적성·감사(Audit)가 약해지는 단점이 있어, 두 방식이 한동안 공존할 가능성이 높습니다.
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 원문에 예시로 든 "화면을 보고 조작하는 에이전트" 제품 두 개가 사라졌고, 무게중심이 오케스트레이션·코딩 에이전트 쪽으로 옮겨 갔습니다.
+
+- 확인된 사실: OpenAI Operator는 2025년 7월 ChatGPT agent로 기능이 합쳐진 뒤 2025년 8월 31일 접속이 종료됐습니다. 원문 작성 시점에 이미 단독 제품이 아니었던 셈입니다. ([Wikipedia - OpenAI Operator](https://en.wikipedia.org/wiki/OpenAI_Operator), 검색 결과로만 확인)
+- 확인된 사실: 그 ChatGPT agent(Agent Mode)도 2026년 8월 초 ChatGPT에서 제거됐고, OpenAI는 "ChatGPT Work"(별도 클라우드 브라우저 포함)를 대신 쓰라고 안내했습니다. 사전 공지 없는 제거라 사용자 반발이 있었습니다. ([OpenAI Developer Community 스레드, 2026-08-08](https://community.openai.com/t/agent-mode-was-removed-with-no-real-replacement/1389601), 2026-10-12 확인)
+- 확인된 사실: Google Project Mariner는 2026년 5월 4일 종료됐고, 기능은 Gemini Agent와 Chrome의 auto-browse로 흡수됐습니다. ([Android Headlines](https://www.androidheadlines.com/2026/05/google-shuts-down-project-mariner-ai-agent.html), 2026-10-12 확인)
+- 확인된 사실: UiPath는 2026년 8월 19일 Maestro Flow를 발표했습니다. Claude Code·Cursor·GitHub Copilot·Codex 같은 코딩 에이전트로 프로세스를 설계하고, 에이전트·RPA 로봇·API·사람을 한 흐름에서 실행·감사하는 오케스트레이션 도구입니다. UiPath CPTO의 말이 상징적입니다 — "기업에는 에이전트 문제가 아니라 오케스트레이션 문제가 있다." ([UiPath Newsroom](https://www.uipath.com/newsroom/uipath-launches-maestro-flow), 2026-10-12 확인)
+- 해석·전망: "RPA를 에이전트가 대체한다"보다 "에이전트·RPA·사람을 누가 감사 가능하게 엮느냐"로 경쟁 축이 이동했다고 보는 게 지금은 더 정확해 보입니다. 원문의 "두 방식이 한동안 공존"이라는 예측은 오히려 더 강해졌습니다.
+- 확인하지 못한 것: Anthropic Claude Computer Use, Automation Anywhere AI Agent Studio의 2026년 하반기 현황은 이번에 별도로 확인하지 않았습니다.
+
+교육·실습 관점: 실습 교재에 특정 제품명(Operator, Mariner)을 박아 두면 금방 낡습니다. "브라우저 조작 에이전트 → 코딩·API 기반 에이전트 → 오케스트레이션 계층"이라는 구조로 가르치고, 실습은 API로 접근 가능한 도구(예: 각 모델사의 computer use API나 오픈소스 브라우저 자동화)로 구성하는 편이 안전합니다. 소비자용 에이전트 기능은 예고 없이 없어질 수 있다는 점도 꼭 짚어 주세요.
+:::
+
 ---
 
 ## 피지컬 RX — 물리 세계의 자동화
@@ -146,6 +169,17 @@ RX는 종종 "로봇 도입"이라는 좁은 의미로 오해되지만, 실제�
 - **4대 메이커** : ABB(스위스), KUKA(독일), FANUC(일본), Yaskawa(일본)
 - **국내** : 현대로보틱스, 두산로보틱스
 - **특징** : 고속·고하중, 안전 펜스 필수, 가격대가 높음. 자동차·반도체·디스플레이 산업이 핵심 수요처.
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — IFR 「World Robotics 2026」이 나와 2025년 실적 숫자가 새로 생겼습니다.
+
+- 확인된 사실: 2026년 9월 24일 IFR 발표에 따르면 전 세계 공장에서 가동 중인 산업용 로봇은 2025년 500만 대(전년 대비 +9%), 2025년 신규 설치는 60만 대 이상(+11%)입니다. ([IFR 보도자료](https://ifr.org/ifr-press-releases/news/five-million-robots-now-operate-in-factories-globally), 2026-10-12 확인)
+- 확인된 사실: 중국이 35.4만 대(+20%, 전 세계의 59%)로 압도적 1위이고 중국 내 시장의 55%를 중국 업체가 가져갔습니다. 미국이 약 3.85만 대로 일본(36,219대, -19%)을 제치고 2위, 한국은 약 3만 대(-1%)로 4위를 유지했습니다. (같은 출처)
+- 확인된 사실: IFR은 2026년 설치량을 65.5만 대, 2029년 80.6만 대로 전망합니다. 이건 전망치입니다. (같은 출처)
+- 해석·전망: 원문의 "4대 메이커(ABB·KUKA·FANUC·Yaskawa)" 구도는 여전히 글로벌 기준으로 유효하지만, 최대 시장인 중국에서 자국 업체 비중이 절반을 넘었다는 점은 함께 알려 줄 필요가 있습니다.
+
+교육·실습 관점: "한국은 로봇 밀도 세계 최상위"라는 익숙한 문장만 쓰지 말고, 신규 설치량은 정체(-1%)라는 숫자도 같이 보여 주면 토론거리가 됩니다. 수치는 매년 9월 IFR 발표 때 갱신하세요.
+:::
 
 ### 협동 로봇 (Cobot, Collaborative Robot)
 
@@ -202,6 +236,21 @@ RX는 종종 "로봇 도입"이라는 좁은 의미로 오해되지만, 실제�
 - **국내** : 현대 모셔널, 카카오모빌리티, 라이드플럭스, 토르드라이브, 오토노머스에이투지
 - **2026 트렌드** : Tesla Cybercab(2인용 로보택시) 양산 진입, Waymo의 도시 확장, **End-to-End 모델이 모듈식(Perception→Planning→Control) 접근을 빠르게 대체**하는 흐름.
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 원문이 "트렌드"로 적은 Cybercab 양산과 Waymo 확장은 실제로 일어났고, Cruise는 "축소"가 아니라 이미 철수한 상태입니다.
+
+- 확인된 사실: Cruise는 원문 표현("서비스 축소")과 달리, GM이 2024년 12월 로보택시 사업을 포기하고 Cruise 조직을 GM 기술팀에 흡수했습니다. 로보택시 플레이어 목록에서는 빼는 게 맞습니다. ([NBC News](https://www.nbcnews.com/business/autos/gm-cruise-robotaxi-business-rcna184294), 검색 결과로만 확인)
+- 확인된 사실: Waymo는 2026년 9월 1일 덴버·샌디에이고·탬파에서 일반 승객을 받기 시작하면서 완전 무인 운행 도시가 14곳이 됐습니다. 2026년 상반기에 마이애미, 댈러스·휴스턴·샌안토니오·올랜도, 내슈빌이 차례로 열렸습니다. ([Waymo 블로그](https://waymo.com/blog/2026/09/ride-in-denver-san-diego-tampa/), 2026-10-12 확인 / [Waymo 블로그 - 텍사스·올랜도](https://waymo.com/blog/2026/02/dallas-houston-san-antonio-orlando/), 검색 결과로만 확인)
+- 확인된 사실: Tesla는 2026년 Q2에 텍사스 기가팩토리에서 Cybercab 생산을 시작했고 7월부터 사내 직원 탑승을 운영했습니다. Q2 업데이트 기준 Robotaxi는 미국 7개 대도시권(샌프란시스코 베이 지역은 안전 요원 탑승)에서 운영 중입니다. ([Tesla Q2 2026 Update, SEC 8-K](https://www.sec.gov/Archives/edgar/data/0001318605/000162828026049213/exhibit991.htm), 2026-10-12 확인)
+- 확인된 사실: 현대차는 2026 CEO 인베스터 데이(8월 26일)에서 첫 IONIQ 5 기반 Waymo 로보택시를 2026년 4분기에 인도한다고 밝혔습니다. ([Hyundai Motor Group 뉴스룸](https://www.hyundaimotorgroup.com/en/news/hyundai-motor-company-charts-profit-driven-growth-roadmap-at-2026-ceo-investor-day), 2026-10-12 확인)
+- 확인된 사실: 국토교통부는 2026년 7월 7일 '무인 자율주행차 안전운행 요건 가이드라인'을 냈습니다. 무인 임시운행 허가 전 1만5천km 이상 실증 주행(동일 차량 최대 5대 합산 가능), 원격관제, 시스템 이중화, 최소위험상태(MRC) 확보가 핵심입니다. ([한국경제](https://www.hankyung.com/article/202607070745i), 2026-10-12 확인)
+- 확인된 사실: 서울시는 2026년 하반기 상암 자율주행지구(6.6㎢)에서 레벨4 무인 로보택시 3대로 시범 운행을 시작해 2027년까지 10대 이상으로 늘린다는 계획을 밝혔고, 일부 보도는 11월 시작·초기 조수석 안전관리자 탑승을 전합니다. ([국민일보](https://www.kmib.co.kr/article/view.asp?arcid=1769412748), 2026-10-12 확인 / [아시아경제](https://view.asiae.co.kr/article/2026070210170759922), 검색 결과로만 확인)
+- 해석·전망: 미국에서는 "무인 운행이 되느냐"보다 "얼마나 빨리 도시를 늘리느냐"가 경쟁 포인트가 됐고, 한국은 이제 막 레벨4 무인 실증의 제도 틀을 갖추는 단계입니다.
+- 확인하지 못한 것: Tesla Robotaxi의 도시별 '완전 무인(차내 안전요원 없음)' 여부는 Tesla 자료 요약과 제3자 트래커 사이에 표현 차이가 있어 도시별로 단정하지 않았습니다. 서울 상암 로보택시의 실제 운행 개시 여부도 2026-10-12 시점에는 확인하지 못했습니다. Waymo의 런던 서비스 개시 여부도 확인하지 못했습니다.
+
+교육·실습 관점: 표의 "Robotaxi (Level 4)" 목록은 "실제 무인 유료 운행 중 / 시범 운행 / 철수"로 나눠서 다시 그려 보게 하면 좋은 연습이 됩니다. 특히 "생산 시작 = 무인 상용 서비스"가 아니라는 점(Cybercab)과, 한국 레벨4가 "허가 요건 정비" 단계라는 점을 구분해 주세요.
+:::
+
 ### 드론 (UAV, Unmanned Aerial Vehicle)
 
 - **상업/촬영** : DJI(중국, 압도적 점유율), Skydio, Parrot
@@ -241,11 +290,39 @@ RX는 종종 "로봇 도입"이라는 좁은 의미로 오해되지만, 실제�
   - 레인보우로보틱스 **Hubo**, **RB-Y1** (삼성전자가 최대주주)
   - 정부 주도 **K-휴머노이드 연합** (현대·삼성·LG·두산 등 참여, 2026년 본격 가동)
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 업체별로 "발표 → 시범 → 실제 출하"의 위치가 꽤 다릅니다. 원문 일부 표현은 현실보다 앞서 있었습니다.
+
+- 확인된 사실 (Tesla Optimus): 2026년 7월 Q2 업데이트 기준, 프리몬트 공장의 Model S·X 라인을 철거하고 1세대 Optimus 라인을 설치 중이며 생산은 "올해 후반 예상"입니다. 초기 생산분은 학습 데이터 수집용 'Optimus Academy'에 쓰인다고 밝혔습니다. 원문의 "2026년 자체 공장 투입 단계"는 공식 자료로는 아직 확인되지 않습니다. ([Tesla Q2 2026 Update, SEC 8-K](https://www.sec.gov/Archives/edgar/data/0001318605/000162828026049213/exhibit991.htm), 2026-10-12 확인)
+- 확인된 사실 (Figure): Figure 02의 BMW 조립 라인 투입(2025)에 이어, 2026년 6월 30일 Figure 03이 BMW 스파턴버그 공장에서 부품 시퀀싱(분류·적재) 작업을 시작했습니다. 제어 모델은 Helix 02입니다. Figure 스스로 "첫 시연·다음 단계"라고 표현하므로 대규모 상용 배치로 보기는 이릅니다. ([Figure - F.03 Arrives at BMW](https://www.figure.ai/news/f-03-at-bmw), 2026-10-12 확인)
+- 확인된 사실 (1X): 원문의 "Neo Gamma 베타"는 이후 소비자용 NEO로 이어졌습니다. 가격은 Early Access $20,000 또는 월 $499 구독, 미국 인도는 "2026년 시작"이 공식 안내입니다. 모르는 집안일은 사람 전문가(1X Expert)가 원격으로 가르치는 방식이 공식적으로 포함돼 있습니다. ([1X - NEO Home Robot](https://www.1x.tech/discover/neo-home-robot), 2026-10-12 확인)
+- 확인된 사실 (Boston Dynamics): 2026년 1월 5일 CES에서 양산형 Atlas를 공개하고 즉시 생산을 시작했으며, 2026년 물량은 현대차 RMAC(로보틱스 메타플랜트 애플리케이션 센터)와 Google DeepMind로 전량 배정됐습니다. ([Boston Dynamics 블로그](https://bostondynamics.com/blog/boston-dynamics-unveils-new-atlas-robot-to-revolutionize-industry/), 2026-10-12 확인) 다만 현대차는 메타플랜트 아메리카 생산 현장 투입을 2028년부터로 잡고 있어, 원문의 "현대차 공장 투입"은 현재로선 "학습·검증 센터 투입"이 정확합니다. ([Hyundai Motor Group 뉴스룸](https://www.hyundaimotorgroup.com/en/news/hyundai-motor-company-charts-profit-driven-growth-roadmap-at-2026-ceo-investor-day), 2026-10-12 확인)
+- 확인된 사실 (Agility): 2026년 6월 24일 SPAC 합병 상장 발표 자료 기준 Digit은 Schaeffler, GXO, Toyota Motor Manufacturing Canada, Mercado Libre 등 9개 고객 시설에서 누적 6.5만 시간 이상 운영했고, 차세대 Digit v5 수주는 3억 달러 이상(다년 계약)입니다. 이 고객 목록에 Amazon은 없습니다 — 원문의 "Amazon 물류센터 투입"은 2023년 시험 사례로 보는 게 맞을 것 같습니다. ([Churchill Capital Corp XI·Agility 공동 보도자료, SEC](https://www.sec.gov/Archives/edgar/data/2074973/000121390026071290/ea029548401ex99-1.htm), 2026-10-12 확인)
+- 확인된 사실 (Unitree): 상장 심사 자료 기준 2025년 휴머노이드 5,500대 이상을 출하해 세계 1위라고 밝혔고, 2026년 7월 2일 상하이 STAR Market 상장 승인을 받았습니다. ([SSE 영문 뉴스(Global Times 전재)](https://english.sse.com.cn/news/newsrelease/voice/c/c_20260806_10828128.shtml), 2026-10-12 확인) 8월 19일 상장 완료는 [Caixin Global](https://www.caixinglobal.com/2026-07-03/unitree-robotics-wins-approval-for-618-million-star-market-ipo-102460136.html) 등 보도로만 봤습니다(검색 결과로만 확인).
+- 확인된 사실 (한국): K-휴머노이드 연합 출범일은 2025년 4월 10일입니다(본문 '정부 정책' 박스 참고).
+- 해석·전망: "누가 제일 멋진 데모를 했나"보다 "몇 대를, 어느 고객 현장에서, 몇 시간 돌렸나"를 공개하는 회사가 늘었습니다(Agility, Unitree). 반대로 출하 수치를 내지 않는 회사의 양산 발표는 한 번 더 의심해 볼 만합니다.
+- 확인하지 못한 것: Tesla Optimus 3세대(V3)의 공개 여부, 1X NEO의 실제 고객 인도 여부(제3자 보도는 2026-10 초까지 확인된 인도가 없다고 전함)는 공식 자료로 확인하지 못했습니다. Sanctuary AI, Xiaomi CyberOne, Fourier, UBTECH, XPENG의 2026년 하반기 현황도 이번에 검증하지 않았습니다.
+
+교육·실습 관점: 휴머노이드 뉴스를 읽을 때 "공개(announce) / 시연(demo) / 파일럿(pilot) / 유상 상용 배치(commercial) / 소비자 인도(delivered)" 다섯 칸 표를 만들어 업체를 배치해 보게 하세요. 같은 "공장 투입"이라도 칸이 전혀 다릅니다. 1X NEO처럼 원격 조작이 제품에 포함된 경우는 "자율성"과 "프라이버시"를 함께 토론할 좋은 사례입니다.
+:::
+
 #### 휴머노이드 시장 특징
 
 - 2025년 말부터 양산 단계 진입, 2026년부터 **공장·물류 도입 사례 누적** 시작
 - 가정용은 아직 상용화 초기 단계. 안전·가격이 큰 장벽.
 - 가격대: Unitree G1이 약 $16,000부터 시작해 진입 장벽이 빠르게 낮아지는 중.
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — "2026년부터 도입 사례 누적"이라는 원문 전망은 산업용에서는 맞아 들어가고 있지만, 가정용은 아직 "인도 대기" 상태입니다.
+
+- 확인된 사실: 산업 현장 도입은 실제로 늘었습니다. Agility는 9개 고객 시설·누적 6.5만 시간을, Figure는 BMW에서 Figure 03 작업 개시를 공개했습니다. ([Agility 공동 보도자료, SEC](https://www.sec.gov/Archives/edgar/data/2074973/000121390026071290/ea029548401ex99-1.htm) / [Figure](https://www.figure.ai/news/f-03-at-bmw), 2026-10-12 확인)
+- 확인된 사실: 대규모 계획도 숫자로 나왔습니다. 현대차는 2028년부터 미국에서 연 3만 대 로봇 생산 능력을 갖추고, 그중 2.5만 대 이상을 현대차·기아 공장에 배치한다는 계획입니다. 이건 계획이지 실적이 아닙니다. ([Boston Dynamics 블로그](https://bostondynamics.com/blog/boston-dynamics-unveils-new-atlas-robot-to-revolutionize-industry/), 2026-10-12 확인 / [The Korea Herald](https://www.koreaherald.com/article/10741955), 검색 결과로만 확인)
+- 확인된 사실: 가정용 1X NEO는 $20,000에 예약을 받고 있지만, 공식 안내는 여전히 "2026년 인도 시작"이라는 미래형입니다. ([1X](https://www.1x.tech/discover/neo-home-robot), 2026-10-12 확인)
+- 해석·전망: 가격은 계속 내려가는 추세로 보입니다. Unitree는 2025년 7월 더 작은 R1을 약 $5,900 수준에 내놨다는 보도가 많습니다. 다만 Unitree 제품 가격은 지역·구성(EDU, 손 옵션)에 따라 편차가 커서 원문의 "G1 약 $16,000"을 대체할 단일 숫자는 제시하지 않겠습니다.
+- 확인하지 못한 것: Unitree G1·R1의 2026-10 기준 공식 정가는 공식 스토어 페이지에서 직접 확인하지 못했습니다(검색 결과마다 수치가 다름).
+
+교육·실습 관점: 가격을 슬라이드에 넣을 때는 "기본 구성 / 연구용(EDU) 구성"을 나누고 확인 날짜를 적어 두세요. 그리고 "로봇 가격"보다 "로봇 1대·1시간 운용 비용(유지보수·원격 지원 인력 포함)"으로 사고하게 하면 도입 판단 연습이 훨씬 현실적이 됩니다.
+:::
 
 ### 사족보행·특수형 로봇
 
@@ -286,6 +363,19 @@ LLM이 텍스트를 학습해 언어를 이해하게 된 것처럼, **VLA 모델
 
 > **한 줄 요약**: VLA는 "로봇판 ChatGPT"입니다. 한 모델로 다양한 로봇·다양한 작업을 처리할 수 있다는 점이 혁명적입니다.
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 표에 있는 모델 대부분이 한두 세대씩 올라갔습니다. 이름은 그대로 두되 "현재 버전"을 함께 알려 주세요.
+
+- 확인된 사실 (Gemini Robotics): Google DeepMind는 2025년 9월 Gemini Robotics 1.5·ER 1.5에 이어, 2026년 7월 30일 Gemini Robotics 2(VLA, 휴머노이드 전신 제어), Gemini Robotics ER 2(추론·계획 담당), Gemini Robotics On-Device 2(로컬 실행)를 발표했습니다. ER 2는 Google AI Studio에서 공개 사용 가능하고, VLA·On-Device 모델은 신청제 조기 접근입니다. 하드웨어 파트너로 Apptronik Apollo 2, Franka, Boston Dynamics 등이 언급됩니다. ([Google DeepMind 블로그 - Gemini Robotics 2](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/), 2026-10-12 확인)
+- 확인된 사실 (GR00T): NVIDIA는 2026년 1월 5일 CES에서 Isaac GR00T N1.6(휴머노이드 전신 제어용 오픈 추론 VLA, Cosmos Reason 사용)을 Hugging Face로 공개했습니다. ([NVIDIA IR 보도자료](https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Releases-New-Physical-AI-Models-as-Global-Partners-Unveil-Next-Generation-Robots/default.aspx), 2026-10-12 확인) 2026년 4월 N1.7(Early Access)이 나왔다는 정보는 검색 결과로만 확인했습니다.
+- 확인된 사실 (π): Physical Intelligence는 π0 → π0.5 → π*0.6(경험 기반 학습)에 이어 2026년 4월 16일 π0.7을 공개했습니다. 다른 작업에서 배운 기술을 조합해 학습 데이터에 없던 작업을 수행하는 "조합적 일반화의 첫 징후"를 내세웁니다. ([Physical Intelligence 블로그 - π0.7](https://www.pi.website/blog/pi07), 검색 결과로만 확인)
+- 확인된 사실 (Helix): Figure의 현재 VLA는 Helix 02이며, Figure 03의 손·팔·몸통·발을 함께 제어합니다. ([Figure](https://www.figure.ai/news/f-03-at-bmw), 2026-10-12 확인)
+- 해석·전망: 2026년 VLA의 공통 키워드는 "팔만 → 전신(whole-body)", "단일 명령 → 수 분짜리 긴 작업", "추론 모델(ER/Reason)과 행동 모델(VLA)의 분리"입니다. 원문의 "로봇판 ChatGPT" 비유는 여전히 유용하지만, 데모 성공률과 현장 신뢰성 사이에는 아직 큰 차이가 있다는 점도 같이 말해 주는 게 정직하다고 생각합니다.
+- 확인하지 못한 것: π0.7의 가중치 공개 여부, GR00T N1.7의 정식 출시 여부는 공식 페이지에서 직접 확인하지 못했습니다.
+
+교육·실습 관점: 실습은 공개 가중치가 있는 모델(GR00T N1.6, OpenVLA, π0/π0.5 오픈소스 버전)로, 최신 상용 모델(Gemini Robotics 2, Helix 02)은 "읽기 자료"로 나누는 게 현실적입니다. 비공개 모델의 성능 수치는 회사 발표치라는 걸 반드시 표시하세요.
+:::
+
 ### World Model (세계 모델)
 
 > **World Model**
@@ -296,6 +386,17 @@ LLM이 텍스트를 학습해 언어를 이해하게 된 것처럼, **VLA 모델
 - **Genie 2 / 3 (Google DeepMind)** : 텍스트로 가상 환경을 생성
 - **V-JEPA (Meta, Yann LeCun 주도)** : 영상 기반 세계 모델 연구
 - **1X World Model** : 휴머노이드 학습을 위한 자체 월드 모델
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 월드 모델은 "연구 데모"에서 "데이터 생성·정책 평가 도구"와 "일반인 체험판"으로 갈라졌습니다.
+
+- 확인된 사실: NVIDIA는 2026년 1월 Cosmos Predict 2.5·Cosmos Transfer 2.5(합성 데이터 생성과 시뮬레이션 내 로봇 정책 평가용 오픈 월드 모델)와 Cosmos Reason 2(물리 세계 이해용 오픈 VLM)를 공개했고, 정책 평가·벤치마크용 Isaac Lab-Arena도 함께 내놨습니다. ([NVIDIA IR 보도자료](https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Releases-New-Physical-AI-Models-as-Global-Partners-Unveil-Next-Generation-Robots/default.aspx), 2026-10-12 확인)
+- 확인된 사실: Genie 3(2025년 8월 발표)는 2026년 1월 29일 'Project Genie'라는 Google Labs 실험으로 미국 Google AI Ultra 구독자에게 열렸습니다. 공개 API는 없습니다. ([Engadget](https://www.engadget.com/ai/googles-project-genie-lets-you-create-your-own-3d-interactive-worlds-183646428.html), 검색 결과로만 확인)
+- 해석·전망: 로봇 분야에서 월드 모델의 실용적 쓰임은 "로봇이 머릿속으로 상상"보다는 "학습 데이터를 늘리고, 실제 로봇에 올리기 전 정책을 평가"하는 쪽으로 먼저 자리 잡는 것 같습니다.
+- 확인하지 못한 것: Meta V-JEPA, 1X World Model의 2026년 하반기 업데이트는 이번에 확인하지 않았습니다.
+
+교육·실습 관점: Cosmos 계열은 Hugging Face에서 받을 수 있어 실습 소재로 쓸 수 있지만 GPU 요구량이 큽니다. 비전공자 대상이라면 Project Genie 같은 체험형 도구로 개념을 잡고, 엔지니어 대상이라면 Cosmos로 합성 데이터 생성 파이프라인을 보여 주는 식으로 나누세요.
+:::
 
 ### 시뮬레이션 — Sim2Real
 
@@ -371,6 +472,18 @@ VLA 모델 학습에는 **사람이 로봇을 조종한 시연 데이터**가 �
 - **ISO/TS 15066** : 협동 로봇 안전 표준
 - **EU AI Act, EU Machinery Regulation** : 로봇·AI 결합 시스템에 대한 규제 정비 중
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — ISO 10218과 ISO/TS 15066을 "별개 두 표준"으로 외우면 이제 틀립니다. 휴머노이드 전용 표준은 아직 초안입니다.
+
+- 확인된 사실: ISO 10218-1:2025·10218-2:2025가 2025년 2월 발행됐습니다(2011년 이후 첫 대개정). 협동 로봇용 ISO/TS 15066:2016의 요구사항 대부분이 10218-2에 흡수됐고, "협동"은 로봇의 속성이 아니라 "응용(application)의 속성"으로 바뀌었습니다. 기능안전·사이버보안 요구도 확대됐습니다. ([ISO 10218-1:2025](https://www.iso.org/standard/73933.html), 검색 결과로만 확인 / [arXiv - 2011 vs 2025 비교 분석](https://arxiv.org/abs/2602.17822v1), 검색 결과로만 확인)
+- 확인된 사실: 휴머노이드·사족보행·자가균형 바퀴형처럼 "능동적으로 균형을 잡아야 하는" 산업용 이동 로봇을 위한 ISO 25785-1은 2026-10 기준 ISO 카탈로그에 위원회 초안(ISO/CD 25785-1)으로 올라 있습니다. 즉 아직 발행된 표준이 아닙니다. ([ISO/CD 25785-1](https://www.iso.org/standard/91469.html), 검색 결과로만 확인)
+- 확인된 사실: EU AI Act의 고위험 AI 의무는 'Digital Omnibus'로 미뤄졌습니다. 2026년 5월 6일 잠정 합의 기준, 단독형(부속서 III) 고위험 시스템은 2027년 12월 2일, 규제 제품 내장형(부속서 I)은 2028년 8월 2일로 연기됐고, 기계류 규정(Machinery Regulation) 대상 제품에 내장된 AI는 AI Act 의무에서 대부분 빠지고 기계류 규정 쪽으로 정리됩니다. ([Gibson Dunn, 2026-05-27](https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/), 2026-10-12 확인) 2026년 7월 정식 채택됐다는 보도는 검색 결과로만 확인했습니다.
+- 해석·전망: 휴머노이드를 공장에 넣으려는 회사들은 당분간 ISO 10218(2025)·ISO 3691-4(무인 산업 트럭) 같은 기존 표준과 리스크 평가를 조합해 버틸 수밖에 없어 보입니다. 원문의 "규제 정비 중"은 여전히 맞는 표현인데, 그 "정비"가 예상보다 느립니다.
+- 확인하지 못한 것: ISO 25785-1의 예상 발행 시점(업계 글에선 2026~2027년 언급)은 공식 일정으로 확인하지 못했습니다. ISO 공식 페이지는 직접 열람이 막혀 검색 결과로만 봤습니다.
+
+교육·실습 관점: 안전 파트 슬라이드는 "ISO 10218:2025(협동 요구사항 통합) / ISO 25785-1(휴머노이드, 초안) / EU AI Act(연기)"로 바꿔 두세요. "협동 로봇을 샀으니 펜스 없이 써도 된다"는 오해를 깨기에 '협동은 응용의 속성'이라는 2025년 개정 포인트가 아주 좋은 교재입니다.
+:::
+
 ---
 
 ## 2026년, 한국의 RX 풍경
@@ -385,11 +498,36 @@ VLA 모델 학습에는 **사람이 로봇을 조종한 시연 데이터**가 �
 - **두산** : 두산로보틱스가 협동 로봇 글로벌 4–5위권. 2024년 IPO 후 휴머노이드까지 영역 확장 추진.
 - **한화** : 한화로보틱스 출범, 협동 로봇·국방 로봇 양면 공략.
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 현대차가 로봇·자율주행 계획에 처음으로 구체적인 연도와 수량을 붙였고, 두산로보틱스는 휴머노이드 로드맵을 공개했습니다.
+
+- 확인된 사실: 현대차는 2026 CEO 인베스터 데이(2026-08-26)에서 메타플랜트 아메리카에 2028년부터 Atlas를 투입하고, 6월 미국에 연 RMAC를 연말까지 10배로 키운다고 밝혔습니다. 자율주행은 2026년 말 광주에 'Atria AI'를 투입해 데이터를 모으고, 2028년 NVIDIA와 협력해 첫 양산 SDV에 레벨2+를 적용, 이후 레벨4까지 단계적으로 올리는 로드맵입니다. ([Hyundai Motor Group 뉴스룸](https://www.hyundaimotorgroup.com/en/news/hyundai-motor-company-charts-profit-driven-growth-roadmap-at-2026-ceo-investor-day), 2026-10-12 확인)
+- 확인된 사실: Boston Dynamics 발표 기준, 현대차그룹은 연 3만 대 규모 로봇 공장을 짓고 있으며 미국에 260억 달러 투자를 발표했습니다. ([Boston Dynamics 블로그](https://bostondynamics.com/blog/boston-dynamics-unveils-new-atlas-robot-to-revolutionize-industry/), 2026-10-12 확인)
+- 확인된 사실: 두산로보틱스는 2026년 9월 '협동로봇 → 지능형 로봇 솔루션(용접·표면처리 등) → 산업용 휴머노이드(2028년 실증)'의 3단계 로드맵을 제시했습니다. 원문의 "휴머노이드까지 영역 확장 추진"이 구체 일정으로 바뀐 셈입니다. ([아시아경제, 2026-09-08](https://view.asiae.co.kr/article/2026090809005349708), 2026-10-12 확인)
+- 해석·전망: 현대차 계획에서 눈여겨볼 건 인베스터 데이 관련 보도에 나온 액추에이터(휴머노이드 재료비의 큰 몫) 미국 생산 계획입니다(검색 결과로만 확인 — 현대차 뉴스룸 본문에서는 직접 확인하지 못함). 원문 말미의 "핵심 부품 해외 의존도" 약점에 대기업이 직접 대응하기 시작한 신호로 읽힙니다. 다만 이는 미국 생산이라 "국내 공급망" 문제와는 결이 다릅니다.
+- 확인하지 못한 것: 삼성전자(레인보우로보틱스)의 자체 휴머노이드 공개 일정, LG전자의 로봇 사업 2026년 하반기 변화, 원문의 "두산로보틱스 협동로봇 글로벌 4–5위권" 최신 순위는 공식 자료로 확인하지 못했습니다.
+
+교육·실습 관점: 대기업 동향은 "보유 자산(인수·지분) / 실제 배치 / 공식 일정"으로 나눠 정리하게 하세요. 현대차처럼 연도·수량이 공개된 계획은 1년 뒤 실제와 비교해 보는 과제로 쓰기 좋습니다.
+:::
+
 ### 정부 정책
 
 - **K-휴머노이드 연합 (2024 출범)** : 대기업·중소기업·연구소가 모인 휴머노이드 공동 추진체. 2026년부터 본격 R&D 수행.
 - **지능형 로봇 기본 계획** : 산업부 주도, 5년 단위 갱신.
 - **자율주행 임시운행 허가, 도심 항공교통(UAM) 실증** 등 규제 샌드박스 활발.
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 원문의 K-휴머노이드 연합 출범 연도(2024)는 2025년으로 바로잡아야 하고, 담당 부처 이름도 바뀌었습니다.
+
+- 확인된 사실: K-휴머노이드 연합은 2025년 4월 10일 출범했습니다(원문 '2024 출범'과 참고자료의 '2024 보도자료'는 연도 오기로 보입니다). 기업·대학 등 약 40개 기관이 참여하고, 2030년까지 민관 합산 1조 원 이상 투자, 로봇 AI 공용 모델·핵심 부품 개발 등이 미션입니다. ([정책브리핑 보도자료](https://www.korea.kr/briefing/pressReleaseView.do?newsId=156683522), 2026-10-12 확인 — 날짜만 직접 확인, 세부 내용은 [AI타임스](https://www.aitimes.com/news/articleView.html?idxno=169526) 등 검색 결과로 확인)
+- 확인된 사실: 2025년 10월 1일 시행된 정부조직법 개정으로 에너지 기능이 기후에너지환경부로 넘어가면서 산업통상자원부는 '산업통상부'가 됐습니다. 원문의 "산업부"는 이제 산업통상부를 가리킵니다. ([신김 뉴스레터 - 기후에너지환경부 출범 확정](https://shinkim.com/kor/media/newsletter/2979), 검색 결과로만 확인)
+- 확인된 사실: 산업부는 2026년 3월 5일 'AI로봇 M.AX 얼라이언스' 간담회를 열어 K-휴머노이드 방향을 논의했습니다. ([정책브리핑](https://www.korea.kr/briefing/pressReleaseView.do?newsId=156747403&call_from=rsslink), 2026-10-12 확인 — 세부 내용은 첨부파일에만 있어 확인하지 못함)
+- 확인된 사실: 자율주행 쪽은 국토교통부가 2026년 7월 7일 레벨4 무인차 안전운행 가이드라인을 냈습니다(자율주행차 섹션 박스 참고).
+- 해석·전망: 정책은 "연합 결성"에서 "실증·인증·부품 국산화"로 무게가 옮겨 가는 중으로 보입니다. 2026년 국정감사에서 "중국 대비 피지컬 AI 투자 부족" 지적이 나왔다는 보도도 있어(검색 결과로만 확인), 하반기 예산·정책 발표를 지켜볼 필요가 있습니다.
+- 확인하지 못한 것: 지능형로봇법의 2026년 개정 여부와 '첨단로봇 산업 전략'의 2026년 후속 계획은 공식 자료로 확인하지 못했습니다. 검색에 나오는 "영구법 전환·실외이동로봇 허용" 개정은 2023년 개정 내용으로 보이며 2026년 변화가 아닙니다.
+
+교육·실습 관점: 정책 자료를 인용할 때는 부처명(산업통상부)과 보도자료 날짜를 반드시 원문 링크로 확인하게 하세요. 이 글의 원문처럼 연도 하나가 틀리면 "정부가 2년째 추진 중"과 "1년째 추진 중"이라는 해석이 달라집니다.
+:::
 
 > **한국 RX의 약점이라면?**: 휴머노이드용 핵심 부품(고성능 액추에이터, 정밀 감속기, 촉각 센서)의 해외 의존도가 높고, VLA·World Model 같은 핵심 SW 모델의 자체 개발 사례가 아직 부족합니다.
 
@@ -453,3 +591,39 @@ RX는 한 줄로 요약하기 어려운 분야지만, 이번 글에서 다룬 �
 - Stanford, "Open X-Embodiment Dataset" (2023–)
 - 산업통상자원부, "K-휴머노이드 연합 출범" 보도자료 (2024)
 - UiPath, "Agentic Automation Platform" 백서 (2025)
+
+## 2026년 하반기 업데이트 참고자료 (2026-10-12 확인)
+
+- [Wikipedia - OpenAI Operator](https://en.wikipedia.org/wiki/OpenAI_Operator) — Operator의 ChatGPT agent 통합(2025-07)과 종료(2025-08-31) (검색 결과로만 확인)
+- [OpenAI Developer Community - Agent Mode was removed](https://community.openai.com/t/agent-mode-was-removed-with-no-real-replacement/1389601) — 2026년 8월 ChatGPT agent 제거, ChatGPT Work 안내
+- [Android Headlines - Google shuts down Project Mariner](https://www.androidheadlines.com/2026/05/google-shuts-down-project-mariner-ai-agent.html) — Mariner 종료(2026-05-04)와 Gemini Agent·Chrome으로의 흡수
+- [UiPath Newsroom - UiPath Launches Maestro Flow](https://www.uipath.com/newsroom/uipath-launches-maestro-flow) — 2026-08-19 Maestro Flow 발표, 지원 코딩 에이전트
+- [IFR - Five Million Robots now Operate in Factories Globally](https://ifr.org/ifr-press-releases/news/five-million-robots-now-operate-in-factories-globally) — World Robotics 2026: 2025년 설치량·국가별 순위·전망
+- [NBC News - GM's Cruise robotaxi business](https://www.nbcnews.com/business/autos/gm-cruise-robotaxi-business-rcna184294) — GM의 Cruise 로보택시 사업 철수(2024-12) (검색 결과로만 확인)
+- [Waymo - Welcoming our first riders in Denver, San Diego, and Tampa](https://waymo.com/blog/2026/09/ride-in-denver-san-diego-tampa/) — 2026-09-01 기준 14개 도시 완전 무인 운행
+- [Waymo - Ready to Ride: Dallas, Houston, San Antonio, and Orlando](https://waymo.com/blog/2026/02/dallas-houston-san-antonio-orlando/) — 2026년 상반기 신규 도시 (검색 결과로만 확인)
+- [Tesla Q2 2026 Update (SEC 8-K Exhibit 99.1)](https://www.sec.gov/Archives/edgar/data/0001318605/000162828026049213/exhibit991.htm) — Cybercab 생산 개시, Robotaxi 운영 도시, Optimus 라인 설치·생산 예정
+- [Hyundai Motor Group - 2026 CEO Investor Day](https://www.hyundaimotorgroup.com/en/news/hyundai-motor-company-charts-profit-driven-growth-roadmap-at-2026-ceo-investor-day) — Atlas 2028 투입, RMAC 확대, Atria AI·레벨2+ 로드맵, IONIQ 5 Waymo 로보택시 4분기 인도
+- [The Korea Herald - Hyundai Motor Group to deploy 25,000 Atlas robots](https://www.koreaherald.com/article/10741955) — Atlas 2.5만 대 배치 계획 (검색 결과로만 확인)
+- [한국경제 - 레벨4 무인 자율주행차 안전기준 마련](https://www.hankyung.com/article/202607070745i) — 국토부 무인차 안전운행 가이드라인(2026-07-07)
+- [국민일보 - 서울시, 올 하반기 레벨4 무인 로보택시 실증](https://www.kmib.co.kr/article/view.asp?arcid=1769412748) — 상암 레벨4 로보택시 계획
+- [아시아경제 - 서울서 11월부터 무인 로보택시](https://view.asiae.co.kr/article/2026070210170759922) — 11월 개시·안전관리자 탑승 보도 (검색 결과로만 확인)
+- [Figure - F.03 Arrives at BMW](https://www.figure.ai/news/f-03-at-bmw) — Figure 03의 BMW 스파턴버그 투입(2026-06-30), Helix 02
+- [1X - NEO Home Robot](https://www.1x.tech/discover/neo-home-robot) — NEO 가격·2026년 인도 계획·원격 전문가 지원
+- [Boston Dynamics - Unveils New Atlas Robot](https://bostondynamics.com/blog/boston-dynamics-unveils-new-atlas-robot-to-revolutionize-industry/) — 양산형 Atlas(2026-01-05), 2026년 물량 배정, 현대차 3만 대 공장
+- [Churchill Capital Corp XI·Agility Robotics 공동 보도자료 (SEC)](https://www.sec.gov/Archives/edgar/data/2074973/000121390026071290/ea029548401ex99-1.htm) — Digit 고객·운영 시간·Digit v5 수주
+- [SSE 영문 뉴스 - Unitree IPO (Global Times)](https://english.sse.com.cn/news/newsrelease/voice/c/c_20260806_10828128.shtml) — Unitree 2025년 휴머노이드 5,500대+ 출하, 상장 승인
+- [Caixin Global - Unitree wins approval for STAR Market IPO](https://www.caixinglobal.com/2026-07-03/unitree-robotics-wins-approval-for-618-million-star-market-ipo-102460136.html) — 상장 승인·일정 (검색 결과로만 확인)
+- [Google DeepMind - Gemini Robotics 2](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/) — Gemini Robotics 2·ER 2·On-Device 2(2026-07-30)와 접근 방식
+- [NVIDIA - New Physical AI Models (CES 2026)](https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Releases-New-Physical-AI-Models-as-Global-Partners-Unveil-Next-Generation-Robots/default.aspx) — GR00T N1.6, Cosmos Predict/Transfer 2.5, Cosmos Reason 2
+- [Physical Intelligence - π0.7](https://www.pi.website/blog/pi07) — π0.7 공개(2026-04-16)와 조합적 일반화 주장 (검색 결과로만 확인)
+- [Engadget - Google's Project Genie](https://www.engadget.com/ai/googles-project-genie-lets-you-create-your-own-3d-interactive-worlds-183646428.html) — Genie 3 기반 Project Genie 공개 범위 (검색 결과로만 확인)
+- [ISO 10218-1:2025](https://www.iso.org/standard/73933.html) — 산업용 로봇 안전 표준 2025년 개정판 (검색 결과로만 확인)
+- [arXiv - ISO 10218 2011 vs 2025 비교 및 ISO/TS 15066 통합](https://arxiv.org/abs/2602.17822v1) — 협동 요구사항 흡수, 로봇·리스크 분류 변경 (검색 결과로만 확인)
+- [ISO/CD 25785-1](https://www.iso.org/standard/91469.html) — 동적 안정 산업용 이동 로봇(휴머노이드 등) 안전 표준, 위원회 초안 단계 (검색 결과로만 확인)
+- [Gibson Dunn - EU AI Act Omnibus Agreement](https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/) — 고위험 의무 연기 일정, 기계류 규정 대상 AI 처리
+- [아시아경제 - 두산로보틱스 휴머노이드 로드맵](https://view.asiae.co.kr/article/2026090809005349708) — 3단계 로드맵, 2028년 산업용 휴머노이드 실증
+- [정책브리핑 - K-휴머노이드 연합 출범](https://www.korea.kr/briefing/pressReleaseView.do?newsId=156683522) — 출범일 2025-04-10
+- [AI타임스 - 산업부, K-휴머노이드 연합 출범](https://www.aitimes.com/news/articleView.html?idxno=169526) — 참여 기관·투자 규모 (검색 결과로만 확인)
+- [정책브리핑 - K-휴머노이드가 나아가야할 길 찾는다](https://www.korea.kr/briefing/pressReleaseView.do?newsId=156747403&call_from=rsslink) — 2026-03-05 AI로봇 M.AX 얼라이언스 간담회
+- [신김 뉴스레터 - 기후에너지환경부 출범 확정](https://shinkim.com/kor/media/newsletter/2979) — 정부조직법 개정, 산업통상부 명칭 (검색 결과로만 확인)

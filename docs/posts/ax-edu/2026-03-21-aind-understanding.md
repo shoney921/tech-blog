@@ -5,6 +5,16 @@ date: 2026-03-21T09:50:00
 
 # Chapter 6. AIND 이해와 활용
 
+::: info 2026년 하반기 업데이트 안내 · 2026-10-12 기준
+이 글은 2026년 상반기에 작성한 원문을 그대로 두고, 바뀐 내용을 각 섹션 아래 '2026년 하반기 업데이트' 박스로 덧붙였습니다. 핵심 변화:
+- `.cursorrules`는 현재 Cursor 공식 문서에서 사라졌고, 프로젝트 규칙은 `.cursor/rules/*.mdc` 또는 `AGENTS.md`로 작성합니다. `AGENTS.md`는 Linux Foundation 산하 Agentic AI Foundation이 관리하는 도구 공통 규칙 파일이 되었고, Claude Code도 `CLAUDE.md`가 없으면 `AGENTS.md`를 읽습니다.
+- Claude Code의 `.claude/commands/`는 Skills로 통합되었고, Agent Skills(`SKILL.md`) 포맷은 Cursor·GitHub Copilot·Codex·Kiro·Junie 등 다수 도구가 지원하는 공통 포맷이 되었습니다. Claude Code에는 내장 `/code-review`도 생겨 실습 예제의 스킬 이름과 겹칩니다.
+- 도구 지형이 크게 바뀌었습니다. Windsurf는 Devin Desktop으로 이름이 바뀌었고, 개인용 Gemini CLI는 2026-06-18 서비스가 중단되어 Antigravity CLI로 전환되었으며, Amazon Q Developer IDE 플러그인은 2027-04-30 지원 종료(후속은 Kiro)가 예고되었습니다. Cursor 운영사 Anysphere는 SpaceX에 인수되었습니다.
+- GitHub Copilot은 2026-06-01부터 AI Credits 기반 사용량 과금으로 바뀌었고, 원문 표의 Copilot Workspace는 이미 종료되어 cloud agent(구 coding agent)가 그 자리를 대신합니다.
+- 데이터 정책: GitHub Copilot Free/Pro/Pro+는 2026-04-24부터 옵트아웃하지 않으면 상호작용 데이터가 모델 학습에 쓰입니다. "개인용 플랜 사용 제한" 원칙이 더 중요해졌습니다.
+- 원문의 `.claudeignore`는 Claude Code 공식 문서에서 확인되지 않습니다. 민감 파일 차단은 `permissions.deny`(필요 시 hooks)로 구성하는 것이 공식 방식입니다.
+:::
+
 ## AIND (AI Native Development) 개요
 
 ### AIND 정의
@@ -201,6 +211,20 @@ AIND를 실무에서 구현하려면 도구의 특성을 이해하고 상황에 
 >
 > - 다만 도구마다 AIND 방식 적용의 용이성에 차이가 있으므로, 프로젝트 특성과 팀 역량에 맞는 도구를 선택하는 것이 중요합니다.
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 비교표의 세 도구 모두 '에이전트' 중심으로 재편되었고, Copilot Workspace는 이미 종료되었으며 과금 방식도 바뀌었습니다.
+
+- 확인된 사실: 표의 "Copilot Workspace(프리뷰)"는 기술 프리뷰가 2025-05-30에 종료되었고, 이슈를 받아 백그라운드에서 PR을 만드는 Copilot coding agent가 2025-09-25 유료 플랜 전체에 GA되었습니다. ([GitHub Changelog — Copilot coding agent GA](https://github.blog/changelog/2025-09-25-copilot-coding-agent-is-now-generally-available/), 검색 결과로만 확인) 현재 GitHub 공식 문서는 이 기능을 "Copilot cloud agent"라는 이름으로 부릅니다. ([GitHub Docs — Repository custom instructions](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions), 2026-10-12 확인)
+- 확인된 사실: GitHub Copilot은 2026-06-01부터 premium request 방식 대신 토큰 사용량 기반의 GitHub AI Credits로 과금합니다. 공식 공지 기준 Pro 월 $10, Pro+ 월 $39, Business 사용자당 월 $19, Enterprise 사용자당 월 $39이며 각각 같은 금액의 월 크레딧이 포함됩니다. 코드 자동완성과 Next Edit suggestions는 크레딧을 소모하지 않습니다. ([GitHub Changelog — usage-based billing](https://github.blog/changelog/2026/04/27/github-copilot-is-moving-to-usage-based-billing/), 2026-10-12 확인) 요금제 페이지에는 월 $100의 Max 플랜도 추가되어 있습니다. ([GitHub Copilot Plans](https://github.com/features/copilot/plans), 2026-10-12 확인)
+- 확인된 사실: Cursor 요금제 페이지 기준 Hobby(무료), 개인 유료 플랜은 월 $20부터(Pro·Pro+·Ultra), Teams는 사용자당 월 $40이며, 개인 유료 플랜에 MCP·skills·hooks·cloud agents가 포함되어 있습니다. ([Cursor Pricing](https://cursor.com/pricing), 2026-10-12 확인)
+- 확인된 사실: Cursor 운영사 Anysphere는 SpaceX(xAI와 합병)에 전액 주식 방식으로 인수되었고, 거래는 2026-08-14 완료되었습니다. 보도 기준으로 Cursor 브랜드와 제품은 유지되고 있습니다. ([The Next Web](https://thenextweb.com/news/spacex-cursor-acquisition-completed-gpu-fleet), 2026-10-12 확인)
+- 확인된 사실: Claude Code는 이제 터미널 전용이 아니라 터미널·IDE·데스크톱 앱·브라우저(클라우드 세션)에서 쓸 수 있는 도구로 소개됩니다. ([Agent Skills 클라이언트 목록의 Claude Code 소개](https://agentskills.io), 2026-10-12 확인)
+- 해석·전망: Copilot도 agent 모드와 cloud agent로 멀티파일 편집·PR 생성까지 하므로, 표의 "현재 열린 파일 중심의 제한적 컨텍스트", "AIND 적합성 보통" 평가는 지금 기준으로는 Copilot을 과소평가한 것으로 보입니다. 세 도구의 차이는 '자동완성 vs 에이전트'보다 '어디서 실행되는 에이전트인가(IDE/터미널/클라우드)'와 하네스 설계 차이로 옮겨 갔습니다.
+- 확인하지 못한 것: Copilot agent 모드의 현재 컨텍스트 수집 방식, Cursor 인수 이후의 제품 로드맵·데이터 정책 변경 여부는 공식 문서로 확인하지 못했습니다.
+
+교육·실습 관점: 표는 "형태" 축 대신 "IDE 내 에이전트 / 터미널 에이전트 / 클라우드(비동기) 에이전트" 축으로 다시 비교해 보는 것을 권합니다. 가격과 포함 사용량은 분기마다 바뀌고 있으니 강의 자료에 숫자를 고정하지 말고, 수업 당일 공식 요금제 페이지를 함께 열어 보는 방식이 안전합니다.
+:::
+
 #### 주요 Use Case 비교
 
 동일한 작업을 각 도구에서 어떻게 수행하는지 비교하면 도구별 특성을 더 명확히 이해할 수 있습니다.
@@ -212,6 +236,22 @@ AIND를 실무에서 구현하려면 도구의 특성을 이해하고 상황에 
 | 멀티파일 작업 | Composer/Agent 모드에서 여러 파일 동시 편집 | 프로젝트 전체를 자동 탐색하며 필요한 파일 모두 수정 | 파일 단위 개별 작업 (멀티파일 동시 편집 제한적) |
 | 테스트 코드 생성 | 대상 코드 참조하여 테스트 생성 요청 | "테스트 작성하고 실행까지 해줘" → 생성+실행+수정 자동 | Chat에서 테스트 생성 요청 → 결과 복사/붙여넣기 |
 | 디버깅 | 오류 코드 선택 후 "이 오류 원인 분석해줘" 요청 | 에러 메시지 전달 → 원인 분석 + 자동 수정 + 재실행 확인 | 에러 메시지 붙여넣기 → 원인 설명 및 수정안 제시 |
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 원문 비교표 밖의 주요 AI 코딩 도구 상당수가 이름이 바뀌거나 개인용 서비스가 종료되었습니다.
+
+- 확인된 사실: Windsurf는 2025년 7월 Cognition에 인수된 뒤 2026-06-02 "Devin Desktop"으로 이름이 바뀌었습니다. 현재 `windsurf.com`에 접속하면 `devin.ai/desktop`으로 영구 리다이렉트(308)됩니다. (windsurf.com 직접 접속으로 2026-10-12 확인; 공식 공지 [Windsurf is now Devin Desktop](https://devin.ai/blog/windsurf-is-now-devin-desktop)은 검색 결과로만 확인)
+- 확인된 사실: Google은 2026-06-18부터 Google AI Pro·Ultra 및 무료 개인 사용자에 대해 Gemini CLI와 Gemini Code Assist IDE 확장의 요청 처리를 중단하고 Antigravity CLI로 전환했습니다. Gemini Code Assist Standard/Enterprise 라이선스 조직은 계속 사용할 수 있습니다. ([Google Developers Blog](https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/), 2026-10-12 확인)
+- 확인된 사실: AWS는 Amazon Q Developer의 신규 가입을 2026-05-15부터 막고, IDE 플러그인(VS Code·JetBrains·Eclipse·Visual Studio)과 유료 구독을 2027-04-30에 지원 종료한다고 발표했으며 후속 도구로 Kiro를 권장합니다. AWS 콘솔 등 1st-party 경험의 Q는 영향을 받지 않습니다. ([AWS 블로그(일본어)](https://aws.amazon.com/jp/blogs/news/amazon-q-developer-end-of-support-announcement/), 2026-10-12 확인)
+- 확인된 사실: Kiro 요금제는 Free($0, 50 credits), Pro(사용자당 월 $20), Pro+($40), Pro Max($100), Power($200)입니다. ([Kiro Pricing](https://kiro.dev/pricing/), 2026-10-12 확인)
+- 확인된 사실: OpenAI Codex는 ChatGPT 플랜(Free, Go 월 $8, Plus 월 $20, Pro 월 $100부터, Business 사용자당 월 $20(연간 결제) 등)에 포함되며 데스크톱 앱·CLI·웹·IDE 확장으로 쓸 수 있습니다. ([Codex Pricing](https://learn.chatgpt.com/docs/pricing), 2026-10-12 확인)
+- 확인된 사실: JetBrains는 2026년 3월 LLM 비종속 터미널 에이전트 Junie CLI 베타를 공개했고, 4월에는 실행 중인 JetBrains IDE의 인덱싱·분석 기능에 연결되도록 했습니다. ([JetBrains Junie 블로그](https://blog.jetbrains.com/junie/2026/03/junie-cli-the-llm-agnostic-coding-agent-is-now-in-beta/), 검색 결과로만 확인)
+- 확인된 사실: Windsurf의 Cascade 에이전트는 Devin Local로 대체되었고, 공식 FAQ는 기존 Cascade를 "7월까지 계속 사용 가능"하다고 안내했습니다. 제3자 기사에 나온 '2026-07-01 종료'와는 다르므로 공식 FAQ를 기준으로 삼습니다. ([Devin Desktop FAQ](https://docs.devin.ai/desktop/devin-desktop-faq), 2026-10-12 확인)
+- 확인하지 못한 것: 개인용 Jules 접근이 Gemini CLI와 함께 종료되었다는 내용, Junie의 GA(2026년 6월)는 제3자 기사로만 보았고 공식 문서로는 확인하지 못했습니다.
+- 해석·전망: 도구 간 이합집산(인수·리브랜딩·종료)이 1년 사이 여러 번 일어났습니다. 특정 도구에 맞춘 절차보다 `AGENTS.md`, Agent Skills, MCP처럼 도구가 바뀌어도 들고 갈 수 있는 자산에 투자하는 편이 안전해 보입니다.
+
+교육·실습 관점: 실습 환경에서 개인 계정의 Gemini CLI·Jules나 Amazon Q Developer IDE 플러그인을 쓰고 있었다면 교체가 필요합니다(Google은 Antigravity CLI, AWS는 Kiro를 안내). Windsurf 화면 캡처가 들어간 자료는 Devin Desktop 기준으로 갱신하세요.
+:::
 
 ### 프로젝트 설정 파일 활용
 
@@ -235,6 +275,18 @@ Cursor에서 프로젝트 루트에 위치하는 설정 파일로, AI가 코드�
 | **금지 패턴** | "System.out.println 대신 SLF4J 로거를 사용합니다. 하드코딩된 비밀번호/API 키를 절대 포함하지 않습니다" |
 | **선호 패턴** | "예외 처리는 GlobalExceptionHandler를 통해 일괄 처리합니다. DTO 변환은 MapStruct를 사용합니다" |
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — `.cursorrules` 한 파일 대신 `.cursor/rules/*.mdc`와 도구 공통의 `AGENTS.md`가 표준 경로가 되었습니다.
+
+- 확인된 사실: 현재 Cursor 공식 Rules 문서는 프로젝트 규칙을 `.cursor/rules` 디렉토리의 `.mdc` 파일로 작성하도록 안내하며, 같은 디렉토리의 일반 `.md` 파일은 frontmatter가 없어 무시된다고 명시합니다. 규칙 적용 방식은 Always Apply / Apply Intelligently / Apply to Specific Files / Apply Manually 네 가지이고, Team·Enterprise 플랜에는 대시보드에서 관리하는 Team Rules가 있습니다. 문서 어디에도 `.cursorrules`는 더 이상 나오지 않습니다. ([Cursor Docs — Rules](https://cursor.com/docs/context/rules), 2026-10-12 확인)
+- 확인된 사실: 같은 문서에서 Cursor는 프로젝트 루트와 하위 디렉토리의 `AGENTS.md`를 `.cursor/rules`의 간단한 대안으로 지원합니다. ([Cursor Docs — Rules](https://cursor.com/docs/context/rules), 2026-10-12 확인)
+- 확인된 사실: `AGENTS.md`는 2025년 12월 출범한 Agentic AI Foundation(Linux Foundation 산하)이 MCP 등과 함께 관리하는 오픈 포맷이 되었고, 6만 개 이상의 오픈소스 프로젝트가 사용합니다. ([agents.md](https://agents.md), 2026-10-12 확인; [OpenAI — Agentic AI Foundation](https://openai.com/blog/agentic-ai-foundation), 검색 결과로만 확인)
+- 확인된 사실: GitHub Copilot은 `.github/copilot-instructions.md`(저장소 전체), `.github/instructions/` 아래 `NAME.instructions.md`(경로별), 저장소 내 `AGENTS.md`, 루트의 `CLAUDE.md` 또는 `GEMINI.md` 하나를 지시 파일로 인식합니다. ([GitHub Docs — Repository custom instructions](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions), 2026-10-12 확인) Kiro는 `.kiro/steering/`의 steering 파일과 `AGENTS.md`를 지원합니다. ([Kiro Docs — Steering](https://kiro.dev/docs/steering/), 검색 결과로만 확인)
+- 확인하지 못한 것: 기존 `.cursorrules`가 지금도 하위 호환으로 로드되는지는 Cursor 공식 문서에서 확인하지 못했습니다. 제3자 글과 포럼에는 "레거시로 남아 있으나 Agent에서 적용되지 않는 사례가 있다"는 보고가 있습니다.
+
+교육·실습 관점: 실습은 `.cursorrules` 대신 `.cursor/rules/` 아래 `.mdc` 파일(예: 항상 적용되는 프로젝트 규칙 1개 + 특정 경로에만 적용되는 규칙 1개)로 다시 작성하세요. 팀이 Cursor·Claude Code·Copilot·Codex를 섞어 쓴다면 공통 규칙은 `AGENTS.md` 하나에 두고, 도구별 파일에는 그 도구에만 필요한 내용만 남기는 구성이 관리하기 쉽습니다. 위 표의 항목(기술 스택·컨벤션·아키텍처·금지/선호 패턴)은 파일 형식만 바뀌었을 뿐 그대로 유효합니다.
+:::
+
 #### CLAUDE.md (Claude Code)
 
 Claude Code가 프로젝트 작업 시 자동으로 읽어 참조하는 설정 파일입니다. .cursorrules와 유사한 목적이지만, Claude Code의 에이전틱 특성에 맞게 보다 포괄적인 프로젝트 정보를 포함합니다.
@@ -253,6 +305,18 @@ Claude Code가 프로젝트 작업 시 자동으로 읽어 참조하는 설정 �
 | **코딩 스타일 및 규칙** | "Google Java Style Guide 준수. 모든 API는 OpenAPI 3.0 스펙을 먼저 작성한 후 구현" |
 | **도메인 규칙** | "주문 취소는 결제 완료 후 24시간 이내만 가능. 할인율은 고객 등급에 따라 차등 적용" |
 | **금지 사항** | "main 브랜치 직접 수정 금지. 환경변수에 민감정보 하드코딩 금지. ORM 없이 raw SQL 금지" |
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — `CLAUDE.md`는 위치·범위가 세분화되었고, `AGENTS.md`를 직접 읽게 되었으며, "규칙"이지 "강제"가 아니라는 점이 공식 문서에 명시되었습니다.
+
+- 확인된 사실: 프로젝트 지시 파일은 `./CLAUDE.md` 또는 `./.claude/CLAUDE.md`에 둘 수 있고, 개인 전역 `~/.claude/CLAUDE.md`, 커밋하지 않는 개인용 `./CLAUDE.local.md`, 조직이 배포하는 managed `CLAUDE.md`가 있습니다. 하위 디렉토리의 `CLAUDE.md`는 Claude가 그 디렉토리 파일을 다룰 때 필요 시 로드됩니다. ([Claude Code Docs — Memory](https://code.claude.com/docs/en/memory), 2026-10-12 확인)
+- 확인된 사실: `.claude/rules/` 디렉토리에 주제별 `.md` 규칙 파일을 나눠 둘 수 있고, `paths` frontmatter로 특정 파일 경로에서만 로드되게 할 수 있습니다. ([Claude Code Docs — Memory](https://code.claude.com/docs/en/memory), 2026-10-12 확인)
+- 확인된 사실: Claude Code v2.1.277 이상은 작업 디렉토리 위쪽에 `CLAUDE.md`·`.claude/CLAUDE.md`·`CLAUDE.local.md`가 없을 때 `AGENTS.md`를 프로젝트 지시로 읽습니다. 둘 다 있으면 기본값으로 `CLAUDE.md`만 읽으며, `CLAUDE.md`에서 `AGENTS.md`를 import하는 방식도 안내합니다. ([Claude Code Docs — Memory](https://code.claude.com/docs/en/memory), 2026-10-12 확인)
+- 확인된 사실: Claude가 사용자의 교정·선호를 스스로 메모하는 auto memory가 추가되어 매 세션 함께 로드됩니다. 또한 공식 문서는 `CLAUDE.md`를 "강제되는 설정이 아니라 컨텍스트"로 취급한다고 밝히고, 반드시 막아야 하는 동작은 PreToolUse hook으로 차단하라고 안내합니다. ([Claude Code Docs — Memory](https://code.claude.com/docs/en/memory), 2026-10-12 확인)
+- 해석·전망: 위 표의 "금지 사항" 행(예: main 브랜치 직접 수정 금지)은 `CLAUDE.md`에 적는 것만으로는 보장되지 않습니다. 원칙은 `CLAUDE.md`에 쓰고, 정말 지켜야 하는 것은 permissions·hooks·브랜치 보호 규칙 같은 강제 수단으로 이중화하는 것이 맞다고 봅니다.
+
+교육·실습 관점: 실습에서는 세션에서 `/context`를 실행해 어떤 메모리 파일이 실제로 로드되었는지 확인하는 단계를 추가하세요. 표의 "도메인 규칙"처럼 특정 모듈에만 해당하는 내용은 `.claude/rules/`의 경로 한정 규칙으로 분리해 보는 연습이 컨텍스트 엔지니어링 감각을 기르는 데 좋습니다.
+:::
 
 > **설정 파일이 컨텍스트 엔지니어링의 실체인 이유**
 >
@@ -277,6 +341,19 @@ Claude Code가 프로젝트 작업 시 자동으로 읽어 참조하는 설정 �
 | **셸 명령/스크립트** | 본문에 !`command` 구문으로 셸 명령을 전처리 실행하여 동적 컨텍스트를 생성 가능 (예: !`gh pr diff`) | scripts/ 디렉토리에 Bash/Python/JS 스크립트를 배치하고 SKILL.md에서 상대 경로로 참조 |
 | **도구 제한** | allowed-tools 프론트매터로 사용 가능한 도구를 제한 (예: Read만 허용) | 별도 도구 제한 기능 없음 |
 | **공유 범위** | .claude/commands/는 프로젝트 공유, ~/.claude/commands/는 개인용 | .agents/skills/는 프로젝트 공유 (Git 커밋), ~/.cursor/skills/는 개인용. GitHub URL로 원격 설치도 가능 |
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — Claude Code의 commands는 skills로 통합되었고, Agent Skills는 수십 개 도구가 읽는 공통 포맷이 되어 표의 경로·필드 일부가 바뀌었습니다.
+
+- 확인된 사실: Claude Code 공식 문서는 "custom commands가 skills로 통합되었다"고 명시합니다. `.claude/commands/deploy.md`와 `.claude/skills/deploy/SKILL.md`는 똑같이 `/deploy`를 만들고 기존 commands 파일도 계속 동작하지만, 새 작업은 skills가 권장됩니다. 따라서 표의 "공유 범위" 행은 이제 `.claude/skills/`(프로젝트)·`~/.claude/skills/`(개인) 기준으로 읽어야 하며, 엔터프라이즈·플러그인 위치도 있고 이름이 겹치면 Enterprise → Personal → Project 순으로 우선합니다. ([Claude Code Docs — Skills](https://code.claude.com/docs/en/skills), 2026-10-12 확인)
+- 확인된 사실: Claude Code frontmatter에 `when_to_use`, `arguments`(이름 있는 인수, `$이름` 치환), `paths`, `effort`, `disallowed-tools`, `hooks` 등이 추가되었고 `$ARGUMENTS[N]` 형식의 위치 인수도 지원합니다. 문서는 `name`·`description`·`license`·`compatibility`·`metadata`·`allowed-tools`를 Agent Skills 표준 필드로, `disable-model-invocation`·`user-invocable`·`context` 등을 Claude Code 확장 필드로 구분합니다. ([Claude Code Docs — Skills](https://code.claude.com/docs/en/skills), 2026-10-12 확인)
+- 확인된 사실: Cursor는 프로젝트의 `.agents/skills/`·`.cursor/skills/`, 사용자 전역의 `~/.agents/skills/`·`~/.cursor/skills/`를 읽고, 호환을 위해 `.claude/skills/`와 `.codex/skills/`도 인식합니다. `name`(소문자·숫자·하이픈)과 `description`이 필수이며 `paths`, `disable-model-invocation`을 지원합니다. ([Cursor Docs — Agent Skills](https://cursor.com/docs/context/skills), 2026-10-12 확인)
+- 확인된 사실: Agent Skills 포맷은 Anthropic이 처음 개발해 오픈 표준으로 공개했으며, 클라이언트 목록에 Claude Code·Cursor·GitHub Copilot·VS Code·Codex·Gemini CLI·Kiro·Junie 등이 올라 있습니다. ([agentskills.io](https://agentskills.io), 2026-10-12 확인)
+- 확인하지 못한 것: 표의 "Cursor — 별도 도구 제한 기능 없음"이 지금도 맞는지는 Cursor 문서에서 확인하지 못했습니다(문서에 관련 필드가 보이지 않았을 뿐, 부재를 단정할 근거는 없음).
+- 해석·전망: 표준 필드만 쓴 스킬은 도구 간 이식성이 높고, 확장 필드는 도구마다 무시될 수 있습니다. 팀 공용 스킬은 표준 필드 중심으로 쓰고, 도구별 확장은 꼭 필요한 곳에만 넣는 것이 좋겠습니다.
+
+교육·실습 관점: Cursor가 `.claude/skills/`도 읽으므로, 실습에서는 스킬을 `.claude/skills/` 한 곳(또는 `.agents/skills/`)에 두고 두 도구에서 모두 호출되는지 확인하는 방식으로 단순화할 수 있습니다. `.claude/commands/` 예제를 쓰는 기존 자료는 skills 디렉토리 구조로 바꿔 두는 편이 좋습니다.
+:::
 
 실무에서는 코드 리뷰 포맷을 /review 스킬로 표준화하거나, 배포 절차를 scripts/가 포함된 스킬로 자동화하는 등 팀 단위의 반복 워크플로우를 정의하는 데 활용합니다.
 
@@ -359,6 +436,17 @@ disable-model-invocation을 true로 설정한 이유는 코드 리뷰처럼 개�
 두 도구 모두 /스킬명으로 동일하게 호출합니다.
 
 이처럼 Skills는 한 번 작성하면 팀 전체가 /code-review 한 줄로 동일한 기준의 코드 리뷰를 수행할 수 있습니다. 리뷰 기준이 변경되면 SKILL.md만 수정하면 되므로, 팀의 리뷰 품질을 코드(파일)로 관리할 수 있다는 것이 Skills의 핵심 가치입니다.
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — Claude Code에 내장 `/code-review`가 생겨, 실습 스킬 이름 `code-review`가 내장 명령을 덮어쓰게 됩니다.
+
+- 확인된 사실: Claude Code에는 브랜치의 변경분을 리뷰하는 내장(bundled) `/code-review`가 있고 `/review`는 그 별칭입니다. `--fix`(지적 사항 적용), `--comment`(PR에 인라인 코멘트) 같은 플래그를 지원합니다. ([Claude Code Docs — Code Review](https://code.claude.com/docs/en/code-review), 2026-10-12 확인)
+- 확인된 사실: 사용자 스킬이 내장 명령·번들 스킬과 이름이 같으면 사용자 스킬이 우선하지만 별칭은 대체하지 않습니다. 공식 문서 예시 그대로, 프로젝트 `code-review` 스킬은 `/code-review`를 대체하고 `/review`는 여전히 내장 리뷰를 실행합니다. ([Claude Code Docs — Skills](https://code.claude.com/docs/en/skills), 2026-10-12 확인)
+- 확인된 사실: `disable-model-invocation: true`는 Claude Code에서 "사용자만 호출 가능, 설명도 컨텍스트에 로드하지 않음"으로 동작하고, Cursor에서도 "명시적으로 호출할 때만 포함"으로 동작해 실습 프론트매터는 두 도구에서 유효합니다. Cursor의 `/migrate-to-skills`도 현재 문서에 남아 있으며, 슬래시 명령을 `disable-model-invocation: true` 스킬로 변환합니다. ([Claude Code Docs — Skills](https://code.claude.com/docs/en/skills), [Cursor Docs — Agent Skills](https://cursor.com/docs/context/skills), 2026-10-12 확인)
+- 해석·전망: 실습대로 따라 하면 동작은 하지만, 수강생이 "내 스킬이 실행된 것인지 내장 리뷰가 실행된 것인지" 헷갈리기 쉽습니다. `/review`로 호출하면 팀 기준이 아니라 내장 기준으로 리뷰된다는 점도 혼란 요인입니다.
+
+교육·실습 관점: 실습 스킬 이름을 `team-review`나 `team-code-review`처럼 내장 명령과 겹치지 않게 바꾸는 것을 권합니다. 오히려 "팀 스킬 `/team-review` vs 내장 `/code-review`"를 같은 diff에 돌려 결과를 비교하는 활동을 추가하면, 하네스와 컨텍스트가 결과를 어떻게 바꾸는지 보여 주는 좋은 예가 됩니다.
+:::
 
 > **기존 Cursor Commands에서의 마이그레이션**
 >
@@ -480,6 +568,17 @@ AI가 생성한 코드를 다시 AI에게 리뷰시키는 "교차 리뷰" 방식
 >
 > - 개발자의 비판적 검토 역량이 품질의 최후 방어선이라는 원칙은 AI 리뷰를 활용할 때도 동일하게 적용됩니다.
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — '교차 리뷰'가 PR 단위의 관리형 자동 리뷰 제품으로 자리 잡았고, 비용 구조를 이해해야 쓸 수 있게 되었습니다.
+
+- 확인된 사실: GitHub Copilot code review는 Pro·Pro+·Max·Business·Enterprise 플랜에서 제공되며(Free 제외), 리뷰마다 AI Credits를 소모합니다(공식 추정치: Lite 효과 수준에서 $0.05–$1, Balanced에서 $0.25–$5). 프로젝트 전체 컨텍스트를 활용하고, `.github/copilot-instructions.md`와 경로별 instructions를 반영하며, 저장소·조직 ruleset으로 자동 리뷰를 설정할 수 있습니다. ([GitHub Docs — Copilot code review](https://docs.github.com/en/copilot/concepts/agents/code-review), 2026-10-12 확인)
+- 확인된 사실: Anthropic의 관리형 Code Review는 Team·Enterprise 구독에서 research preview로 제공됩니다. 여러 에이전트가 병렬로 문제를 찾고 검증 단계에서 오탐을 거른 뒤 심각도(Important/Nit/Pre-existing)별 인라인 코멘트를 남기며, 체크 결과는 항상 neutral이라 머지를 막지 않습니다. `CLAUDE.md`와 리뷰 전용 `REVIEW.md`로 기준을 조정하고, 비용은 리뷰당 평균 $15–25 수준으로 별도 사용량 크레딧에서 청구됩니다. Zero Data Retention 조직에서는 사용할 수 없습니다. ([Claude Code Docs — Code Review](https://code.claude.com/docs/en/code-review), 2026-10-12 확인)
+- 확인된 사실: 직접 워크플로를 관리하려면 Claude Code GitHub Actions(`anthropics/claude-code-action@v1`)를 씁니다. `/install-github-app`으로 설정하고, PR·이슈에서 `@claude`로 호출합니다. `@beta`를 쓰던 워크플로는 v1으로 옮기면서 `direct_prompt`를 `prompt`로 바꾸는 등 입력값을 수정해야 합니다. ([Claude Code Docs — GitHub Actions](https://code.claude.com/docs/en/github-actions), 2026-10-12 확인)
+- 해석·전망: 원문의 "생성과 리뷰 분리" 원칙이 제품 차원에서 구현된 셈입니다. 다만 두 제품 모두 승인·차단 권한을 주지 않는 설계라, "최종 판단은 개발자"라는 원문 원칙은 그대로 유효합니다.
+
+교육·실습 관점: 실습에서는 위 체크리스트를 `REVIEW.md`(또는 `.github/copilot-instructions.md`)로 옮겨 자동 리뷰에 반영해 보는 활동이 효과적입니다. 다만 PR마다 비용이 발생하므로 수업용 저장소는 수동 트리거(예: `@claude review`)로 두고, 강사가 사용 한도를 먼저 설정해 두세요.
+:::
+
 ### 보안 및 기밀성 고려사항
 
 Cursor, Claude Code와 같은 상용 AI Coding 도구를 SI 프로젝트에 도입할 때 반드시 고려해야 할 보안 및 기밀성 이슈를 다룹니다. 도구의 기능적 장점만큼이나 데이터 보호와 법적 리스크에 대한 이해가 AIND 실무 역량의 필수 요소입니다.
@@ -494,6 +593,18 @@ Cursor, Claude Code와 같은 상용 AI Coding 도구를 SI 프로젝트에 도�
 | **고객 데이터 유출** | 테스트 데이터나 설정 파일에 포함된 실제 고객 정보가 전송될 수 있음 | 실제 데이터 대신 마스킹/더미 데이터 사용, 환경변수로 민감정보 분리 |
 | **API Key/인증정보 노출** | 코드 내 하드코딩된 API 키, 비밀번호, 토큰 등이 AI에게 전달됨 | .env 파일 분리 + .gitignore 등록, 설정 파일에 "시크릿 하드코딩 금지" 규칙 명시 |
 | **학습 데이터 활용 우려** | 전송된 코드가 AI 모델의 향후 학습 데이터로 사용될 가능성 | 서비스 약관의 데이터 활용 정책 확인, 학습 제외(Opt-out) 옵션 활성화 |
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 개인용 플랜의 학습 정책이 '기본 사용(옵트아웃 필요)' 쪽으로 움직였고, 도구별 정책 차이를 직접 확인해야 합니다.
+
+- 확인된 사실: GitHub은 2026-04-24부터 Copilot Free·Pro·Pro+ 사용자의 상호작용 데이터(입력·출력·코드 조각·파일명·저장소 구조 등)를 사용자가 옵트아웃하지 않는 한 모델 학습에 사용합니다. Business·Enterprise는 대상이 아니며, 예전에 옵트아웃했다면 그 설정이 유지됩니다. ([GitHub Blog — interaction data usage policy](https://github.blog/news-insights/company-news/updates-to-github-copilot-interaction-data-usage-policy/), 2026-10-12 확인)
+- 확인된 사실: Anthropic은 소비자 플랜(Free·Pro·Max, Claude Code 포함)에서 학습 사용 여부를 사용자가 선택하게 하며, 허용 시 5년, 비허용 시 30일 보관합니다. Team·Enterprise·API 같은 상업 약관 사용자는 별도로 동의하지 않는 한 학습에 쓰지 않고 기본 30일 보관이며, Zero Data Retention은 자격을 갖춘 Claude for Enterprise 조직에 개별 적용됩니다. 또 Claude Code는 세션 기록을 로컬 `~/.claude/projects/`에 평문으로 기본 30일 보관합니다. ([Claude Code Docs — Data usage](https://code.claude.com/docs/en/data-usage), 2026-10-12 확인)
+- 확인된 사실: Cursor는 Privacy Mode가 켜져 있으면 고객 데이터를 학습에 쓰지 않고 모든 모델 제공자와 ZDR 계약을 유지한다고 밝히며, 꺼져 있으면 코드베이스 데이터·프롬프트 등을 저장·학습에 사용할 수 있다고 명시합니다. 팀원은 팀의 Privacy Mode 설정을 상속합니다. ([Cursor — Data Use](https://cursor.com/data-use), [Cursor — Security](https://cursor.com/security), 2026-10-12 확인)
+- 확인하지 못한 것: Cursor 개인 플랜의 Privacy Mode 기본값, SpaceX 인수 이후 Cursor 데이터 정책의 변경 여부는 공식 페이지에서 확인하지 못했습니다.
+- 해석·전망: "기업용 플랜이면 비학습"이라는 원문 대응은 대체로 맞지만, 개인 계정을 쓰는 순간 기본값이 학습 허용일 수 있는 도구가 늘었습니다. SI 현장에서 개인 계정 사용을 막아야 하는 이유가 더 분명해졌습니다.
+
+교육·실습 관점: 표의 "학습 제외(Opt-out) 옵션 활성화"를 실습 체크리스트로 바꿔, 수강생이 각자 쓰는 도구의 개인정보 설정 화면을 직접 열어 현재 상태를 확인하게 하세요. 또한 로컬에 남는 세션 기록(Claude Code의 `~/.claude/projects/` 등)도 고객 코드가 담긴 산출물로 보고 보관·삭제 규칙에 포함해야 합니다.
+:::
 
 **(1) 민감 파일 접근 제어 (Ignore / Deny 설정)**
 
@@ -520,6 +631,18 @@ Cursor, Claude Code와 같은 상용 AI Coding 도구를 SI 프로젝트에 도�
 > **.claudeignore + permissions.deny 이중 방어 권장**
 >
 > .claudeignore는 AI가 자동으로 파일을 찾아 읽는 것을 방지하고, permissions.deny는 어떤 경우에도 해당 파일에 접근하지 못하도록 강제합니다. 민감 파일에는 두 설정을 모두 적용하는 이중 방어가 권장됩니다.
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — `.claudeignore`는 공식 문서에서 확인되지 않는 설정이므로, 민감 파일 차단은 `permissions.deny`와 hooks 중심으로 다시 구성해야 합니다.
+
+- 확인된 사실: Claude Code 공식 Settings 문서는 `.env` 읽기를 막는 예로 `~/.claude/settings.json`의 `permissions.deny`에 `Read(./.env)`, `Read(./.env.*)`를 추가하는 방법을 제시합니다(원문 표의 `Read(.env)`와 달리 `./` 접두가 붙은 형태). ([Claude Code Docs — Settings](https://code.claude.com/docs/en/settings), 2026-10-12 확인)
+- 확인된 사실: 공식 Memory 문서는 `CLAUDE.md`가 강제 설정이 아닌 컨텍스트이며, 반드시 막아야 하는 동작은 PreToolUse hook으로 차단하라고 안내합니다. ([Claude Code Docs — Memory](https://code.claude.com/docs/en/memory), 2026-10-12 확인)
+- 확인된 사실: Cursor의 `.cursorignore`는 Agent·Tab·Inline Edit·@mention에서 파일 접근을 막지만, 공식 문서는 Agent가 쓰는 터미널과 MCP 서버 도구는 `.cursorignore` 대상 파일 접근을 막지 못하며 완전한 보호는 보장되지 않는다고 명시합니다. ([Cursor Docs — Ignore files](https://cursor.com/docs/context/ignore-files), 2026-10-12 확인)
+- 확인하지 못한 것: 원문 표의 `.claudeignore`는 이번에 열어 본 Claude Code 공식 문서(Settings, Memory, Skills)에서 전혀 언급되지 않았습니다. 공식 기능으로 동작한다는 근거를 찾지 못했으므로 보안 통제로 의존하지 않는 것이 안전합니다.
+- 해석·전망: `Bash(curl *)` 같은 명령 단위 차단은 `wget`이나 스크립트 실행 등 다른 경로로 우회될 여지가 있다고 봅니다. "우회 불가"는 해당 패턴과 일치하는 도구 호출에 한정된 이야기로 이해하는 편이 정확합니다.
+
+교육·실습 관점: 실습은 "`.claudeignore` + `permissions.deny`" 이중 방어 대신 "`permissions.deny`(읽기 차단) + hooks(강제 차단) + 비밀값을 애초에 저장소·작업 디렉토리 밖(시크릿 매니저 등)에 두기" 조합으로 고쳐 쓰는 것을 권합니다. Cursor 실습에서는 `.cursorignore`만으로는 터미널 접근을 막지 못한다는 점을 반드시 함께 설명하세요.
+:::
 
 #### AI 생성 코드의 라이선스 및 저작권
 
@@ -566,3 +689,34 @@ AIND를 SI 프로젝트에 적용할 때 수립해야 할 보안 가이드라인
 - AI가 생성한 코드는 Hallucinated API, 불완전한 에러 처리, 보안 취약점 등의 문제를 포함할 수 있다. 정확성/완전성/일관성/보안성/유지보수성 관점의 체계적 검토가 필수이다.
 
 - SI 프로젝트에서 AI 도구 사용 시 소스코드/고객 데이터의 외부 전송 리스크, 기업용 플랜의 데이터 정책, AI 생성 코드의 라이선스 이슈를 반드시 고려해야 한다.
+
+## 2026년 하반기 업데이트 참고자료 (2026-10-12 확인)
+
+- [Cursor Docs — Rules](https://cursor.com/docs/context/rules) — `.cursor/rules/*.mdc`, 규칙 유형, AGENTS.md 지원, Team Rules
+- [Cursor Docs — Agent Skills](https://cursor.com/docs/context/skills) — 스킬 디렉토리(`.agents/skills`, `.claude/skills` 호환), frontmatter, `/migrate-to-skills`
+- [Cursor Docs — Ignore files](https://cursor.com/docs/context/ignore-files) — `.cursorignore` 적용 범위와 터미널·MCP 한계
+- [Cursor Pricing](https://cursor.com/pricing) — 현재 요금제 구성
+- [Cursor — Data Use](https://cursor.com/data-use) / [Cursor — Security](https://cursor.com/security) — Privacy Mode와 학습·ZDR 정책
+- [The Next Web — SpaceX closes Cursor deal](https://thenextweb.com/news/spacex-cursor-acquisition-completed-gpu-fleet) — Cursor 인수 완료(2026-08-14)
+- [Claude Code Docs — Skills](https://code.claude.com/docs/en/skills) — commands→skills 통합, 경로·우선순위, frontmatter, 내장 명령과 이름 충돌
+- [Claude Code Docs — Memory](https://code.claude.com/docs/en/memory) — CLAUDE.md 위치, `.claude/rules/`, AGENTS.md 읽기, auto memory, hooks 권고
+- [Claude Code Docs — Settings](https://code.claude.com/docs/en/settings) — `permissions.deny` 예시
+- [Claude Code Docs — Code Review](https://code.claude.com/docs/en/code-review) — 관리형 Code Review, REVIEW.md, 비용, 내장 `/code-review`
+- [Claude Code Docs — GitHub Actions](https://code.claude.com/docs/en/github-actions) — `claude-code-action@v1`, beta→v1 마이그레이션
+- [Claude Code Docs — Data usage](https://code.claude.com/docs/en/data-usage) — 학습·보관 정책, 로컬 세션 기록
+- [agentskills.io](https://agentskills.io) — Agent Skills 표준과 지원 도구 목록
+- [agents.md](https://agents.md) — AGENTS.md 관리 주체(Agentic AI Foundation)와 채택 규모
+- [OpenAI — Agentic AI Foundation](https://openai.com/blog/agentic-ai-foundation) — AAIF 출범(검색 결과로만 확인)
+- [GitHub Docs — Repository custom instructions](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions) — copilot-instructions.md, AGENTS.md·CLAUDE.md·GEMINI.md 지원, cloud agent 명칭
+- [GitHub Docs — Copilot code review](https://docs.github.com/en/copilot/concepts/agents/code-review) — 제공 플랜, AI Credits 소모, 자동 리뷰
+- [GitHub Changelog — usage-based billing](https://github.blog/changelog/2026/04/27/github-copilot-is-moving-to-usage-based-billing/) — AI Credits 전환과 플랜 가격
+- [GitHub Copilot Plans](https://github.com/features/copilot/plans) — 현재 플랜 구성(Max 포함)
+- [GitHub Changelog — Copilot coding agent GA](https://github.blog/changelog/2025-09-25-copilot-coding-agent-is-now-generally-available/) — coding agent GA(검색 결과로만 확인)
+- [GitHub Blog — interaction data usage policy](https://github.blog/news-insights/company-news/updates-to-github-copilot-interaction-data-usage-policy/) — Free/Pro/Pro+ 학습 정책 변경
+- [Google Developers Blog — Gemini CLI to Antigravity CLI](https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/) — Gemini CLI 개인용 서비스 중단
+- [AWS 블로그 — Amazon Q Developer 지원 종료](https://aws.amazon.com/jp/blogs/news/amazon-q-developer-end-of-support-announcement/) — 일정과 Kiro 전환
+- [Kiro Pricing](https://kiro.dev/pricing/) / [Kiro Docs — Steering](https://kiro.dev/docs/steering/) — 요금제, steering·AGENTS.md(steering은 검색 결과로만 확인)
+- [Codex Pricing](https://learn.chatgpt.com/docs/pricing) — Codex 포함 플랜과 사용 환경
+- [Windsurf is now Devin Desktop](https://devin.ai/blog/windsurf-is-now-devin-desktop) — Windsurf 리브랜딩(검색 결과로만 확인, windsurf.com 리다이렉트는 직접 확인)
+- [JetBrains — Junie CLI beta](https://blog.jetbrains.com/junie/2026/03/junie-cli-the-llm-agnostic-coding-agent-is-now-in-beta/) — Junie CLI(검색 결과로만 확인)
+- [Devin Desktop FAQ](https://docs.devin.ai/desktop/devin-desktop-faq) — Windsurf → Devin Desktop(2026-06-02), Cascade → Devin Local, 기존 Cascade는 7월까지 제공

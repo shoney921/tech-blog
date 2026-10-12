@@ -153,6 +153,8 @@ function readPostSource(relativePath: string): { date?: string; description?: st
     .replace(/<style[\s\S]*?<\/style>/g, '')
     .replace(/<script[\s\S]*?<\/script>/g, '')
     .replace(/```[\s\S]*?```/g, '')
+    // 원문 뒤에 덧붙인 '2026년 하반기 업데이트' 박스는 요약에서 빼고 원문 첫머리를 쓴다
+    .replace(/^:::\s*\w+\s+2026년 하반기 업데이트[\s\S]*?^:::\s*$/gm, '')
     .replace(/<[^>]+>/g, '')
     .replace(/^:::.*$/gm, '')
     .replace(/^#{1,6}\s.*$/gm, '')

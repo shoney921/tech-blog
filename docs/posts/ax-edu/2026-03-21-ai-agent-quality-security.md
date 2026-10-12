@@ -3,6 +3,16 @@ title: "Chapter 5. AI Agent 품질 및 보안"
 date: 2026-03-21T09:40:00
 ---
 
+::: info 2026년 하반기 업데이트 안내 · 2026-10-12 기준
+이 글은 2026년 상반기에 작성한 원문을 그대로 두고, 바뀐 내용을 각 섹션 아래 '2026년 하반기 업데이트' 박스로 덧붙였습니다. 핵심 변화:
+- EU AI Act: Digital Omnibus on AI(Regulation (EU) 2026/1744)가 2026-07-27 발효되어, 고위험 AI 의무가 2026-08-02에서 2027-12-02(Annex III)·2028-08-02(Annex I)로 연기되었습니다. 반면 Article 50 투명성 의무와 GPAI 집행은 2026-08-02부터 적용 중입니다.
+- 한국 AI 기본법은 2026-01-22 예정대로 시행되었고, 과기정통부는 최소 1년 이상의 과태료 계도기간을 운영 중입니다(가장 이르게 끝나도 2027-01 이후).
+- OWASP: 'Top 10 for Agentic Applications 2026'(ASI01~ASI10, 2025-12)과 'LLM Top 10 2026'(2026-08)이 나와, 원문 표의 2025년판 순위·명칭이 일부 바뀌었습니다(Excessive Agency가 6위에서 3위로).
+- 벤치마크: OpenAI가 SWE-bench Verified를 오염·테스트 결함 문제로 더 이상 보고하지 않는다고 밝혔고, 대안으로 권했던 SWE-Bench Pro에서도 약 30%의 과제 결함을 보고했습니다. 벤치마크 점수는 이전보다 더 조심해서 읽어야 합니다.
+- MCP는 2026-07-28 사양에서 무상태(stateless) 코어와 인가(authorization) 강화를 도입했고, A2A는 v1.0에서 서명된 Agent Card를 표준화했습니다. MCP 관련 실제 CVE도 계속 나오고 있습니다.
+- 도구 생태계: Promptfoo는 OpenAI에, Langfuse는 ClickHouse에 인수되었습니다(둘 다 오픈소스 유지 발표). OpenTelemetry GenAI 시맨틱 컨벤션은 여전히 'Development' 단계입니다.
+:::
+
 ## AI Agent 품질 관리
 
 AI Agent는 자율적으로 도구를 호출하고 다단계 행동(Multi-step Action)을 수행하는 특성상, 기존 소프트웨어보다 품질 관리의 중요성이 훨씬 높습니다. Agent의 각 단계에서 발생한 오류는 후속 단계로 **연쇄적으로 확산(Error Propagation)**되어 최종 결과의 품질을 크게 저하시킬 수 있습니다.
@@ -187,6 +197,18 @@ Agent 성능을 객관적으로 비교하기 위한 주요 벤치마크는 다�
 
 참고로, Agent 벤치마크 외에 LLM 자체의 코드 생성 능력을 평가하는 **HumanEval**(함수 수준 코드 생성 정확도, 지표: pass@k)도 Agent 기반 코딩 도구의 기초 성능을 가늠하는 데 활용됩니다. SWE-bench는 가장 널리 사용되는 코딩 Agent 벤치마크 중 하나로, Agent가 실제 오픈소스 프로젝트의 버그를 수정하거나 기능을 구현하는 능력을 평가합니다. 최신 모델 기반 Agent의 SWE-bench Verified 해결률은 약 72~80% 수준(상위 모델 기준, 2026년 초 기준)에 이르렀으며, 이는 1년 전 대비 크게 향상된 수치입니다.
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — SWE-bench Verified는 '최신 코딩 능력을 재는 잣대'로서 신뢰를 잃었고, 대체로 거론된 SWE-Bench Pro도 결함이 보고되었습니다.
+
+- 확인된 사실: OpenAI는 「Why SWE-bench Verified no longer measures frontier coding capabilities」에서 SWE-bench Verified를 더 이상 평가에 쓰지 않는다고 밝혔습니다. 데이터셋의 27.6%를 감사한 결과 감사 대상 문제 중 59.4% 이상에서 올바른 풀이도 떨어뜨리는 등 테스트 결함이 있었고, 학습 데이터 유입(오염) 정황도 들었습니다. 같은 글은 최고 성능이 6개월 동안 74.9%에서 80.9%로 오른 뒤 정체된 점을 언급하고, 대안으로 SWE-Bench Pro를 권했습니다. ([OpenAI](https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/), 검색 결과로만 확인 — 페이지 직접 열람은 403으로 실패)
+- 확인된 사실: OpenAI는 이후 「Separating signal from noise in coding evaluations」(2026-07 보도)에서 SWE-Bench Pro도 자체 감사 결과 과제의 약 30%가 '깨져 있다(broken)'고 추정했습니다. 지나치게 엄격한 테스트, 설명이 부족한 문제, 검사 범위가 좁은 테스트, 오도하는 문제 설명 등이 원인으로 꼽혔습니다. ([OpenAI](https://openai.com/index/separating-signal-from-noise-coding-evaluations/), 검색 결과로만 확인)
+- 확인된 사실: 원문 표의 TAU-bench는 Sierra가 τ-bench(2024-06) → τ²-bench(2025-06) → τ³-bench(2026-03-18 공개)로 확장해 왔습니다. τ³-bench에는 지식(Knowledge) 평가와 음성(Voice) 평가가 추가되었습니다. ([Sierra τ³-bench](https://sierra.ai/resources/research/tau-3-bench-knowledge), 2026-10-12 확인)
+- 해석·전망: 원문의 '72~80%(2026년 초 기준)'라는 수치 자체는 당시 보고치와 크게 어긋나지 않습니다. 다만 이제는 이 숫자가 실제 능력을 얼마나 반영하는지가 불분명해졌습니다. 공개 벤치마크는 점수가 높아질수록 오염과 테스트 결함 때문에 변별력이 떨어지는 경향이 있습니다. 본문에서 다룬 Eval Saturation이 업계 공용 벤치마크에서도 그대로 일어나고 있는 셈입니다.
+- 확인하지 못한 것: GAIA, OSWorld, WebArena, τ³-bench의 2026-10 기준 최고 점수는 리더보드마다 평가 조건(스캐폴드, 시도 횟수, 검증 여부)이 달라 공식 수치를 확정하지 못했습니다. 그래서 이 박스에는 점수를 적지 않았습니다.
+
+교육·실습 관점: 강의에서 'SWE-bench Verified 몇 %'를 모델 선택 근거로 제시하지 마십시오. 대신 공개 벤치마크 점수는 1차 필터로만 쓰고, 최종 판단은 고객 업무로 만든 Golden Data와 사내 Eval(pass^k 포함)로 해야 한다는 점을 강조하는 편이 좋습니다. 실습에서 벤치마크를 다룬다면 '점수 비교'보다 '벤치마크 과제 몇 개를 직접 열어 테스트가 정답을 제대로 판정하는지 검토하기'가 이번 사례를 체감하는 데 더 효과적입니다.
+:::
+
 ### Agent 테스트 전략
 
 Agent 시스템은 다계층으로 구성되어 있으므로, 각 계층에 맞는 테스트 전략이 필요합니다.
@@ -256,6 +278,18 @@ AI Agent 테스트를 지원하는 주요 플랫폼과 프레임워크는 다음
 - **본 개발/운영 단계:** 상용 플랫폼(Braintrust, LangSmith)으로 프로덕션 수준의 모니터링과 팀 협업 지원
 - **데이터 주권 필수 환경:** Arize Phoenix, Langfuse 등 자체 호스팅 가능한 오픈소스 도구 선택
 - **RAG 중심 프로젝트:** Ragas를 핵심 평가 도구로 활용
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 표의 도구는 모두 살아 있지만, 소유 구조와 유지보수 상황이 바뀐 곳이 있습니다.
+
+- 확인된 사실: OpenAI가 2026-03-09 Promptfoo 인수를 발표했습니다. Promptfoo 측은 오픈소스를 유지하고 OpenAI 외 모델도 계속 지원한다고 밝혔으며, GitHub 저장소는 MIT 라이선스로 2026-10에도 활발히 커밋되고 있습니다. ([OpenAI 발표](https://openai.com/index/openai-to-acquire-promptfoo/), 검색 결과로만 확인 / [promptfoo GitHub](https://github.com/promptfoo/promptfoo), 2026-10-12 확인)
+- 확인된 사실: ClickHouse가 2026-01 Langfuse를 인수했습니다. 핵심 기능은 기존 MIT 라이선스로 계속 오픈소스이며, 프로덕션 규모의 자체 호스팅도 유지된다고 발표했습니다. ([ClickHouse 블로그](https://clickhouse.com/blog/clickhouse-acquires-langfuse-open-source-llm-observability), 2026-10-12 확인)
+- 확인된 사실: Ragas 저장소는 `vibrantlabsai/ragas`로 옮겨졌습니다. PyPI 최신 릴리스는 0.4.3(2026-01-13)이고, 저장소 마지막 푸시는 2026-02입니다. DeepEval(4.2.x, 2026-09), Arize Phoenix(2026-10 릴리스), Langfuse(2026-10 릴리스)는 계속 활발히 릴리스되고 있습니다. ([Ragas GitHub](https://github.com/vibrantlabsai/ragas), [PyPI ragas](https://pypi.org/project/ragas/), [DeepEval GitHub](https://github.com/confident-ai/deepeval), [Phoenix GitHub](https://github.com/Arize-ai/phoenix), 2026-10-12 확인)
+- 확인된 사실: 원문의 Braintrust 투자 건은 2026-02-17 8,000만 달러 조달로 확인됩니다. ([CB Insights](https://www.cbinsights.com/compare/braintrust-data-vs-langfuse), 검색 결과로만 확인 — 밸류에이션 수치는 확인하지 못함)
+- 해석·전망: 평가·레드팀 도구가 모델 공급사나 데이터 인프라 회사에 흡수되는 흐름이 보입니다. 오픈소스 유지 약속이 있더라도, 장기 프로젝트라면 특정 공급사 쪽으로 기능 우선순위가 기우는지 지켜볼 필요가 있습니다. Ragas는 중단된 것은 아니지만 릴리스 주기가 느려졌으므로, RAG 평가를 Ragas 하나에 전적으로 의존하는 설계는 다시 검토해 볼 만합니다.
+
+교육·실습 관점: 도구 선정 실습에서 '라이선스, 최근 릴리스 날짜, 소유 구조'를 체크리스트에 추가하게 하십시오. Ragas 실습은 버전을 0.4.x로 고정(pin)하고, 같은 지표를 DeepEval 같은 다른 도구로도 재현해 보는 대체 경로를 함께 안내하면 안전합니다. Promptfoo는 계속 OpenAI 외 모델에도 쓸 수 있지만, 인수 이후 라이선스·텔레메트리 정책이 바뀌는지는 실습 전에 한 번 더 확인하는 것을 권합니다.
+:::
 
 #### 평가 파이프라인 자동화
 
@@ -390,6 +424,16 @@ f"{document_text}\n"
 
 다만 이 방법만으로 모든 공격을 막을 수는 없습니다. 민감한 도구 호출에는 최소 권한(Least Privilege), 승인 절차(Human-in-the-Loop), 출력 검증(Output Guardrails)을 함께 적용해야 합니다.
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 간접 프롬프트 인젝션은 이제 '이론적 위협'이 아니라 CVE가 붙은 실제 사례로 가르칠 수 있고, OWASP는 이를 Agent 관점에서 'Agent Goal Hijack'이라는 이름으로 정리했습니다.
+
+- 확인된 사실: CVE-2025-32711(통칭 EchoLeak)은 Microsoft 365 Copilot의 'AI command injection'으로, 권한 없는 공격자가 네트워크를 통해 정보를 노출시킬 수 있는 취약점으로 등록되었습니다(2025-06-11 공개). 숨겨진 지시가 담긴 이메일을 Copilot이 처리하면서 사용자 클릭 없이 내부 정보가 유출될 수 있었던 사례로 알려져 있습니다. ([NVD CVE-2025-32711](https://nvd.nist.gov/vuln/detail/CVE-2025-32711), NVD API로 2026-10-12 확인 / 공격 시나리오 설명은 [Cycode 정리](https://cycode.com/blog/owasp-top-10-agentic-applications/), 검색 결과로만 확인)
+- 확인된 사실: OWASP GenAI Security Project의 「Top 10 for Agentic Applications 2026」(2025-12-09 공개)은 1번 위험을 ASI01 Agent Goal Hijack(에이전트가 읽는 텍스트를 통해 목표 자체를 바꿔치기하는 공격)으로 정의했습니다. ([OWASP GenAI](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/), 2026-10-12 확인)
+- 해석·전망: 위 코드 예시의 '구분자 + 경고 문구' 방식은 여전히 기본기로 유효합니다. 하지만 실제 사고 사례를 보면 뚫리는 지점은 대부분 프롬프트 문구가 아니라 '읽기 권한과 외부 전송 경로가 한 Agent에 함께 있는 구조'였습니다. 프롬프트 차원의 방어는 확률을 낮출 뿐이라고 보는 편이 안전합니다.
+
+교육·실습 관점: 이 코드 예시를 실습할 때는 '방어 성공'만 보여 주지 말고, 같은 문서를 조금씩 변형해(인코딩, 다국어, 이미지 속 텍스트 등) 뚫리는 경우가 있다는 점도 함께 보여 주는 편이 좋습니다. 그다음 단계로 '외부 문서를 읽은 세션에서는 외부 전송 도구를 비활성화하거나 승인을 받게 하기'처럼 구조로 막는 방법을 이어서 실습하면, 본문의 최소 권한·HITL 내용과 자연스럽게 연결됩니다.
+:::
+
 ### Tool Abuse / Privilege Escalation
 
 Agent가 보유한 도구 접근 권한을 악용하여 의도하지 않은 행동을 수행하거나, 허용된 권한 범위를 초과하는 공격입니다.
@@ -474,6 +518,18 @@ LLM의 안전 가이드라인을 우회하여 유해한 콘텐츠를 생성하�
 
 특히 Agent 환경에서는 **LLM06 (Excessive Agency)**이 핵심 위협으로, Agent에게 불필요하게 많은 도구 접근 권한을 부여하거나 인간의 승인 없이 중요한 작업을 자동 실행하도록 설계하는 것이 대표적인 위험 요소입니다. 위 표에서 확인할 수 있듯이, Agent 환경에서는 LLM01(Prompt Injection), LLM02(Sensitive Info Disclosure), LLM05(Improper Output Handling), LLM08(Vector Weaknesses) 역시 단순 LLM 애플리케이션 대비 위험도가 크게 증가합니다. Agent가 **외부 데이터를 자동 수집하고, 도구를 통해 실제 시스템에 작용**하기 때문입니다.
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 위 표는 2025년판 기준이며, 2026년 8월 LLM Top 10 2026이 나오면서 순위와 명칭이 바뀌었고 Agent 전용 Top 10도 별도로 생겼습니다.
+
+- 확인된 사실: OWASP GenAI Security Project가 「OWASP GenAI LLM Top 10 2026」을 2026-08-03 공개했습니다. ([OWASP GenAI 리소스 페이지](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/), 2026-10-12 확인)
+- 확인된 사실: 2026년판 순서는 LLM01 Prompt Injection, LLM02 Sensitive Information Disclosure, LLM03 Excessive Agency, LLM04 Supply Chain, LLM05 Data and Model Poisoning, LLM06 Unbounded Consumption, LLM07 Misinformation, LLM08 Hidden Context Exposure, LLM09 Vector and Embedding Weaknesses, LLM10 Improper Output Handling입니다. 2025년판의 System Prompt Leakage가 Hidden Context Exposure로 이름이 바뀌어 범위가 넓어졌고, 삭제되거나 새로 추가된 항목은 없습니다. ([OWASP 공식 발표](https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/), 목록은 검색 결과로만 확인 / [Imperva 정리](https://www.imperva.com/blog/owasp-llm-top-10-2026-what-changed/), 2026-10-12 확인)
+- 확인된 사실: 같은 프로젝트가 2025-12-09 「Top 10 for Agentic Applications 2026」을 냈습니다. 항목은 ASI01 Agent Goal Hijack, ASI02 Tool Misuse and Exploitation, ASI03 Agent Identity and Privilege Abuse, ASI04 Agentic Supply Chain Compromise, ASI05 Unexpected Code Execution, ASI06 Memory and Context Poisoning, ASI07 Insecure Inter-Agent Communication, ASI08 Cascading Agent Failures, ASI09 Human-Agent Trust Exploitation, ASI10 Rogue Agents입니다. ([OWASP GenAI](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/), 2026-10-12 확인 / 항목 목록은 [Cycode 정리](https://cycode.com/blog/owasp-top-10-agentic-applications/), 검색 결과로만 확인)
+- 확인된 사실: 2026-09-01에는 Agent가 무엇에 접근하고 무엇을 실행할 수 있는지 런타임에서 통제하는 지침인 'Agent Control Standard(ACS)'가 OWASP GenAI Security Project에 기증되어 공개되었습니다. ([OWASP 공식 발표](https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/), 2026-10-12 확인)
+- 해석·전망: 본문이 'Agent 환경에서는 LLM06(Excessive Agency)이 핵심 위협'이라고 짚은 방향은 2026년판에서 3위로 올라가며 오히려 더 힘을 얻었습니다. 다만 본문의 LLM05·LLM06·LLM07 같은 ID는 2025년판 기준이라, 2026년판 문서와 함께 보면 번호가 엇갈립니다. 원문의 Cascading Failure(오류 연쇄 확산) 개념이 ASI08로, Shadow AI·HITL 논의가 ASI09·ASI10과 맞닿아 있다는 점도 눈여겨볼 만합니다.
+
+교육·실습 관점: 보고서나 체크리스트에 OWASP 항목을 인용할 때는 반드시 'LLM06:2025'처럼 연도까지 붙이게 하십시오. Agent 프로젝트의 위협 모델링 실습은 LLM Top 10만이 아니라 Agentic Top 10(ASI01~ASI10)을 함께 매핑하게 하는 것이 2026년 하반기 기준으로는 더 적절합니다. 본문의 Tool Abuse·Data Exfiltration 절은 각각 ASI02·ASI03, ASI01과 대응시켜 보면 이해하기 쉽습니다.
+:::
+
 #### MITRE ATLAS (Adversarial Threat Landscape for AI Systems)
 
 MITRE ATLAS는 AI/ML 시스템에 대한 **실제 공격 사례와 전술·기법·절차(TTPs: Tactics, Techniques, and Procedures)**를 체계적으로 분류한 프레임워크입니다. 사이버 보안 분야에서 널리 사용되는 **MITRE ATT&CK 프레임워크의 AI 버전**으로, AI 시스템 고유의 공격 벡터를 다룹니다.
@@ -540,6 +596,19 @@ OWASP LLM03 (Supply Chain Vulnerabilities)이 MCP 생태계에서 특히 중요�
 - **감사 추적 통합:** MCP 도구 호출 기록과 A2A Task 기록을 통합 로그로 관리하여 End-to-End 추적 가능
 - **격리된 실행 경계:** 외부 에이전트(A2A)와의 통신 결과를 내부 시스템에 반영하기 전 검증 단계 삽입
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — MCP와 A2A 모두 보안 관련 사양이 크게 바뀌었고, MCP 생태계에서는 원문이 경고한 '악성 서버·공급망' 위협이 CVE로 계속 확인되고 있습니다.
+
+- 확인된 사실: MCP는 2025-12-09 출범한 Linux Foundation 산하 Agentic AI Foundation(AAIF)의 창립 프로젝트가 되었습니다(goose, AGENTS.md와 함께). ([Linux Foundation 발표](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation), 2026-10-12 확인)
+- 확인된 사실: MCP 2026-07-28 사양은 코어를 무상태(stateless) 요청/응답 구조로 바꾸고, 인가를 강화했습니다. RFC 9207 issuer 검증이 필수가 되었고, 클라이언트 자격 증명을 발급한 인가 서버에 묶었으며, Dynamic Client Registration 대신 Client ID Metadata Documents 쪽으로 옮겨 갑니다. 또한 Roots·Sampling·Logging을 코어에서 빼는 deprecation(최소 12개월 유예)과 HTTP+SSE 전송 방식의 공식 deprecation이 포함되었습니다. ([MCP 공식 블로그](https://blog.modelcontextprotocol.io/posts/2026-07-28/), 2026-10-12 확인)
+- 확인된 사실: A2A는 v1.0을 첫 안정(stable) 사양으로 내면서 '암호학적 신원 확인을 위한 Signed Agent Cards'를 포함했습니다(Linux Foundation 2026-04-09 발표). 원문 표의 'Agent Card 위·변조 → 서명된 Agent Card 사용' 대응이 이제 사양 차원에서 지원됩니다. ([Linux Foundation 발표](https://www.linuxfoundation.org/press/a2a-protocol-surpasses-150-organizations-lands-in-major-cloud-platforms-and-sees-enterprise-production-use-in-first-year), 2026-10-12 확인)
+- 확인된 사실: 대표적인 MCP 관련 CVE로 CVE-2025-6514(mcp-remote가 신뢰할 수 없는 MCP 서버에 연결할 때 `authorization_endpoint` 응답으로 OS 명령 인젝션 발생)와 CVE-2025-49596(MCP Inspector 0.14.1 미만에서 인증 없는 요청으로 원격 코드 실행 가능)이 있습니다. ([NVD CVE-2025-6514](https://nvd.nist.gov/vuln/detail/CVE-2025-6514), [NVD CVE-2025-49596](https://nvd.nist.gov/vuln/detail/CVE-2025-49596), NVD API로 2026-10-12 확인)
+- 확인된 사실: 보안 업체 집계에 따르면 레지스트리를 통해 배포된 트로이 목마 MCP 서버(정상 프로젝트를 복제해 정보 탈취 악성코드를 심은 사례), 가짜 Postmark MCP 서버의 메일 BCC 탈취 등 공급망 사고가 2025~2026년에 이어졌습니다. ([AuthZed MCP 사고 타임라인](https://authzed.com/blog/timeline-mcp-breaches), 2026-10-12 확인 — 업체 정리 자료이므로 개별 사건은 원 출처로 재확인 권장)
+- 해석·전망: 원문의 위협 표는 지금도 그대로 유효합니다. 오히려 'MCP 서버를 쓰는 쪽(클라이언트·개발 도구)'도 공격 대상이 된다는 점이 CVE로 드러났습니다. 2026-07-28 사양의 인가 강화는 반가운 변화지만, 이미 배포된 서버와 SDK가 새 사양을 따르기까지는 시간이 걸릴 것으로 보입니다.
+
+교육·실습 관점: MCP 실습 자료가 2025년 사양(HTTP+SSE 전송, Sampling 등)을 전제로 쓰였다면 2026-07-28 사양 기준으로 다시 점검하십시오. deprecated 기능은 당분간 동작하더라도 새 실습의 기본값으로 쓰지 않는 편이 좋습니다. 보안 실습으로는 '사용 중인 MCP 서버·클라이언트 버전을 위 CVE와 대조하고, 로컬 MCP Inspector를 최신 버전으로 올리기'가 짧고 효과적인 과제입니다.
+:::
+
 ## AI Agent 거버넌스
 
 ### AI 거버넌스의 필요성
@@ -575,6 +644,19 @@ Agent 시스템에서는 자율적 의사결정과 도구 실행이 수반되므
 
 > **Agent 시스템에 대한 시사점:** AI Agent가 고영향 의사결정(채용 필터링, 신용 평가 보조 등)에 활용되는 경우, 영향평가 의무가 적용될 가능성이 높으며, Agent의 의사결정 과정을 설명할 수 있는 체계를 사전에 마련해야 합니다.
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 법은 예정대로 2026-01-22 시행되었고, 시행령으로 세부 기준이 정해졌습니다. 다만 과태료는 '최소 1년 이상' 계도기간 중이라 실제 부과는 아직 시작되지 않았습니다.
+
+- 확인된 사실: 과기정통부는 「인공지능 발전과 신뢰 기반 조성 등에 관한 기본법」이 2026-01-22 시행되었다고 밝혔습니다. 최소 1년 이상의 계도기간을 두고, 이 기간에는 인명 사고·인권 침해처럼 사회적 문제가 중대한 극히 예외적인 경우에만 사실조사를 하겠다고 했습니다. 기업 문의를 돕는 'AI기본법 지원데스크'도 운영합니다. ([정책브리핑 2026-01](https://www.korea.kr/news/policyNewsView.do?newsId=148958380), 2026-10-12 확인)
+- 확인된 사실: 시행령(입법예고 2025-11-12~12-22) 기준으로, 실제와 구분하기 어려운 생성물(딥페이크 등)은 AI 생성 사실을 명확히 표시해야 합니다. 안전성 확보 의무 대상인 고성능 AI는 학습 누적 연산량 10^26 FLOPs 이상 등을 기준으로 삼고, 고영향 AI 해당 여부 확인은 과기정통부가 기본 30일(1회 30일 연장 가능) 안에 처리합니다. ([정책브리핑 2025-11 입법예고](https://www.korea.kr/news/policyNewsView.do?newsId=148954629), 2026-10-12 확인)
+- 확인된 사실: 과태료(최대 3천만 원) 대상은 투명성 관련 사전고지 미이행, 일정 기준 이상 해외 사업자의 국내대리인 미지정, 시정명령 미이행입니다. 계도기간 중에도 시정명령은 나올 수 있고, 이를 따르지 않으면 과태료 대상이 됩니다. ([TBC 보도](https://www.tbc.co.kr/news/view?id=200749), 검색 결과로만 확인)
+- 확인된 사실: 과기정통부는 「인공지능 투명성 확보 가이드라인」을 별도로 공개했습니다. ([과기정통부 보도자료](https://www.korea.kr/briefing/pressReleaseView.do?newsId=156740669), 검색 결과로만 확인)
+- 확인하지 못한 것: 법률 제21311호(2026-01-20 공포, 2026-07-21 시행)로 일부 개정이 있었다는 정보가 있으나, 법제처 원문을 직접 열어 보지는 못했습니다(검색 결과로만 확인). 계도기간의 정확한 종료일은 법 조문에 없는 정책 약속이라, 2027-01 이후 언제 과태료 부과가 시작될지는 공식 발표가 나오기 전까지 확정할 수 없습니다.
+- 해석·전망: 원문 표의 '이용자 보호(차별 금지, 이의제기 권리)', 'AI 의사결정 과정의 설명 가능성' 같은 항목은 법의 취지를 넓게 요약한 것입니다. 실제 의무 조항(투명성 제31조, 안전성 제32조, 고영향 AI 사업자 책무 제34조 등)과 1:1로 대응하지는 않으므로, 실무에서는 조문과 시행령을 직접 대조해야 합니다. 이 박스는 법률 자문이 아닙니다.
+
+교육·실습 관점: '계도기간이니 지금은 안 지켜도 된다'로 받아들이지 않게 지도하십시오. 계도기간에도 시정명령과 예외적 사실조사는 가능합니다. 생성형 AI를 쓰는 Agent라면 사전고지·표시(워터마크) 의무가 이미 적용 중이므로, 실습 과제에 'AI 생성 고지 문구와 표시 방식을 설계에 넣기'를 추가하는 것을 권합니다. 고영향 해당 여부가 애매하면 과기정통부 확인 절차(기본 30일)를 일정에 반영하도록 안내하는 것도 좋습니다.
+:::
+
 #### (2) EU AI Act 핵심 내용
 
 EU AI Act는 세계 최초의 포괄적 AI 규제 법안으로, 2024년 8월에 발효되었습니다.
@@ -594,6 +676,18 @@ EU AI Act는 세계 최초의 포괄적 AI 규제 법안으로, 2024년 8월에 
 
 > **Agent 시스템에 대한 시사점**: EU AI Act는 AI 시스템의 자율성 수준에 따라 규제 강도가 달라질 수 있으며, 자율적으로 의사결정하고 행동하는 Agent는 더 높은 수준의 인간 감독(Human Oversight) 의무가 부과될 수 있습니다. 특히 고위험 분야에서 Agent를 배포할 경우, 적합성 평가(Conformity Assessment)를 반드시 수행해야 합니다.
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 원문 작성 당시 '제안' 단계였던 Digital Omnibus on AI가 확정·발효되어, 고위험 AI 의무 적용 시점이 2027-12 이후로 미뤄졌습니다. 반면 투명성 의무와 GPAI 집행은 2026-08부터 실제로 적용되고 있습니다.
+
+- 확인된 사실: Digital Omnibus on AI는 Regulation (EU) 2026/1744로 2026-07-24 EU 관보(Official Journal)에 게재되었고, 2026-07-27 발효되었습니다. 원래 고위험 의무가 시작될 예정이던 2026-08-02보다 먼저 발효되어 연기가 법적으로 효력을 가집니다. ([European Commission, AI Omnibus enters into force](https://digital-strategy.ec.europa.eu/en/news/ai-omnibus-enters-force), 2026-10-12 확인 / [EUR-Lex ELI](http://data.europa.eu/eli/reg/2026/1744/oj), 관보 번호·날짜는 [nicfab 정리](https://www.nicfab.eu/en/posts/digital-omnibus-ai-official-journal/)로 확인)
+- 확인된 사실: 변경된 일정은 다음과 같습니다(EU AI Act Service Desk 공식 타임라인 기준). 2025-08-02부터 GPAI 모델 제공자 의무가 적용되었고, 2026-08-02부터는 Article 50 투명성 의무가 적용되며 GPAI·금지 관행·투명성·AI 리터러시에 대한 EU 및 회원국 차원의 집행이 시작되었습니다. 2026-12-02에는 비동의 성적 딥페이크·아동 성착취물 생성 관련 금지가 추가되고, 2026-08-02 이전 출시된 합성 콘텐츠 시스템의 Article 50(2) 표시 의무 유예가 끝납니다. Annex III 고위험(채용, 교육, 생체인식, 핵심 인프라 등)은 2027-12-02, Annex I(제품 내장형)은 2028-08-02부터 적용됩니다. ([AI Act Service Desk 타임라인](https://ai-act-service-desk.ec.europa.eu/en/ai-act/timeline/timeline-implementation-eu-ai-act), 2026-10-12 확인)
+- 확인된 사실: Omnibus는 이 밖에도 AI 리터러시 의무를 완화했고(기업 의무 대신 집행위·회원국의 촉진 역할 강화), 일부 SME 특례를 small mid-cap 기업으로 확대했으며, 등록 의무 간소화와 AI Office 감독 권한 확대를 담고 있습니다. ([European Commission](https://digital-strategy.ec.europa.eu/en/news/ai-omnibus-enters-force), 2026-10-12 확인)
+- 해석·전망: 원문의 '고위험 분야 Agent는 적합성 평가를 반드시 수행' 서술은 방향은 맞지만, 의무가 실제로 적용되는 시점은 이제 Annex III 기준 2027-12-02입니다. 그렇다고 준비를 미뤄도 된다는 뜻은 아닙니다. EU 고객과의 계약이나 조달 요건에서 먼저 요구될 수 있고, 챗봇형 Agent의 'AI임을 고지' 의무(Article 50)는 이미 적용 중입니다. 원문 표의 제재 금액(7%/3,500만 유로 등)은 Omnibus 이후에도 기본 구조는 유지된 것으로 보이나, SME·small mid-cap 상한 특례가 생긴 점은 감안해야 합니다.
+- 확인하지 못한 것: 관보 원문(EUR-Lex)은 페이지가 비어 있는 형태로 열려 조문 단위 대조는 하지 못했습니다. 위 내용은 집행위 공식 페이지와 AI Act Service Desk 기준입니다. 이 박스는 법률 자문이 아닙니다.
+
+교육·실습 관점: 강의 자료의 EU 타임라인 슬라이드에서 '2026-08 고위험 의무 시작'은 반드시 고쳐야 합니다. 이 글처럼 원문을 그대로 남겨 두는 경우에는 이 박스를 함께 보여 주십시오. 실습 과제에서는 '우리 Agent가 Article 50 고지 의무 대상인가(지금 적용)'와 'Annex III 고위험인가(2027-12 적용)'를 분리해서 판단하게 하면 시점별 대응을 명확히 이해할 수 있습니다.
+:::
+
 #### (3) 기타 주요 규제 동향
 
 - **미국:** NIST AI RMF를 통해 자발적 AI 안전 기준 제시. 2023년 바이든 행정명령(EO 14110)은 2025년 1월 트럼프 행정부에 의해 폐기되었으며, 이를 대체하는 행정명령(EO 14179, "Removing Barriers to American Leadership in AI")이 서명되어 AI 규제 완화 방향으로 전환
@@ -603,6 +697,20 @@ EU AI Act는 세계 최초의 포괄적 AI 규제 법안으로, 2024년 8월에 
 - **일본**: 2024년 「AI Guidelines for Business」를 발표하여 기업의 자율적 AI 거버넌스를 중심으로 한 소프트 규제(soft law) 프레임워크를 제시하였다. 이후 2025년 「AI Promotion Act」를 제정하여 AI 연구·개발과 활용을 촉진하기 위한 국가 차원의 법적 기반을 마련하였다.
 
 - **국제 표준**: ISO/IEC 42001:2023 (AI 관리 시스템, 세계 최초 AI 관리 체계 국제 표준), ISO/IEC 23894:2023 (AI 리스크 관리) 등의 국제 표준이 발표되어 기업의 AI 거버넌스 구축에 참고 가능
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 미국은 연방 차원에서 주(州) AI 법을 견제하는 쪽으로 움직였고, 주 법은 개정·대체되었습니다. NIST는 AI RMF 본체는 그대로 둔 채 Agent 보안 전용 이니셔티브를 시작했습니다.
+
+- 확인된 사실(미국 연방): 2025-12-11 행정명령 EO 14365 「Ensuring a National Policy Framework for Artificial Intelligence」가 서명되었습니다. 법무장관에게 30일 안에 연방 정책과 충돌하는 주 AI 법에 소송으로 대응할 'AI Litigation Task Force'를 꾸리도록 했고, 상무장관에게 90일 안에 부담스러운 주 법을 식별하게 했으며, BEAD 보조금 등 연방 자금과의 연계도 지시했습니다. ([White House](https://www.whitehouse.gov/presidential-actions/2025/12/eliminating-state-law-obstruction-of-national-artificial-intelligence-policy/), 2026-10-12 확인) 이어 2026-03-20 백악관은 의회용 입법 권고안(National Policy Framework for AI: Legislative Recommendations)을 냈습니다. ([WilmerHale](https://www.wilmerhale.com/en/insights/blogs/wilmerhale-privacy-and-cybersecurity-law/20260323-white-house-releases-national-policy-framework-for-artificial-intelligence), 검색 결과로만 확인)
+- 확인된 사실(미국 주): 콜로라도 AI Act(SB 24-205)는 시행일이 2026-06-30으로 한 차례 연기되었다가, 시행 전인 2026-05-14 서명된 SB 26-189로 대체되었습니다. 새 법은 '고위험 AI 시스템' 대신 '자동화된 의사결정 기술(ADMT)'을 중심으로 하며, 개발자 문서 제공 의무 등은 2027-01-01부터 적용됩니다. ([Colorado General Assembly SB26-189](https://leg.colorado.gov/bills/sb26-189), 2026-10-12 확인) 캘리포니아 SB 53(Transparency in Frontier Artificial Intelligence Act)은 2025-09-29 서명되어 2026-01-01부터 시행 중이며, 10^26 FLOPs 이상으로 학습한 프런티어 모델 개발자에게 공개·보고 의무를 지웁니다. ([Clifford Chance](https://www.cliffordchance.com/insights/resources/blogs/talking-tech/en/articles/2025/10/sb-53--california-sets-standards-for-ai-transparency.html), 검색 결과로만 확인)
+- 확인된 사실(NIST): NIST CAISI가 2026-02-17 'AI Agent Standards Initiative'를 발표했습니다. Agent 보안 RFI(3월 마감)와 Agent 신원·인가(Identity and Authorization) 개념 문서 의견 수렴을 진행했습니다. ([NIST](https://www.nist.gov/news-events/news/2026/02/announcing-ai-agent-standards-initiative-interoperable-and-secure), 2026-10-12 확인) CSF 2.0 기반의 Cyber AI Profile(NIST IR 8596)은 2025-12 예비 초안이 나왔고, 의견 수렴이 2026-01-30 끝났습니다. ([NIST CSRC](https://csrc.nist.gov/pubs/ir/8596/iprd), 검색 결과로만 확인)
+- 확인된 사실(국제 표준): ISO/IEC 42001:2023은 그대로이며, 관련 표준으로 AI 영향평가 지침 ISO/IEC 42005(2025-05)와 AIMS 인증기관 요구사항 ISO/IEC 42006(2025-07)이 발행되었습니다. ([ISO/IEC 42005:2025](https://www.iso.org/standard/42005), 검색 결과로만 확인 / ISO/IEC 42006 발행 시점도 검색 결과로만 확인)
+- 확인된 사실(중국): 원문의 2023년 잠정 조치에 더해, 「AI 생성 합성 콘텐츠 표시 방법(标识办法)」과 강제 국가표준이 2025-09-01 시행되어 명시적·암묵적(메타데이터) 표시가 의무화되었습니다. ([Loeb & Loeb](https://www.loeb.com/en/insights/publications/2025/03/chinas-ai-labeling-measures-and-mandatory-national-standards-take-effect-september-1), 검색 결과로만 확인)
+- 확인하지 못한 것: NIST AI RMF 1.0의 개정판과 Cyber AI Profile 최종본은 2026-10-12 기준으로 공식 발표를 찾지 못했습니다. 제3자 추적 사이트([NormGrid](https://www.normgrid.com/nist-ai-rmf/timeline/))도 '개정 초안 미공개'로 정리하고 있습니다. 연방 행정명령의 주 법 선점(preemption) 효력은 소송과 의회 입법에 달려 있어 현재로서는 확정되지 않았습니다. 이 박스는 법률 자문이 아닙니다.
+- 해석·전망: 원문의 '미국은 규제 완화 방향' 서술은 여전히 맞습니다. 다만 2026년에는 '연방은 완화, 주는 개별 입법, 연방이 주 법을 견제'라는 3중 구도가 되었습니다. 미국 고객 대상 프로젝트라면 어느 주의 법이 적용되는지가 더 중요해졌습니다.
+
+교육·실습 관점: 규제 동향 슬라이드에 '콜로라도 AI Act 2026-02 시행'처럼 적혀 있다면 'SB 26-189로 대체, ADMT 중심, 2027-01 적용'으로 바꾸십시오. NIST 쪽은 AI RMF 1.0을 기본 틀로 유지하되, Agent 과정에서는 CAISI AI Agent Standards Initiative와 OWASP Agentic Top 10을 보조 참고자료로 소개하는 구성이 현재 상황에 맞습니다.
+:::
 
 ### 기업 AI 거버넌스 프레임워크
 
@@ -691,6 +799,16 @@ Agent 시스템의 실시간 상태를 파악하고 이상을 감지하기 위�
 - 가드레일 트리거 빈도 (어떤 유형의 입력/출력이 필터링되었는가)
 
 **주요 도구:** LangSmith, Langfuse, Arize Phoenix 등의 LLM Observability 플랫폼 활용 / OpenTelemetry 기반의 표준화된 트레이싱 통합
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — OpenTelemetry GenAI 시맨틱 컨벤션은 별도 저장소로 옮겨졌지만, 여전히 안정(Stable) 버전이 아니라 'Development' 단계입니다.
+
+- 확인된 사실: opentelemetry.io의 GenAI 시맨틱 컨벤션 페이지는 내용이 'OpenTelemetry GenAI semantic conventions repository'로 옮겨졌다고 안내합니다. 새 저장소(`open-telemetry/semantic-conventions-genai`)는 GenAI 클라이언트 스팬·메트릭·이벤트, Agent 스팬, MCP, 공급사별(Anthropic, AWS Bedrock, Azure AI Inference, OpenAI) 컨벤션을 다룹니다. ([OpenTelemetry 문서](https://opentelemetry.io/docs/specs/semconv/gen-ai/), [GitHub 저장소](https://github.com/open-telemetry/semantic-conventions-genai), 2026-10-12 확인)
+- 확인된 사실: 2026-10-12 기준 새 저장소의 Agent 스팬 문서(`gen-ai-agent-spans.md`)는 문서 상태가 'Development'이고, `gen_ai.operation.name` 같은 핵심 속성도 'Development' 표시입니다. ([gen-ai-agent-spans.md](https://github.com/open-telemetry/semantic-conventions-genai/blob/main/docs/gen-ai/gen-ai-agent-spans.md), 2026-10-12 확인)
+- 해석·전망: 일부 블로그에 'GenAI 컨벤션이 Stable이 되었다'는 서술이 보이지만, 공식 저장소 기준으로는 사실이 아닙니다. Development 단계 속성은 이름이 바뀔 수 있으므로, 대시보드·알림 규칙을 속성 이름에 강하게 묶으면 업그레이드 때 깨질 수 있습니다.
+
+교육·실습 관점: 'OpenTelemetry로 Agent 트레이싱' 실습에서는 사용하는 계측 라이브러리와 semconv 버전을 명시적으로 고정하고, 속성 이름이 바뀔 수 있다는 점을 미리 알려 주십시오. 예전 실습 자료가 opentelemetry.io의 gen-ai 페이지를 기준 문서로 링크하고 있다면 새 저장소 링크로 바꾸는 것이 좋습니다. MCP 도구 호출 트레이싱도 이 저장소에 MCP 컨벤션이 들어 있으므로, 본문의 '감사 추적 통합(MCP 도구 호출 + A2A Task 기록)' 실습에 함께 활용할 수 있습니다.
+:::
 
 ## 안전한 Agent 설계 원칙
 
@@ -815,6 +933,19 @@ NSFW란 **직장이나 공공장소에서 열람하기에 부적절한 콘텐츠
 
 위 도구들이 추론(런타임) 단계에서 입출력을 필터링하는 방식이라면, Anthropic의 **Constitutional AI**는 접근 방식이 다릅니다. 사전 정의된 원칙(헌법) 목록에 따라 모델이 스스로 응답을 평가·수정하도록 **학습 단계에서 안전성을 내재화**하는 방법론으로, 런타임 도구가 아닌 모델 훈련 기법에 해당합니다.
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 표의 세 도구는 모두 계속 유지되고 있지만, 저장소 위치와 최신 버전, 함께 쓸 만한 분류 모델이 달라졌습니다.
+
+- 확인된 사실: NeMo Guardrails 저장소는 `NVIDIA-NeMo/Guardrails`로 옮겨졌고, 최신 릴리스는 v0.24.1(2026-09-16)입니다. Guardrails AI는 v0.11.0(2026-08-14)까지 나왔고 Apache-2.0 라이선스로 활발히 유지되고 있습니다. ([NeMo Guardrails GitHub](https://github.com/NVIDIA-NeMo/Guardrails), [Guardrails AI GitHub](https://github.com/guardrails-ai/guardrails), 2026-10-12 확인)
+- 확인된 사실: Meta의 안전 분류기 최신 공개 모델은 Llama Guard 4(12B, 2025-04 공개, 텍스트+이미지 멀티모달)입니다. 프롬프트 인젝션·탈옥 탐지에 특화된 경량 분류기 Llama Prompt Guard 2(22M/86M)도 함께 공개되어 있습니다. 2026-10-12 기준 Hugging Face의 meta-llama 계정에서 이보다 새로운 Guard 모델은 찾지 못했습니다. ([Hugging Face Llama-Guard-4-12B](https://huggingface.co/meta-llama/Llama-Guard-4-12B), [Llama-Prompt-Guard-2-86M](https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-86M), 2026-10-12 확인)
+- 확인된 사실: 사용자가 직접 쓴 정책 문서를 기준으로 판정하는 오픈 웨이트 안전 분류 모델로 OpenAI의 gpt-oss-safeguard(20B, Apache-2.0)도 공개되어 있습니다. ([Hugging Face gpt-oss-safeguard-20b](https://huggingface.co/openai/gpt-oss-safeguard-20b), 2026-10-12 확인)
+- 확인된 사실: 원문이 인용한 MLCommons AILuminate v1.0의 12개 위험 범주 구성은 v1.0 논문과 일치합니다. ([AILuminate v1.0 논문](https://arxiv.org/abs/2503.05731), 검색 결과로만 확인 — v1.0 이후 범주 개정 여부는 확인하지 못함)
+- 확인하지 못한 것: 원문의 'OpenAI Moderation API가 MLCommons 분류 체계를 기반으로 구현'이라는 서술은 이번에 공식 근거를 찾지 못했습니다. Llama Guard 계열이 MLCommons 분류를 기반으로 한다는 점은 널리 알려져 있지만, OpenAI Moderation의 범주(harassment, self-harm 등)는 자체 분류로 보는 편이 안전합니다. MLCommons가 별도 Jailbreak 벤치마크를 냈다는 정보도 있으나 공식 페이지로 확인하지는 못했습니다.
+- 해석·전망: 원문 표의 LlamaGuard 설명 중 'permit/deny'는 실제 출력 형식과 다릅니다. Llama Guard는 safe/unsafe와 위반 범주 코드를 출력하므로 실습 코드에서 이 형식으로 파싱해야 합니다.
+
+교육·실습 관점: 가드레일 실습은 '프롬프트 인젝션 탐지(Prompt Guard 2 같은 경량 분류기) → 유해성 분류(Llama Guard 4) → 정책 판정(LLM 또는 gpt-oss-safeguard 같은 정책 기반 분류기)'의 3단 구성으로 짜면, 본문 트레이드오프 표의 '규칙 → 전용 분류기 → LLM' 흐름을 그대로 체험할 수 있습니다. NeMo Guardrails 실습 자료의 설치 경로나 저장소 링크가 예전 위치(`NVIDIA/NeMo-Guardrails`)라면 새 위치로 바꾸고, 버전을 고정해 두십시오.
+:::
+
 #### 운영 정책: Graceful Degradation(우아한 성능 저하)과 Fail-Closed(기본 차단)
 
 가드레일은 "차단 여부"만이 아니라, 차단 이후 시스템이 어떤 방식으로 계속 동작할지도 함께 설계해야 합니다. 운영 환경에서는 보안 정책 위반과 가드레일 자체의 장애 상황을 구분해 대응하는 것이 중요합니다.
@@ -837,3 +968,48 @@ Agent 시스템을 설계하고 운영할 때 준수해야 하는 **책임 있�
 | **(3) 안전성 (Safety)** | 사용자나 제3자에게 피해를 끼치지 않도록 설계, Fail-safe 메커니즘 구현, 위험한 상황에서는 인간에게 에스컬레이션 | 금융 Agent가 일정 금액 이상의 거래를 자동 실행하지 않고 인간 승인을 요청 |
 | **(4) 프라이버시 (Privacy)** | 개인정보의 최소 수집, 목적 제한, 보관 기한 준수, 사용자 데이터 접근·수정·삭제 권리 보장 | 고객 서비스 Agent가 대화 종료 후 개인정보를 자동 마스킹하여 저장 |
 | **(5) 책임성 (Accountability)** | Agent의 모든 행동에 대해 책임 소재를 명확히 정의, 조직이 책임을 지는 체계 구축, 정기적인 감사와 리뷰 | Agent의 모든 도구 호출과 의사결정을 Audit Trail에 기록하여 사후 추적 가능 |
+
+## 2026년 하반기 업데이트 참고자료 (2026-10-12 확인)
+
+- [OpenAI — Why SWE-bench Verified no longer measures frontier coding capabilities](https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/) — SWE-bench Verified 보고 중단, 테스트 결함·오염 (검색 결과로만 확인)
+- [OpenAI — Separating signal from noise in coding evaluations](https://openai.com/index/separating-signal-from-noise-coding-evaluations/) — SWE-Bench Pro 과제 약 30% 결함 추정 (검색 결과로만 확인)
+- [Sierra — τ³-bench: Knowledge](https://sierra.ai/resources/research/tau-3-bench-knowledge) — τ-bench → τ²-bench → τ³-bench(2026-03-18) 경과
+- [OpenAI — OpenAI to acquire Promptfoo](https://openai.com/index/openai-to-acquire-promptfoo/) — Promptfoo 인수 발표(2026-03-09) (검색 결과로만 확인)
+- [promptfoo GitHub](https://github.com/promptfoo/promptfoo) — MIT 라이선스, 활발한 유지보수
+- [ClickHouse — ClickHouse welcomes Langfuse](https://clickhouse.com/blog/clickhouse-acquires-langfuse-open-source-llm-observability) — Langfuse 인수, MIT 오픈소스·자체 호스팅 유지
+- [Ragas GitHub](https://github.com/vibrantlabsai/ragas) · [PyPI ragas](https://pypi.org/project/ragas/) — 저장소 이전, 최신 릴리스 0.4.3(2026-01-13)
+- [DeepEval GitHub](https://github.com/confident-ai/deepeval) · [Arize Phoenix GitHub](https://github.com/Arize-ai/phoenix) — 2026-09~10 릴리스 확인
+- [CB Insights — Braintrust vs Langfuse](https://www.cbinsights.com/compare/braintrust-data-vs-langfuse) — Braintrust 2026-02-17 8,000만 달러 조달 (검색 결과로만 확인)
+- [NVD CVE-2025-32711](https://nvd.nist.gov/vuln/detail/CVE-2025-32711) — M365 Copilot AI command injection(EchoLeak)
+- [NVD CVE-2025-6514](https://nvd.nist.gov/vuln/detail/CVE-2025-6514) — mcp-remote OS 명령 인젝션
+- [NVD CVE-2025-49596](https://nvd.nist.gov/vuln/detail/CVE-2025-49596) — MCP Inspector 인증 부재로 인한 RCE
+- [OWASP GenAI — Top 10 for Agentic Applications for 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/) — 2025-12-09 공개
+- [Cycode — OWASP Top 10 for Agentic Applications](https://cycode.com/blog/owasp-top-10-agentic-applications/) — ASI01~ASI10 항목명, EchoLeak 시나리오 (검색 결과로만 확인)
+- [OWASP GenAI — LLM Top 10 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) — 2026-08-03 공개
+- [OWASP GenAI — 2026 Top 10 for LLM Applications 및 Agent Control Standard 발표](https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/) — 2026년판 순위, ACS 공개
+- [OWASP — LLM Top 10(2025) 페이지](https://genai.owasp.org/llm-top-10/) — 원문 표의 2025년판 항목 대조
+- [Imperva — OWASP LLM Top 10 2026: What Changed](https://www.imperva.com/blog/owasp-llm-top-10-2026-what-changed/) — 2026년판 전체 목록·명칭 변경
+- [Linux Foundation — Agentic AI Foundation 출범](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation) — MCP의 AAIF 편입(2025-12-09)
+- [MCP Blog — The 2026-07-28 Specification](https://blog.modelcontextprotocol.io/posts/2026-07-28/) — 무상태 코어, 인가 강화, deprecation
+- [Linux Foundation — A2A Protocol surpasses 150 organizations](https://www.linuxfoundation.org/press/a2a-protocol-surpasses-150-organizations-lands-in-major-cloud-platforms-and-sees-enterprise-production-use-in-first-year) — A2A v1.0, Signed Agent Cards
+- [AuthZed — A Timeline of MCP Security Breaches](https://authzed.com/blog/timeline-mcp-breaches) — MCP 공급망·보안 사고 정리
+- [정책브리핑 — '인공지능기본법' 22일 시행](https://www.korea.kr/news/policyNewsView.do?newsId=148958380) — 시행, 계도기간, 표시 의무, 지원데스크
+- [정책브리핑 — AI기본법 시행령 입법예고](https://www.korea.kr/news/policyNewsView.do?newsId=148954629) — 표시 의무, 10^26 FLOPs, 고영향 확인 절차, 계도기간
+- [TBC — AI 기본법 시행령 공개…과태료 1년 이상 유예](https://www.tbc.co.kr/news/view?id=200749) — 과태료 대상 (검색 결과로만 확인)
+- [과기정통부 — 인공지능 투명성 확보 가이드라인 공개](https://www.korea.kr/briefing/pressReleaseView.do?newsId=156740669) — 가이드라인 공개 (검색 결과로만 확인)
+- [European Commission — AI Omnibus enters into force](https://digital-strategy.ec.europa.eu/en/news/ai-omnibus-enters-force) — 2026-07-27 발효, 새 일정과 주요 변경
+- [EU AI Act Service Desk — Timeline](https://ai-act-service-desk.ec.europa.eu/en/ai-act/timeline/timeline-implementation-eu-ai-act) — 2025~2028 적용 일정
+- [EUR-Lex — Regulation (EU) 2026/1744](http://data.europa.eu/eli/reg/2026/1744/oj) · [nicfab 정리](https://www.nicfab.eu/en/posts/digital-omnibus-ai-official-journal/) — 관보 번호·게재일
+- [White House — EO 14365](https://www.whitehouse.gov/presidential-actions/2025/12/eliminating-state-law-obstruction-of-national-artificial-intelligence-policy/) — 연방 AI 정책 프레임워크, AI Litigation Task Force
+- [WilmerHale — White House Releases National Policy Framework for AI](https://www.wilmerhale.com/en/insights/blogs/wilmerhale-privacy-and-cybersecurity-law/20260323-white-house-releases-national-policy-framework-for-artificial-intelligence) — 2026-03-20 입법 권고안 (검색 결과로만 확인)
+- [Colorado General Assembly — SB26-189](https://leg.colorado.gov/bills/sb26-189) — SB 24-205 대체, ADMT, 2027-01-01 적용
+- [Clifford Chance — SB 53](https://www.cliffordchance.com/insights/resources/blogs/talking-tech/en/articles/2025/10/sb-53--california-sets-standards-for-ai-transparency.html) — 캘리포니아 SB 53 서명·시행일 (검색 결과로만 확인)
+- [NIST — AI Agent Standards Initiative](https://www.nist.gov/news-events/news/2026/02/announcing-ai-agent-standards-initiative-interoperable-and-secure) — 2026-02-17 발표
+- [NIST CSRC — IR 8596 (Cyber AI Profile) 예비 초안](https://csrc.nist.gov/pubs/ir/8596/iprd) — 초안 상태 (검색 결과로만 확인)
+- [NormGrid — NIST AI RMF Timeline](https://www.normgrid.com/nist-ai-rmf/timeline/) — AI RMF 개정 초안 미공개 (제3자 자료)
+- [ISO/IEC 42005:2025](https://www.iso.org/standard/42005) — AI 영향평가 표준 (검색 결과로만 확인)
+- [Loeb & Loeb — China's AI Labeling Measures](https://www.loeb.com/en/insights/publications/2025/03/chinas-ai-labeling-measures-and-mandatory-national-standards-take-effect-september-1) — 중국 AI 생성물 표시 의무 2025-09-01 시행 (검색 결과로만 확인)
+- [OpenTelemetry — GenAI semantic conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/) · [semantic-conventions-genai 저장소](https://github.com/open-telemetry/semantic-conventions-genai) — 저장소 이전, Development 상태
+- [NeMo Guardrails GitHub](https://github.com/NVIDIA-NeMo/Guardrails) · [Guardrails AI GitHub](https://github.com/guardrails-ai/guardrails) — 저장소 위치·최신 릴리스
+- [Hugging Face — Llama-Guard-4-12B](https://huggingface.co/meta-llama/Llama-Guard-4-12B) · [Llama-Prompt-Guard-2-86M](https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-86M) · [gpt-oss-safeguard-20b](https://huggingface.co/openai/gpt-oss-safeguard-20b) — 안전 분류 모델 현황
+- [MLCommons AILuminate v1.0 논문](https://arxiv.org/abs/2503.05731) — 12개 위험 범주

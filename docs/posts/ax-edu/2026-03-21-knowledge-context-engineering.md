@@ -5,6 +5,15 @@ date: 2026-03-21T09:20:00
 
 # Chapter 3. Knowledge & Context Engineering
 
+::: info 2026년 하반기 업데이트 안내 · 2026-10-12 기준
+이 글은 2026년 상반기에 작성한 원문을 그대로 두고, 바뀐 내용을 각 섹션 아래 '2026년 하반기 업데이트' 박스로 덧붙였습니다. 핵심 변화:
+- Microsoft GraphRAG 저장소가 2026년 8월부터 사실상 유지보수 모드(신규 기능·신규 PR 중단)로 전환되었습니다. 방법론은 유효하지만 실습·도입 도구 선택은 다시 따져 봐야 합니다.
+- 임베딩·리랭커 세대가 바뀌었습니다. Gemini Embedding 2는 정식 모델 `gemini-embedding-2`가 되었고(프리뷰는 2026-08-10 종료), Cohere는 Embed 5와 Rerank 4(`-pro`/`-fast`)를 제공합니다. OpenAI text-embedding-3는 변화가 없습니다.
+- RAGAS는 v0.4에서 `evaluate()`가 deprecated되고 메트릭 import 경로·필드명이 바뀌었습니다. 2026-01 v0.4.3 이후 새 릴리스가 없습니다.
+- 컨텍스트 윈도우 표의 모델 대부분이 세대 교체되었습니다(Claude 5.x, GPT-6 계열, Gemini 3.x). Claude Sonnet 4는 2026-06-15에 은퇴했고 Sonnet 4.5는 2026-11-30 은퇴 예정입니다.
+- Anthropic 압축(Compaction)이 임계값 방식과 온디맨드 방식으로 나뉘었고, 최신 Claude 모델은 이전 턴 thinking 블록을 기본으로 유지합니다. Context Awareness 대신 Task Budgets(베타)를 쓰는 모델도 늘었습니다.
+:::
+
 ## Knowledge(지식)의 개념
 
 ### AI에서 Knowledge란?
@@ -158,6 +167,18 @@ Cohere에서 제공하는 최신 임베딩 모델 (최대 1,536차원, 128K 컨�
 Google의 최신 멀티모달 임베딩 모델 (최대 3,072차원, 8,192 토큰)
 텍스트뿐 아니라 이미지, 비디오, 오디오, PDF까지 하나의 임베딩 공간에서 처리하는 네이티브 멀티모달 모델
 100개 이상의 언어를 지원하며, 검색, 분류, 클러스터링 등 다양한 태스크 유형(Task Type)을 지정하여 최적화 가능
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 세 임베딩 모델 중 Gemini와 Cohere 쪽에 세대·상태 변화가 있었고, OpenAI text-embedding-3는 그대로입니다.
+
+- 확인된 사실: OpenAI `text-embedding-3-small`/`-large`는 모델 문서와 지원 중단 페이지 어디에도 종료 공지가 없습니다. 가격은 100만 토큰당 small $0.02, large $0.13입니다. OpenAI가 새 세대 임베딩 모델을 발표했다는 공식 자료는 찾지 못했습니다. 원문의 "최신"은 "현행"으로 읽으면 됩니다. ([OpenAI text-embedding-3-small 모델 문서](https://developers.openai.com/api/docs/models/text-embedding-3-small), [OpenAI Deprecations](https://developers.openai.com/docs/deprecations), 2026-10-12 확인)
+- 확인된 사실: 원문 당시 프리뷰였던 Gemini Embedding 2는 이제 정식(Stable) 모델 `gemini-embedding-2`입니다. 최대 입력 8,192 토큰, 128~3,072차원, 텍스트·이미지·비디오·오디오·PDF를 지원합니다. 프리뷰 모델(`embedding-2-preview`)은 2026-08-10에 종료되었고, `text-embedding-004`는 2026-01-14에 종료되었으며, `gemini-embedding-001`은 2028-05-14 종료 예정입니다. ([Gemini API Embeddings](https://ai.google.dev/gemini-api/docs/embeddings), [Gemini API Deprecations](https://ai.google.dev/gemini-api/docs/deprecations), 2026-10-12 확인)
+- 확인된 사실: Gemini 문서에 따르면 `gemini-embedding-2`는 태스크 유형을 별도의 `task_type` 파라미터가 아니라 프롬프트 안의 지시로 지정합니다(`task_type` 파라미터는 `gemini-embedding-001` 방식). 또 두 모델의 임베딩 공간은 서로 호환되지 않습니다. 원문의 "태스크 유형(Task Type)을 지정" 설명은 이 차이를 감안해 읽어야 합니다. ([Gemini API Embeddings](https://ai.google.dev/gemini-api/docs/embeddings), 2026-10-12 확인)
+- 확인된 사실: Cohere 모델 문서에는 `embed-v4.0`보다 새로운 `embed-v5.0-pro`/`embed-v5.0-fast`가 올라와 있습니다. 128K 컨텍스트, 최대 2,048차원, 텍스트·이미지·혼합 문서를 지원하며 `embed-v4.0`은 이전 세대로 남아 있습니다. ([Cohere Models 문서](https://docs.cohere.com/docs/models), 2026-10-12 확인) 출시일(2026-09-30), 가격(100만 토큰당 Pro $0.12, Fast $0.08), "Pro로 색인하고 Fast로 질의해도 같은 임베딩 공간을 공유한다"는 설명은 보도 기사로만 확인했습니다. ([Let's Data Science, Cohere Embed 5 출시 보도](https://letsdatascience.com/news/cohere-launches-embed-5-with-pro-and-fast-retrieval-models-bde2deee), 검색 결과로만 확인)
+- 해석·전망: 임베딩 모델 교체는 LLM 교체보다 비쌉니다. 벡터 공간이 바뀌면 기존 색인 전체를 다시 임베딩해야 하기 때문입니다. 이번 Gemini 프리뷰 종료처럼 "프리뷰 모델로 색인을 만들었다가 강제로 재색인하는" 일이 실제로 일어납니다. 원문의 "임베딩 모델 선택 시 고려할 점"에 '수명 주기(정식/프리뷰, 종료 일정)'를 하나 더 넣어도 좋겠습니다.
+
+교육·실습 관점: Gemini 임베딩 실습 코드는 모델명을 `gemini-embedding-2`로 바꾸고, `task_type` 인자를 넘기던 예제는 프롬프트 지시 방식으로 고쳐야 합니다(001을 계속 쓰면 기존 코드가 동작합니다). 001과 2의 벡터를 한 인덱스에 섞지 않도록 주의시키세요. 벡터 DB 메타데이터에 임베딩 모델명·버전·차원을 함께 저장하는 습관을 실습에서 꼭 다루시길 권합니다. 모델이 바뀌거나 종료될 때 어떤 색인을 다시 만들어야 하는지 바로 알 수 있습니다.
+:::
 
 **임베딩 모델을 선택할 때 고려할 점**
 
@@ -350,6 +371,17 @@ GraphRAG는 문서를 단순히 벡터로 저장하는 대신, **지식 그래�
 | **비용** | 높음 (커뮤니티 감지·요약에 대량 LLM 호출) | 낮음 (커뮤니티 단계 생략으로 비용 대폭 절감) |
 | **적합 시나리오** | 복잡한 전체 문서군 요약/추론 | 빈번한 문서 업데이트, 비용 효율 중시 |
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — Microsoft GraphRAG가 유지보수 모드로 전환되었고, LightRAG는 활발히 개발 중입니다.
+
+- 확인된 사실: 2026-08-14 Microsoft GraphRAG 저장소 README에 경고문이 추가되었습니다. 요지는 "2024년 7월 첫 공개 이후 프런티어 모델의 역량이 크게 바뀌었고 연구 포트폴리오도 다양해져, 이 프로젝트는 대체로 유지보수 모드이며 새 PR을 받지 않고 새 기능도 구현하지 않는다. 버그 수정과 의존성 업데이트(특히 CVE 대응)만 한다"입니다. README는 원래부터 "공식 지원되는 Microsoft 제품이 아닌 데모 코드"라고 밝히고 있습니다. ([microsoft/graphrag README](https://github.com/microsoft/graphrag), 2026-10-12 확인)
+- 확인된 사실: 그 사이 v3.0.0(2026-01-28)에서 모노레포로 재구성되어 `graphrag-chunking`, `graphrag-vectors`, `graphrag-llm` 등 하위 패키지로 나뉘었고, 설정을 `graphrag init --force`로 다시 만들어야 했습니다. 최신 릴리스는 v3.3.0(2026-10-08, SQLite 성능 수정)이며 PyPI 기준 Python 3.11~3.13을 요구합니다. ([microsoft/graphrag Releases](https://github.com/microsoft/graphrag/releases), 2026-10-12 확인)
+- 확인된 사실: LightRAG(HKUDS)는 계속 개발 중이며 최신 릴리스는 v1.5.7(2026-09-02), PyPI 패키지명은 `lightrag-hku`입니다. ([HKUDS/LightRAG Releases](https://github.com/HKUDS/LightRAG/releases), 2026-10-12 확인)
+- 해석·전망: 원문 비교표의 기술적 설명(Leiden 커뮤니티 감지, Global/Local Search, 비용 구조)은 방법론으로서 여전히 유효합니다. 다만 Microsoft GraphRAG 라이브러리를 운영 시스템의 기반으로 새로 채택하는 판단은 신중해야 합니다. 새 기능이 없다는 것은 새 LLM API나 벡터 스토어 연동을 직접 유지하거나 다른 구현체에 기대야 한다는 뜻입니다. 경고문이 "프런티어 모델 역량의 변화"를 이유로 든 점은, 1M급 컨텍스트와 에이전트형 반복 검색이 흔해지면서 무거운 사전 그래프 색인의 상대적 가치가 줄었다는 흐름과 맞닿아 있다고 봅니다. 이는 필자의 해석이며, Microsoft가 그렇게 설명한 것은 아닙니다.
+
+교육·실습 관점: GraphRAG 수업은 "Microsoft GraphRAG = 방법론 원전(논문), 실습 도구 = 현재 유지되는 구현체"로 나누어 다루기를 권합니다. Microsoft GraphRAG로 실습한다면 `graphrag==3.3.0`처럼 버전을 고정하고, 2.x 시절 튜토리얼의 설정 파일은 3.x에서 그대로 동작하지 않을 수 있으니 `graphrag init --force`로 새로 만들게 하세요. 원문 표의 "증분 업데이트 지원" 같은 세부 항목은 버전마다 달라질 수 있어 실습 전 해당 버전 문서를 다시 확인해야 합니다. README도 경고하듯 색인 비용이 크므로 작은 문서 집합으로 시작하게 하세요.
+:::
+
 #### 프로젝트 도입 시 고려할 점
 
 | 고려 항목 | 설명 |
@@ -403,6 +435,16 @@ RAG는 강력한 기술이지만 다음과 같은 한계가 존재합니다.
 
 - **Re-ranking (검색 결과 재조정):** Cross-Encoder 기반 리랭킹으로 1차 검색 결과(상위 50~100개)의 관련성을 재평가하는 **Two-Stage Retrieval** 방식이 프로덕션 환경에서 일반적. (Cohere Rerank, cross-encoder/ms-marco-MiniLM)
 - **Advanced RAG 패턴 활용:** GraphRAG는 지식 그래프 기반 관계 추적으로 Multi-hop 질문에 대응
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — Cohere 리랭커의 현행 모델이 Rerank 4(pro/fast 두 등급)로 정리되었습니다.
+
+- 확인된 사실: Cohere 모델 문서의 현행 리랭커는 `rerank-v4.0-pro`(품질 중심)와 `rerank-v4.0-fast`(저지연·고처리량)이며 둘 다 컨텍스트 32K입니다. 이전 세대인 v3.5·v3.0도 아직 제공됩니다. ([Cohere Models 문서](https://docs.cohere.com/docs/models), 2026-10-12 확인)
+- 확인하지 못한 것: Rerank 4의 정확한 출시일(원문 작성 전후 여부)은 공식 문서에서 날짜를 찾지 못했습니다. `cross-encoder/ms-marco-MiniLM` 계열은 오픈소스 모델이라 이번 점검 대상에서 뺐습니다.
+- 해석·전망: Embed 5와 Rerank 4가 모두 pro/fast 두 등급으로 나뉜 것은, 원문의 Two-Stage Retrieval처럼 "정밀한 단계에는 비싼 모델, 실시간 경로에는 빠른 모델"을 쓰는 설계가 벤더 제품 구성에도 반영된 것으로 보입니다.
+
+교육·실습 관점: Cohere Rerank로 실습한다면 코드에 모델 ID(`rerank-v4.0-fast` 등)를 명시하고, 리랭커 컨텍스트 상한(32K)을 고려해 청크 크기와 후보 수(원문 예시의 상위 50~100개)를 정하게 하세요. 비용 없이 개념만 익히려면 오픈소스 cross-encoder로 대체해도 충분합니다.
+:::
 
 #### 문맥 연결 부족
 
@@ -463,6 +505,17 @@ RAGAS는 정답 데이터(Ground Truth)가 없어도 평가할 수 있으며, LL
 단, Context Recall·Answer Correctness·Answer Semantic Similarity는 **정답 데이터(Reference)가 필수**입니다. (LLM-as-a-Judge 상세 → Ch.5 AI Agent 품질 및 보안의 "LLM-as-a-Judge 평가 방법론" 섹션)
 
 RAG 시스템 운영에서는 검색 단계와 생성 단계를 **분리 평가(Component-wise Evaluation)**하여 성능 병목을 진단하는 것이 중요합니다. 예를 들어, Faithfulness 점수가 낮을 때 Context Precision이나 Context Recall도 함께 낮다면 생성이 아닌 검색 단계가 근본 원인일 수 있습니다. 따라서 **검색 메트릭(Precision@K, MRR, NDCG 등)과 생성 메트릭(Faithfulness, Answer Relevance 등), 그리고 RAGAS의 Context Precision·Context Recall을 함께 모니터링**하는 것이 핵심입니다.
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 지표 개념은 그대로지만 RAGAS 라이브러리의 API가 크게 바뀌었고, 저장소 이전 후 릴리스가 멈춰 있습니다.
+
+- 확인된 사실: RAGAS v0.4(2025-12)에서 `evaluate()`가 deprecated되었습니다(동작은 하지만 경고가 나오며 `@experiment()` 데코레이터 방식을 권장). 메트릭은 `ragas.metrics.collections`에서 import하고, 결과는 `MetricResult`의 `.value`로 읽습니다. `ground_truths`(리스트)는 `reference`(단일 문자열)로 이름이 바뀌었고, `AnswerSimilarity`는 제거되어 `SemanticSimilarity`로 대체되었습니다. LLM 초기화는 `llm_factory` 하나로 통합되었습니다. ([RAGAS v0.3→v0.4 마이그레이션 가이드](https://docs.ragas.io/en/latest/howtos/migrations/migrate_from_v03_to_v04/), 2026-10-12 확인)
+- 확인된 사실: GitHub 저장소가 `explodinggradients/ragas`에서 `vibrantlabsai/ragas`로 옮겨졌습니다. 최신 버전은 v0.4.3(2026-01-13)이고 마지막 푸시는 2026-02-24이며, 2026-10-12까지 새 릴리스가 없습니다. ([vibrantlabsai/ragas Releases](https://github.com/vibrantlabsai/ragas/releases), [PyPI ragas](https://pypi.org/project/ragas/), 2026-10-12 확인)
+- 해석·전망: 원문 표의 지표 개념(Faithfulness, Answer Relevance, Context Precision/Recall)과 "검색·생성 분리 평가" 원칙은 그대로 유효합니다. 다만 9개월 가까이 릴리스가 없는 것은 활동이 둔화되었다는 신호일 수 있습니다.
+- 확인하지 못한 것: 프로젝트 중단이나 향후 유지 계획에 대한 공식 발표는 찾지 못했습니다. 따라서 "중단"이라고 단정할 수는 없습니다.
+
+교육·실습 관점: 인터넷의 RAGAS 예제 상당수는 v0.1~0.3 문법(`from ragas.metrics import faithfulness`, `ground_truths` 컬럼, `evaluate(dataset, metrics=[...])`)입니다. 실습 환경은 `ragas==0.4.3`처럼 버전을 고정하고, collections 문법으로 통일하거나 최소한 deprecation 경고가 무슨 뜻인지 설명해 주세요. 원문의 "Answer Semantic Similarity"는 v0.4 기준으로 `SemanticSimilarity`라고 부릅니다. 지표 개념은 특정 라이브러리에 묶이지 않으므로, 같은 지표를 LLM-as-a-Judge 프롬프트로 직접 구현해 보는 실습을 곁들이면 라이브러리 의존 위험을 줄일 수 있습니다.
+:::
 
 ## 컨텍스트 엔지니어링 (Context Engineering)
 
@@ -582,6 +635,17 @@ Few-shot 예시는 원하는 행동을 시범으로 보여주는 입력-출력 �
 
 Anthropic은 **Server-side Compaction**을 API 기능으로 공식 제공(Claude Opus 4.6/Sonnet 4.6, 베타)하며, 입력 토큰이 설정 임계값(예: 150,000 토큰)을 초과하면 자동으로 이전 대화를 요약·압축하여 컨텍스트 한도를 넘는 장기 대화를 지원합니다.
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — Anthropic 압축(Compaction)이 두 방식으로 나뉘고 지원 모델이 넓어졌으며, 구조화된 노트는 메모리 도구로 제공됩니다.
+
+- 확인된 사실: 원문 당시 Server-side Compaction은 Claude Opus 4.6/Sonnet 4.6 대상 베타였습니다. 지금은 두 방식이 있습니다. (1) 토큰 임계값 방식: 베타 헤더 `compact-2026-01-12`, `context_management.edits`에 `compact_20260112`를 지정하며 기본 트리거는 입력 150,000 토큰, 최소 50,000 토큰입니다. 지원 모델은 Claude 4.6 이후 모델 전체(Fable 5.1, Opus 5.5, Sonnet 5.5, Haiku 5.5 등)이고 Amazon Bedrock·Google Cloud·Microsoft Foundry에서도 베타입니다. (2) 온디맨드 방식: 베타 헤더 `compact-2026-09-04`와 최상위 `compaction` 파라미터를 쓰며, 애플리케이션이 압축 시점을 정하고 최근 턴을 원문 그대로 남기거나 백그라운드에서 요약을 만들 수 있습니다. Anthropic 문서는 가능하면 온디맨드 방식을 쓰라고 권합니다. 두 방식 모두 아직 베타입니다. ([Anthropic, Compaction overview](https://platform.claude.com/docs/en/build-with-claude/compaction), [Anthropic, Compaction at a token threshold](https://platform.claude.com/docs/en/build-with-claude/compaction-threshold), 2026-10-12 확인)
+- 확인된 사실: 원문 표 ②의 구조화된 노트는 API 수준에서 메모리 도구(`memory_20250818`)로 제공됩니다. 클라이언트 측 도구라서 Claude가 `/memories` 디렉터리의 파일 조작을 요청하면 애플리케이션이 실행하고 저장소도 직접 관리합니다. 문서는 Claude 4 이후 모든 모델에서 쓸 수 있다고 하며, 압축과 함께 쓰라고 권합니다. 압축은 활성 컨텍스트를 작게 유지하고, 메모리는 요약 뒤에도 남아야 할 정보를 보존하는 역할입니다. ([Anthropic, Memory tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool), 2026-10-12 확인)
+- 확인된 사실: 요약하지 않고 규칙에 따라 오래된 도구 결과나 thinking 블록을 지우는 컨텍스트 편집(Context editing)도 별도 기능으로 제공됩니다. ([Anthropic, Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows), 2026-10-12 확인)
+- 해석·전망: 원문 표의 기법들이 API 기능(압축·메모리 도구·컨텍스트 편집)으로 제품화되는 흐름입니다. 개념은 그대로이고, "직접 구현할지 플랫폼 기능을 쓸지"라는 선택지가 늘었습니다.
+
+교육·실습 관점: 압축 실습에서 응답의 텍스트만 꺼내 대화 이력에 붙이면 compaction 블록이 사라져 압축 상태가 유실됩니다. 응답의 `content` 전체를 이력에 붙이도록 지도하세요. 또 Fable 5.1·Opus 5.5·Sonnet 5.5 같은 최신 모델은 이전 thinking 블록이 수정되지 않았는지 검사합니다. 직접 만든 요약기로 이력을 다시 쓰면서 최근 턴을 남기면 그 턴의 thinking 블록이 검사를 통과하지 못한다고 문서는 설명합니다. 실습 자료에는 베타 헤더 날짜를 명시하고, 수강 시점에 문서를 다시 확인하게 하세요.
+:::
+
 ### 토큰 예산 관리 (Token Budget Management)
 
 컨텍스트 윈도우는 유한한 자원이므로, **토큰 예산(Token Budget)**을 체계적으로 배분하는 것이 컨텍스트 엔지니어링의 핵심 실무입니다.
@@ -603,6 +667,19 @@ Anthropic은 **Server-side Compaction**을 API 기능으로 공식 제공(Claude
 | GPT-4.1 | 1M 토큰 | GPT-4o(128K)의 후속, 2025년 4월 출시 |
 | Gemini 2.5 Pro | 1M 토큰 | — |
 
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — 표의 모델 대부분이 세대 교체되었고, Sonnet 4는 은퇴, Sonnet 4.5는 은퇴 예정입니다.
+
+- 확인된 사실(Anthropic): 현행 주력 모델은 Claude Fable 5.1, Opus 5.5, Sonnet 5.5, Haiku 5.5이며 모두 1M 컨텍스트, 최대 출력 128K입니다. 1M이 기본값이라 베타 헤더가 필요 없고, Claude 4.6 이후 모델은 1M 전체를 표준 요금으로 과금합니다. 예외로 Haiku 5.5는 프롬프트가 100,000 토큰을 넘으면 더 높은 단가가 적용됩니다. Opus 4.6·Sonnet 4.6은 레거시 모델로 계속 제공됩니다. ([Anthropic, Models overview](https://platform.claude.com/docs/en/about-claude/models/overview), [Anthropic, Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows), [Anthropic, Pricing](https://platform.claude.com/docs/en/about-claude/pricing), 2026-10-12 확인)
+- 확인된 사실(Anthropic): 표 둘째 행의 Claude Sonnet 4(`claude-sonnet-4-20250514`)는 2026-06-15에 Claude API에서 은퇴했고, Sonnet 4.5는 2026-09-30에 deprecated되어 2026-11-30 은퇴 예정입니다(권장 대체 모델 `claude-sonnet-5-5`). 현재 문서는 Sonnet 4.5의 컨텍스트를 200K로만 표기합니다. ([Anthropic, Model deprecations](https://platform.claude.com/docs/en/about-claude/model-deprecations), [Anthropic, Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows), 2026-10-12 확인)
+- 확인된 사실(OpenAI): 모델 문서의 대표 모델은 GPT-6 계열로 바뀌었습니다. 예를 들어 `gpt-6-astra`는 컨텍스트 1.05M(이 중 최대 입력 922K), 출력 128K이고, 272K를 넘는 입력에는 입력 2배·출력 1.5배 요금이 붙습니다. GPT-5.4는 아직 문서에 있으며 1.05M 컨텍스트에 같은 272K 할증 규칙이 있습니다. GPT-5.4 mini는 400K 컨텍스트이지만 최대 입력은 272K입니다. GPT-4.1은 1M 컨텍스트로 계속 제공되고 종료 공지가 없지만, `gpt-4.1-nano`는 2026-10-23 종료 예정입니다. ([OpenAI Models](https://developers.openai.com/api/docs/models), [OpenAI GPT-6 Astra 모델 문서](https://developers.openai.com/api/docs/models/gpt-6-astra), [OpenAI GPT-5.4 모델 문서](https://developers.openai.com/api/docs/models/gpt-5.4), [OpenAI GPT-5.4 mini 모델 문서](https://developers.openai.com/api/docs/models/gpt-5.4-mini), [OpenAI GPT-4.1 모델 문서](https://developers.openai.com/api/docs/models/gpt-4.1), [OpenAI Deprecations](https://developers.openai.com/docs/deprecations), 2026-10-12 확인)
+- 확인된 사실(Google): Gemini 2.5 Pro는 종료 일정이 없지만 과거 사용자에게만 접근이 제한되었고, 신규 프로젝트에는 Gemini 3.8 Flash나 3.5 Flash-Lite를 권장합니다. Gemini 3.8 Flash와 Gemini 3.1 Pro(프리뷰)의 입력 한도는 1,048,576 토큰입니다. ([Gemini API Models](https://ai.google.dev/gemini-api/docs/models), [Gemini 3.8 Flash 모델 문서](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash), [Gemini 3.1 Pro Preview 모델 문서](https://ai.google.dev/gemini-api/docs/models/gemini-3.1-pro-preview), 2026-10-12 확인)
+- 해석·전망: 주요 벤더의 플래그십이 모두 1M급으로 모이면서 "윈도우 크기"만으로는 차별점이 되지 않습니다. 그보다 공시 윈도우에 출력이 포함되는지, 일정 길이를 넘으면 할증이 붙는지(OpenAI 272K, Haiku 5.5 100K), 토크나이저가 다른지를 확인하는 일이 더 중요해졌습니다. Anthropic 문서에 따르면 Claude 4.7 이후 토크나이저는 같은 텍스트에 약 30% 더 많은 토큰을 씁니다.
+- 확인하지 못한 것: GPT-6 Sol의 정확한 버전명은 OpenAI 모델 문서(`gpt-6.1-sol`)와 출시 보도(GPT-6 Sol, 2026-09-22)가 달라 여기서는 확정하지 않았습니다. ([DataNorth, GPT-6 Sol·Luna 출시 보도](https://datanorth.ai/news/openai-launches-gpt-6-sol-and-luna), 검색 결과로만 확인)
+
+교육·실습 관점: 이 표는 시간이 지나면 가장 먼저 낡는 부분입니다. 표를 외우게 하기보다 Anthropic Models API의 `max_input_tokens`처럼 프로그램으로 조회하는 방법과, 벤더 문서의 최대 입력·장문 요금 항목을 확인하는 습관을 실습으로 다루시길 권합니다. 토큰 배분을 계산할 때도 같은 문서가 모델(토크나이저)마다 다른 토큰 수가 되므로, 토큰 카운팅 API로 실측하게 하세요.
+:::
+
 | 연구 | 핵심 발견 |
 | --- | --- |
 | **Context Rot (Chroma Research, 2025)** | 컨텍스트 길이가 증가하면 성능이 비균등하게(non-uniform) 저하되는 "컨텍스트 부패(Context Rot)" 현상이 발생하며, 저하 양상은 모델마다 다름. 컨텍스트를 희소 자원으로 취급하고 외과적으로 관리해야 함 |
@@ -615,6 +692,17 @@ Anthropic은 **Server-side Compaction**을 API 기능으로 공식 제공(Claude
 - 긴 문서는 컨텍스트 상단에 배치하고, 질의(query)는 하단에 배치하면 정확도가 최대 30% 향상 (Anthropic 권장)
 - LLM에게 관련 정보를 인용(recite)한 뒤 답변하도록 유도하면 긴 컨텍스트에서의 정확도가 약 4% 향상 (Du et al., EMNLP 2025)
 - Extended Thinking 사용 시 thinking 토큰도 컨텍스트 윈도우에 포함되나, 이전 턴의 thinking 블록은 API가 자동 제거하여 토큰 낭비를 방지함
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — "이전 턴 thinking 블록은 자동 제거된다"는 설명이 최신 Claude 모델에서는 더 이상 맞지 않습니다.
+
+- 확인된 사실: Claude Opus 4.5 이후 Opus 모델, Sonnet 4.6 이후 Sonnet 모델, Haiku 5.5, Fable 5.1 등에서는 API가 이전 턴의 thinking 블록을 기본으로 유지합니다. 유지된 블록은 다른 입력과 똑같이 컨텍스트 윈도우를 차지하고 이후 요청에서 입력 토큰으로 과금됩니다. 자동 제거는 그보다 이전의 Opus·Sonnet 모델과 Haiku 4.5까지의 Haiku 모델에만 해당합니다. 어느 쪽이든 컨텍스트 편집의 thinking 블록 정리 기능으로 기본 동작을 바꿀 수 있습니다. ([Anthropic, Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows), 2026-10-12 확인)
+- 확인된 사실: 원문의 "Extended Thinking"(`budget_tokens`로 고정 예산 지정)은 Opus 4.6·Sonnet 4.6에서 deprecated되었고 이후 모델에서는 받지 않습니다. 최신 모델은 적응형 thinking과 effort 수준으로 깊이를 조절합니다. ([Anthropic, Models overview](https://platform.claude.com/docs/en/about-claude/models/overview), 2026-10-12 확인)
+- 해석·전망: 장기 실행 에이전트에서 thinking이 쌓이면 원문이 말한 컨텍스트 부패와 비용 문제가 다시 커질 수 있습니다. "thinking은 자동으로 사라지니 예산에서 빼도 된다"는 가정은 최신 모델에서는 성립하지 않습니다.
+- 확인하지 못한 것: 위 목록의 다른 수치(문서 상단 배치 시 "최대 30%" 향상 등)는 이번에 다시 확인하지 않았습니다.
+
+교육·실습 관점: 토큰 예산 실습에서 "이전 턴 thinking"을 별도 항목으로 계상하게 하고, 응답의 `usage`로 턴마다 입력 토큰이 얼마나 늘어나는지 직접 관찰하게 하세요. 구형 모델과 최신 모델을 같은 대화로 돌려 비교하면 차이가 잘 보입니다.
+:::
 
 #### 토큰 배분 전략 예시
 
@@ -640,6 +728,16 @@ LLM은 **입력 토큰(Input)과 출력 토큰(Output)의 합이 모델의 최�
 | **동적 할당** | 질문 유형에 따라 검색 결과와 대화 이력의 비율을 동적으로 조정 |
 | **청크 크기 최적화** | RAG 검색 시 반환하는 청크의 수와 크기를 토큰 예산에 맞게 조절 |
 | **컨텍스트 인식 (Context Awareness)** | Claude Sonnet 4.6/4.5, Haiku 4.5는 남은 토큰 예산을 실시간으로 추적하는 Context Awareness 기능을 보유. 모델이 잔여 컨텍스트를 인식하여 장기 실행 에이전트 작업 시 토큰을 효율적으로 배분. Anthropic은 이를 "시계 없이 요리 대회에 참가하는 것"에 비유하여, 잔여 시간(토큰)을 아는 것의 중요성을 강조 |
+
+::: info 2026년 하반기 업데이트 · 2026-10-12 기준
+**상반기 원문 이후 달라진 점** — Context Awareness는 일부 모델에만 남았고, 최신 모델은 Task Budgets로 예산을 명시하는 방식입니다. 캐시 단가 구조도 바뀌었습니다.
+
+- 확인된 사실: 남은 토큰 예산을 태그로 주입하는 Context Awareness는 현재 Claude Sonnet 5, Sonnet 4.6, Sonnet 4.5(deprecated), Haiku 4.5에서 동작합니다. Claude Opus 4.7 이후 Opus 모델, Sonnet 5.5, Fable 5.1, Haiku 5.5 등 최신 모델은 이 태그를 받지 않으며, 대신 베타 기능인 Task Budgets로 명시적인 토큰 예산을 줄 수 있습니다. ([Anthropic, Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows), 2026-10-12 확인)
+- 확인된 사실: 프롬프트 캐싱 단가도 모델마다 달라졌습니다. 기본은 캐시 읽기가 기본 입력 단가의 0.1배지만, Opus 5.5·Sonnet 5.5는 0.05배, Fable 5.1은 0.025배입니다. 예를 들어 Opus 5.5는 100만 토큰당 입력 $4, 5분 캐시 쓰기 $5, 1시간 캐시 쓰기 $8, 캐시 읽기 $0.20입니다. 캐시된 접두부도 컨텍스트 윈도우는 그대로 차지합니다. ([Anthropic, Pricing](https://platform.claude.com/docs/en/about-claude/pricing), [Anthropic, Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows), 2026-10-12 확인)
+- 해석·전망: "남은 예산을 모델이 스스로 인식"하는 방식에서 "개발자가 예산을 명시해 주는" 방식으로 무게가 옮겨 가는 것으로 보입니다. 또 캐시 읽기가 매우 싸지면서, 표의 "우선순위 기반 삭제"처럼 이력 앞부분을 지우는 기법은 캐시 접두부를 깨뜨려 오히려 비용을 늘릴 수 있습니다. 토큰 수와 비용을 함께 보고 기법을 고르는 것이 좋겠습니다.
+
+교육·실습 관점: Context Awareness를 시연한다면 지원 모델(Sonnet 5, Sonnet 4.6 등)을 명시하세요. 최신 모델로 같은 실습을 하면 태그가 보이지 않아 수강생이 혼란스러울 수 있습니다. 토큰 관리 기법을 비교하는 실습에 캐시 적중 토큰(`cache_read_input_tokens`) 지표를 추가하면, 삭제·요약이 비용에 미치는 영향을 더 현실적으로 보여 줄 수 있습니다.
+:::
 
 ### 컨텍스트 엔지니어링 활용
 
@@ -686,3 +784,34 @@ LLM은 **입력 토큰(Input)과 출력 토큰(Output)의 합이 모델의 최�
 - [Paulsen, "Context Is What You Need: The Maximum Effective Context Window", 2025](https://arxiv.org/abs/2509.21361)
 - [Anthropic, "Long Context Prompting Tips"](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/long-context-tips)
 - [Anthropic, "Compaction"](https://docs.anthropic.com/en/docs/build-with-claude/compaction)
+
+## 2026년 하반기 업데이트 참고자료 (2026-10-12 확인)
+
+- [Anthropic, Models overview](https://platform.claude.com/docs/en/about-claude/models/overview) — 현행 Claude 모델(Fable 5.1, Opus 5.5, Sonnet 5.5, Haiku 5.5), 1M 컨텍스트, 128K 출력, budget_tokens deprecated
+- [Anthropic, Model deprecations](https://platform.claude.com/docs/en/about-claude/model-deprecations) — Sonnet 4 은퇴(2026-06-15), Sonnet 4.5 은퇴 예정(2026-11-30)
+- [Anthropic, Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows) — 모델별 컨텍스트 크기, 이전 thinking 블록 유지 여부, Context Awareness 대상 모델, 압축·컨텍스트 편집 안내
+- [Anthropic, Pricing](https://platform.claude.com/docs/en/about-claude/pricing) — 모델별 입력·출력·캐시 단가, 장문 요금(Haiku 5.5 100K 초과), 토크나이저 약 30% 증가
+- [Anthropic, Compaction overview](https://platform.claude.com/docs/en/build-with-claude/compaction) — 온디맨드 압축(`compact-2026-09-04`)과 임계값 압축의 구분
+- [Anthropic, Compaction at a token threshold](https://platform.claude.com/docs/en/build-with-claude/compaction-threshold) — 임계값 압축 베타 헤더, 기본·최소 트리거, 지원 모델·플랫폼
+- [Anthropic, Memory tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool) — 메모리 도구 `memory_20250818`, 지원 모델, 압축과의 병행
+- [OpenAI Models](https://developers.openai.com/api/docs/models) — GPT-6 계열이 대표 모델로 표시됨
+- [OpenAI GPT-6 Astra 모델 문서](https://developers.openai.com/api/docs/models/gpt-6-astra) — GPT-6 Astra 컨텍스트 1.05M(최대 입력 922K), 272K 초과 할증
+- [OpenAI GPT-5.4 모델 문서](https://developers.openai.com/api/docs/models/gpt-5.4) — GPT-5.4 컨텍스트 1.05M, 272K 초과 할증
+- [OpenAI GPT-5.4 mini 모델 문서](https://developers.openai.com/api/docs/models/gpt-5.4-mini) — GPT-5.4 mini 400K 컨텍스트, 최대 입력 272K
+- [OpenAI GPT-4.1 모델 문서](https://developers.openai.com/api/docs/models/gpt-4.1) — GPT-4.1 1M 컨텍스트, 계속 제공
+- [OpenAI Deprecations](https://developers.openai.com/docs/deprecations) — gpt-4.1-nano 등 2026-10-23 종료, 임베딩 모델 종료 공지 없음
+- [OpenAI text-embedding-3-small 모델 문서](https://developers.openai.com/api/docs/models/text-embedding-3-small) — text-embedding-3-small 가격·상태
+- [DataNorth, GPT-6 Sol·Luna 출시 보도](https://datanorth.ai/news/openai-launches-gpt-6-sol-and-luna) — GPT-6 Sol·Luna 출시 보도(검색 결과로만 확인)
+- [Gemini API Models](https://ai.google.dev/gemini-api/docs/models) — Gemini 3.x 현행 모델, Gemini 2.5 접근 제한
+- [Gemini 3.8 Flash 모델 문서](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash) — Gemini 3.8 Flash 입력 한도
+- [Gemini 3.1 Pro Preview 모델 문서](https://ai.google.dev/gemini-api/docs/models/gemini-3.1-pro-preview) — Gemini 3.1 Pro Preview 입력 한도
+- [Gemini API Embeddings](https://ai.google.dev/gemini-api/docs/embeddings) — `gemini-embedding-2` 정식 제공, 사양, 태스크 지정 방식 변화
+- [Gemini API Deprecations](https://ai.google.dev/gemini-api/docs/deprecations) — Gemini 임베딩 프리뷰·구모델 종료 일정
+- [Cohere Models 문서](https://docs.cohere.com/docs/models) — Embed 5(`embed-v5.0-pro`/`-fast`), Rerank 4(`rerank-v4.0-pro`/`-fast`)
+- [Let's Data Science, Cohere Embed 5 출시 보도](https://letsdatascience.com/news/cohere-launches-embed-5-with-pro-and-fast-retrieval-models-bde2deee) — Cohere Embed 5 출시일·가격(검색 결과로만 확인)
+- [microsoft/graphrag README](https://github.com/microsoft/graphrag) — 유지보수 모드 경고문(2026-08-14 추가), 비공식 지원 고지
+- [microsoft/graphrag Releases](https://github.com/microsoft/graphrag/releases) — v3.0.0 모노레포 재구성, 최신 v3.3.0
+- [HKUDS/LightRAG Releases](https://github.com/HKUDS/LightRAG/releases) — LightRAG 최신 v1.5.7
+- [RAGAS v0.3→v0.4 마이그레이션 가이드](https://docs.ragas.io/en/latest/howtos/migrations/migrate_from_v03_to_v04/) — RAGAS v0.4 주요 변경(evaluate deprecated, collections, reference)
+- [vibrantlabsai/ragas Releases](https://github.com/vibrantlabsai/ragas/releases) — 저장소 이전, 최신 v0.4.3
+- [PyPI ragas](https://pypi.org/project/ragas/) — PyPI 최신 버전 0.4.3(2026-01-13)
