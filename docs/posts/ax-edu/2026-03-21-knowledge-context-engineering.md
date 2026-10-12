@@ -83,6 +83,13 @@ RAG(Retrieval-Augmented Generation, 검색 증강 생성)는 외부 데이터베
 
 RAG는 모델 재학습 없이 외부 지식 베이스만 업데이트하면 최신 정보를 반영할 수 있어 파인튜닝 대비 비용 효율적이며, 검색된 문서의 출처를 함께 제공하여 **투명성(Transparency)**을 확보할 수 있습니다.
 
+<figure class="ax-explainer">
+  <a href="/images/ax-edu/diagrams/rag-pipeline.svg" target="_blank" rel="noopener" aria-label="문서 분할·임베딩·인덱스 준비와 질문 임베딩·검색·컨텍스트 구성·응답 생성을 구분한 RAG 흐름도 — 원본 크게 보기">
+    <img src="/images/ax-edu/diagrams/rag-pipeline.svg" alt="문서 분할·임베딩·인덱스 준비와 질문 임베딩·검색·컨텍스트 구성·응답 생성을 구분한 RAG 흐름도" width="640" height="770" loading="lazy" decoding="async" style="width: 100%; height: auto;" />
+  </a>
+  <figcaption>벡터 검색 기반 RAG의 기본 흐름이다. 문서 준비는 미리 수행하고, 질문이 들어오면 관련 원문을 검색해 모델 입력에 넣는다. <a href="/images/ax-edu/diagrams/rag-pipeline.svg" target="_blank" rel="noopener">원본 크게 보기</a></figcaption>
+</figure>
+
 ### RAG 핵심 구성 요소
 
 RAG 파이프라인은 다음 4가지 핵심 구성 요소로 이루어집니다.
@@ -539,6 +546,13 @@ Anthropic은 컨텍스트 엔지니어링의 핵심을 **컨텍스트 윈도우 
 | **시점** | 설계 시점(Design-time) 중심 | 설계 시점 + 런타임(Runtime) 동적 관리 |
 | **적용 대상** | 일회성 단일 LLM 호출 | 다중 턴 대화, 장기 실행 에이전트 |
 | **핵심 과제** | 명확하고 효과적인 질문 | 정보의 선별, 압축, 갱신, 일관성 유지 |
+
+<figure class="ax-explainer">
+  <a href="/images/ax-edu/diagrams/context-selection.svg" target="_blank" rel="noopener" aria-label="대화·도구·검색 문서를 선별하고 압축해 이번 호출의 컨텍스트를 구성하는 흐름도 — 원본 크게 보기">
+    <img src="/images/ax-edu/diagrams/context-selection.svg" alt="대화·도구·검색 문서를 선별하고 압축해 이번 호출의 컨텍스트를 구성하는 흐름도" width="640" height="640" loading="lazy" decoding="async" style="width: 100%; height: auto;" />
+  </a>
+  <figcaption>프롬프트 문장뿐 아니라 검색 결과와 도구 출력까지 관리한다. 새 결과가 들어오면 다음 호출의 컨텍스트도 달라진다. <a href="/images/ax-edu/diagrams/context-selection.svg" target="_blank" rel="noopener">원본 크게 보기</a></figcaption>
+</figure>
 
 ### 컨텍스트 부패와 Attention Budget
 

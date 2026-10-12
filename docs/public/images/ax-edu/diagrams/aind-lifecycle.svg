@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="720" viewBox="0 0 640 720" role="img" aria-labelledby="title desc">
+<title id="title">개발 전주기에서 AI와 사람의 역할</title><desc id="desc">AI의 제안을 사람이 검토하고 결정한다</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#52646b"/></marker></defs>
+<style>text{font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;fill:#18343b} .small{fill:#52646b}</style>
+<rect width="640" height="720" rx="20" fill="#f8faf9"/>
+<text x="28" y="42" font-size="27" text-anchor="start" font-weight="700" class="">개발 전주기에서 AI와 사람의 역할</text>
+<text x="28" y="76" font-size="18" text-anchor="start" font-weight="400" class="small">AI의 제안을 사람이 검토하고 결정한다</text>
+<text x="177" y="120" font-size="23" text-anchor="middle" font-weight="700" class="">AI가 돕는 일</text>
+<text x="463" y="120" font-size="23" text-anchor="middle" font-weight="700" class="">사람이 맡는 판단</text>
+<text x="28" y="163" font-size="21" text-anchor="start" font-weight="700" class="">요구사항</text>
+<rect x="28" y="178" width="280" height="60" rx="12" fill="#dcefe9" stroke="#c5d5d4"/>
+<text x="168.0" y="215.0" font-size="23" text-anchor="middle" font-weight="700" class="">누락·예외 후보 찾기</text>
+<rect x="332" y="178" width="280" height="60" rx="12" fill="#e4edf8" stroke="#c5d5d4"/>
+<text x="472.0" y="215.0" font-size="23" text-anchor="middle" font-weight="700" class="">범위·업무 규칙 확정</text>
+<polyline points="308,208 330,208" fill="none" stroke="#52646b" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="28" y="291" font-size="21" text-anchor="start" font-weight="700" class="">설계</text>
+<rect x="28" y="306" width="280" height="60" rx="12" fill="#dcefe9" stroke="#c5d5d4"/>
+<text x="168.0" y="343.0" font-size="23" text-anchor="middle" font-weight="700" class="">구조·대안 제안</text>
+<rect x="332" y="306" width="280" height="60" rx="12" fill="#e4edf8" stroke="#c5d5d4"/>
+<text x="472.0" y="343.0" font-size="23" text-anchor="middle" font-weight="700" class="">제약·트레이드오프 판단</text>
+<polyline points="308,336 330,336" fill="none" stroke="#52646b" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="28" y="419" font-size="21" text-anchor="start" font-weight="700" class="">구현</text>
+<rect x="28" y="434" width="280" height="60" rx="12" fill="#dcefe9" stroke="#c5d5d4"/>
+<text x="168.0" y="471.0" font-size="23" text-anchor="middle" font-weight="700" class="">코드 생성·수정</text>
+<rect x="332" y="434" width="280" height="60" rx="12" fill="#e4edf8" stroke="#c5d5d4"/>
+<text x="472.0" y="471.0" font-size="23" text-anchor="middle" font-weight="700" class="">변경 내용 검토</text>
+<polyline points="308,464 330,464" fill="none" stroke="#52646b" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="28" y="547" font-size="21" text-anchor="start" font-weight="700" class="">검증</text>
+<rect x="28" y="562" width="280" height="60" rx="12" fill="#dcefe9" stroke="#c5d5d4"/>
+<text x="168.0" y="599.0" font-size="23" text-anchor="middle" font-weight="700" class="">테스트 초안 작성</text>
+<rect x="332" y="562" width="280" height="60" rx="12" fill="#e4edf8" stroke="#c5d5d4"/>
+<text x="472.0" y="599.0" font-size="23" text-anchor="middle" font-weight="700" class="">기준 확인·결과 검증</text>
+<polyline points="308,592 330,592" fill="none" stroke="#52646b" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="28" y="686" font-size="19" text-anchor="start" font-weight="400" class="small">필요하면 이전 단계의 요구사항·설계로 돌아가 수정한다.</text>
+</svg>

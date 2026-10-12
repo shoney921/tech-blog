@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="720" viewBox="0 0 640 720" role="img" aria-labelledby="title desc">
+<title id="title">모델은 호출을 제안하고, 런타임이 실행한다</title><desc id="desc">Function Calling의 역할 분담</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#52646b"/></marker></defs>
+<style>text{font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;fill:#18343b} .small{fill:#52646b}</style>
+<rect width="640" height="720" rx="20" fill="#f8faf9"/>
+<text x="28" y="42" font-size="27" text-anchor="start" font-weight="700" class="">모델은 호출을 제안하고, 런타임이 실행한다</text>
+<text x="28" y="76" font-size="18" text-anchor="start" font-weight="400" class="small">Function Calling의 역할 분담</text>
+<rect x="28" y="110" width="280" height="65" rx="12" fill="#e4edf8" stroke="#c5d5d4"/>
+<text x="168.0" y="149.5" font-size="23" text-anchor="middle" font-weight="700" class="">모델 (LLM)</text>
+<rect x="332" y="110" width="280" height="65" rx="12" fill="#dcefe9" stroke="#c5d5d4"/>
+<text x="472.0" y="149.5" font-size="23" text-anchor="middle" font-weight="700" class="">런타임 · 도구</text>
+<rect x="28" y="221" width="280" height="76" rx="12" fill="#e4edf8" stroke="#c5d5d4"/>
+<text x="168.0" y="266.0" font-size="23" text-anchor="middle" font-weight="700" class="">함수명·인자 출력</text>
+<rect x="332" y="221" width="280" height="76" rx="12" fill="#dcefe9" stroke="#c5d5d4"/>
+<text x="472.0" y="266.0" font-size="23" text-anchor="middle" font-weight="700" class="">인자·권한 검증</text>
+<rect x="28" y="372" width="280" height="76" rx="12" fill="#e4edf8" stroke="#c5d5d4"/>
+<text x="168.0" y="417.0" font-size="23" text-anchor="middle" font-weight="700" class="">실행 결과 수신</text>
+<rect x="332" y="372" width="280" height="76" rx="12" fill="#dcefe9" stroke="#c5d5d4"/>
+<text x="472.0" y="417.0" font-size="23" text-anchor="middle" font-weight="700" class="">허용된 도구 실행</text>
+<rect x="28" y="523" width="280" height="76" rx="12" fill="#e4edf8" stroke="#c5d5d4"/>
+<text x="168.0" y="568.0" font-size="23" text-anchor="middle" font-weight="700" class="">해석 후 응답·재호출</text>
+<rect x="332" y="523" width="280" height="76" rx="12" fill="#dcefe9" stroke="#c5d5d4"/>
+<text x="472.0" y="568.0" font-size="23" text-anchor="middle" font-weight="700" class="">결과·오류 반환</text>
+<polyline points="308,259 330,259" fill="none" stroke="#52646b" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="472,297 472,370" fill="none" stroke="#52646b" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="472,448 472,521" fill="none" stroke="#52646b" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="332,560 320,560 320,410 310,410" fill="none" stroke="#52646b" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="168,448 168,521" fill="none" stroke="#52646b" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="28" y="654" font-size="19" text-anchor="start" font-weight="400" class="small">모델이 출력한 호출을 그대로 신뢰하지 않는다.</text>
+<text x="28" y="681" font-size="19" text-anchor="start" font-weight="400" class="small">실행 전 검증·권한 통제는 애플리케이션의 책임이다.</text>
+</svg>

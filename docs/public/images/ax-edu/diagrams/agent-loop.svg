@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="750" viewBox="0 0 640 750" role="img" aria-labelledby="title desc">
+<title id="title">에이전트는 관찰한 결과로 다음 행동을 정한다</title><desc id="desc">ReAct 패턴의 제어 흐름을 단순화한 그림</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#52646b"/></marker></defs>
+<style>text{font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;fill:#18343b} .small{fill:#52646b}</style>
+<rect width="640" height="750" rx="20" fill="#f8faf9"/>
+<text x="28" y="42" font-size="27" text-anchor="start" font-weight="700" class="">에이전트는 관찰한 결과로 다음 행동을 정한다</text>
+<text x="28" y="76" font-size="18" text-anchor="start" font-weight="400" class="small">ReAct 패턴의 제어 흐름을 단순화한 그림</text>
+<rect x="95" y="110" width="450" height="70" rx="12" fill="#e4edf8" stroke="#c5d5d4"/>
+<text x="320.0" y="152.0" font-size="23" text-anchor="middle" font-weight="700" class="">목표와 현재 상태 확인</text>
+<rect x="95" y="220" width="450" height="85" rx="12" fill="#dcefe9" stroke="#c5d5d4"/>
+<text x="320.0" y="251" font-size="23" text-anchor="middle" font-weight="700" class="">다음 행동 판단</text>
+<text x="320.0" y="279" font-size="20" text-anchor="middle" font-weight="400" class="">어떤 정보·도구가 필요한가?</text>
+<rect x="95" y="350" width="450" height="85" rx="12" fill="#fff0cb" stroke="#c5d5d4"/>
+<text x="320.0" y="381" font-size="23" text-anchor="middle" font-weight="700" class="">도구 실행</text>
+<text x="320.0" y="409" font-size="20" text-anchor="middle" font-weight="400" class="">런타임에서 호출 수행</text>
+<rect x="95" y="480" width="450" height="85" rx="12" fill="#dcefe9" stroke="#c5d5d4"/>
+<text x="320.0" y="511" font-size="23" text-anchor="middle" font-weight="700" class="">결과 관찰 · 상태 갱신</text>
+<text x="320.0" y="539" font-size="20" text-anchor="middle" font-weight="400" class="">목표 충족 여부와 실행 한도 확인</text>
+<polyline points="320,180 320,218" fill="none" stroke="#52646b" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="320,305 320,348" fill="none" stroke="#52646b" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="320,435 320,478" fill="none" stroke="#52646b" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="545,522 594,522 594,263 547,263" fill="none" stroke="#52646b" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="573" y="409" font-size="18" text-anchor="middle" font-weight="400" class="">계속</text>
+<polyline points="320,565 320,601" fill="none" stroke="#52646b" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="95" y="610" width="450" height="65" rx="12" fill="#e4edf8" stroke="#c5d5d4"/>
+<text x="320.0" y="649.5" font-size="23" text-anchor="middle" font-weight="700" class="">완료 / 중단 / 사람에게 인계</text>
+<text x="28" y="713" font-size="19" text-anchor="start" font-weight="400" class="small">실행 횟수·시간·비용 한도와 실패 시 종료 조건도 필요하다.</text>
+</svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="650" viewBox="0 0 640 650" role="img" aria-labelledby="title desc">
+<title id="title">Top-k와 Top-p는 무엇을 남길까?</title><desc id="desc">가상 다음 토큰 분포 · 실제 모델 측정값 아님</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#52646b"/></marker></defs>
+<style>text{font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;fill:#18343b} .small{fill:#52646b}</style>
+<rect width="640" height="650" rx="20" fill="#f8faf9"/>
+<text x="28" y="42" font-size="27" text-anchor="start" font-weight="700" class="">Top-k와 Top-p는 무엇을 남길까?</text>
+<text x="28" y="76" font-size="18" text-anchor="start" font-weight="400" class="small">가상 다음 토큰 분포 · 실제 모델 측정값 아님</text>
+<text x="30" y="148" font-size="22" text-anchor="start" font-weight="400" class="">좋다</text>
+<rect x="115" y="120" width="200.0" height="40" rx="12" fill="#dcefe9" stroke="#c5d5d4"/>
+<text x="325.0" y="148" font-size="22" text-anchor="start" font-weight="400" class="">50%</text>
+<text x="30" y="213" font-size="22" text-anchor="start" font-weight="400" class="">덥다</text>
+<rect x="115" y="185" width="100.0" height="40" rx="12" fill="#dcefe9" stroke="#c5d5d4"/>
+<text x="225.0" y="213" font-size="22" text-anchor="start" font-weight="400" class="">25%</text>
+<text x="30" y="278" font-size="22" text-anchor="start" font-weight="400" class="">흐리다</text>
+<rect x="115" y="250" width="60.0" height="40" rx="12" fill="#dcefe9" stroke="#c5d5d4"/>
+<text x="185.0" y="278" font-size="22" text-anchor="start" font-weight="400" class="">15%</text>
+<text x="30" y="343" font-size="22" text-anchor="start" font-weight="400" class="">춥다</text>
+<rect x="115" y="315" width="40.0" height="40" rx="12" fill="#dcefe9" stroke="#c5d5d4"/>
+<text x="165.0" y="343" font-size="22" text-anchor="start" font-weight="400" class="">10%</text>
+<text x="115" y="398" font-size="19" text-anchor="start" font-weight="400" class="small">막대 길이 = 후보의 선택 확률</text>
+<rect x="28" y="430" width="280" height="105" rx="12" fill="#e4edf8" stroke="#c5d5d4"/>
+<text x="168.0" y="461" font-size="23" text-anchor="middle" font-weight="700" class="">Top-k = 2</text>
+<text x="168.0" y="489" font-size="20" text-anchor="middle" font-weight="400" class="">좋다 · 덥다</text>
+<text x="168.0" y="516" font-size="20" text-anchor="middle" font-weight="400" class="">상위 2개를 남김</text>
+<rect x="332" y="430" width="280" height="105" rx="12" fill="#fff0cb" stroke="#c5d5d4"/>
+<text x="472.0" y="461" font-size="23" text-anchor="middle" font-weight="700" class="">Top-p = 0.8</text>
+<text x="472.0" y="489" font-size="20" text-anchor="middle" font-weight="400" class="">좋다 · 덥다 · 흐리다</text>
+<text x="472.0" y="516" font-size="20" text-anchor="middle" font-weight="400" class="">누적 90%에서 80% 도달</text>
+<text x="28" y="572" font-size="19" text-anchor="start" font-weight="400" class="small">남은 후보의 확률을 다시 정규화해 선택한다.</text>
+<text x="28" y="599" font-size="19" text-anchor="start" font-weight="400" class="small">Temperature는 후보 확률의 집중도를 바꾼다.</text>
+<text x="28" y="626" font-size="19" text-anchor="start" font-weight="400" class="small">낮은 Temperature가 사실 정확성을 보장하지는 않는다.</text>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="670" viewBox="0 0 640 670" role="img" aria-labelledby="title desc">
+<title id="title">요청 → 검토 → 보완의 협업 사이클</title><desc id="desc">완료 기준을 먼저 정하고 결과를 확인한다</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#52646b"/></marker></defs>
+<style>text{font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;fill:#18343b} .small{fill:#52646b}</style>
+<rect width="640" height="670" rx="20" fill="#f8faf9"/>
+<text x="28" y="42" font-size="27" text-anchor="start" font-weight="700" class="">요청 → 검토 → 보완의 협업 사이클</text>
+<text x="28" y="76" font-size="18" text-anchor="start" font-weight="400" class="small">완료 기준을 먼저 정하고 결과를 확인한다</text>
+<rect x="65" y="110" width="510" height="90" rx="12" fill="#e4edf8" stroke="#c5d5d4"/>
+<text x="320.0" y="141" font-size="23" text-anchor="middle" font-weight="700" class="">요청 (Prompt)</text>
+<text x="320.0" y="169" font-size="20" text-anchor="middle" font-weight="400" class="">목표·배경·제약·완료 기준 제공</text>
+<rect x="65" y="240" width="510" height="90" rx="12" fill="#dcefe9" stroke="#c5d5d4"/>
+<text x="320.0" y="271" font-size="23" text-anchor="middle" font-weight="700" class="">AI 초안 생성</text>
+<text x="320.0" y="299" font-size="20" text-anchor="middle" font-weight="400" class="">설계·코드·테스트 등 작업 수행</text>
+<rect x="65" y="370" width="510" height="90" rx="12" fill="#fff0cb" stroke="#c5d5d4"/>
+<text x="320.0" y="401" font-size="23" text-anchor="middle" font-weight="700" class="">검토 (Review)</text>
+<text x="320.0" y="429" font-size="20" text-anchor="middle" font-weight="400" class="">요구사항·동작·보안·테스트 확인</text>
+<rect x="65" y="500" width="510" height="90" rx="12" fill="#e4edf8" stroke="#c5d5d4"/>
+<text x="320.0" y="531" font-size="23" text-anchor="middle" font-weight="700" class="">보완 (Refine) 또는 완료</text>
+<text x="320.0" y="559" font-size="20" text-anchor="middle" font-weight="400" class="">미달: 근거와 수정 조건을 구체화</text>
+<polyline points="320,200 320,238" fill="none" stroke="#52646b" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="320,330 320,368" fill="none" stroke="#52646b" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="320,460 320,498" fill="none" stroke="#52646b" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="575,545 607,545 607,155 577,155" fill="none" stroke="#52646b" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="28" y="630" font-size="19" text-anchor="start" font-weight="400" class="small">기준 충족 시 종료한다. 반복 자체가 품질 향상을 보장하지 않는다.</text>
+</svg>

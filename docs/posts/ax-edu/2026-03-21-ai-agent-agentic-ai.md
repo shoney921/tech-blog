@@ -183,6 +183,13 @@ Salesforce는 기업의 Agentic AI 도입 수준을 4단계(L1~L4)로 분류하�
 에이전트가 도구를 사용하기 위한 핵심 메커니즘이 **Function Calling(함수 호출)**이다.
 LLM이 직접 외부 함수를 실행하는 것이 아니라, 호출할 함수명과 인자를 구조화된 형태로 출력하면, 런타임(애플리케이션)이 이를 받아 실제 실행하고 결과를 LLM에게 반환하는 방식으로 동작한다.
 
+<figure class="ax-explainer">
+  <a href="/images/ax-edu/diagrams/function-calling.svg" target="_blank" rel="noopener" aria-label="모델이 함수명과 인자를 제안하고 런타임이 권한을 검증해 실행한 뒤 결과를 돌려주는 역할 구분도 — 원본 크게 보기">
+    <img src="/images/ax-edu/diagrams/function-calling.svg" alt="모델이 함수명과 인자를 제안하고 런타임이 권한을 검증해 실행한 뒤 결과를 돌려주는 역할 구분도" width="640" height="720" loading="lazy" decoding="async" style="width: 100%; height: auto;" />
+  </a>
+  <figcaption>모델의 호출 제안과 실제 도구 실행은 별개다. 애플리케이션은 실행 전에 인자와 권한을 확인해야 한다. <a href="/images/ax-edu/diagrams/function-calling.svg" target="_blank" rel="noopener">원본 크게 보기</a></figcaption>
+</figure>
+
 **동작 흐름**:
 
 1. **도구 정의(Tool Definition)**: 개발자가 사용 가능한 함수의 이름, 설명(Description), 파라미터를 정의하여 LLM에게 전달
@@ -278,6 +285,13 @@ ReAct는 **추론(Reasoning)**과 **행동(Acting)**을 번갈아 수행하며 �
 - **단점**: 루프 구조로 인해 API 비용과 응답 시간이 늘어남
 
 - **현재 동향**: ReAct는 2022년 제안 이후 에이전트 구현의 사실상 표준이었으나, 2024~2025년 Reasoning Model(o1, o3, Claude Extended Thinking 등)의 등장으로 모델 자체가 내부적으로 다단계 추론을 수행할 수 있게 되었다. 이에 따라 단순한 도구 호출 시나리오에서는 명시적 ReAct 루프 없이도 모델이 스스로 추론→행동을 수행하는 추세가 나타나고 있다. 그러나 복잡한 멀티 도구 시나리오에서는 여전히 명시적 ReAct 루프가 실행 과정의 투명성과 제어 가능성 측면에서 유효하다.
+
+<figure class="ax-explainer">
+  <a href="/images/ax-edu/diagrams/agent-loop.svg" target="_blank" rel="noopener" aria-label="목표 확인·행동 판단·도구 실행·관찰을 반복하고 완료 또는 중단하는 에이전트 흐름도 — 원본 크게 보기">
+    <img src="/images/ax-edu/diagrams/agent-loop.svg" alt="목표 확인·행동 판단·도구 실행·관찰을 반복하고 완료 또는 중단하는 에이전트 흐름도" width="640" height="750" loading="lazy" decoding="async" style="width: 100%; height: auto;" />
+  </a>
+  <figcaption>관찰 결과에 따라 다음 행동을 바꾼다. 목표 충족뿐 아니라 실행 한도 초과와 사람에게 인계할 조건도 설계한다. <a href="/images/ax-edu/diagrams/agent-loop.svg" target="_blank" rel="noopener">원본 크게 보기</a></figcaption>
+</figure>
 
 ### Plan-and-Execute 패턴 (계획 후 실행 에이전트)
 

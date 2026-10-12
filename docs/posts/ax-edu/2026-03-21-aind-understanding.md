@@ -132,6 +132,13 @@ AIND의 작업 방식은 단발성 요청-응답이 아닌 **반복적인 3단�
 
 > 이 사이클이 반복될수록 AI는 더 많은 맥락을 갖게 되고, 결과물의 품질이 점점 높아집니다. AIND는 "한 번에 완벽한 결과"가 아닌 "반복을 통한 정교화"를 전제로 합니다.
 
+<figure class="ax-explainer">
+  <a href="/images/ax-edu/diagrams/aind-review-loop.svg" target="_blank" rel="noopener" aria-label="목표와 완료 기준을 제공하고 AI 초안을 검토해 보완하거나 완료하는 협업 순환도 — 원본 크게 보기">
+    <img src="/images/ax-edu/diagrams/aind-review-loop.svg" alt="목표와 완료 기준을 제공하고 AI 초안을 검토해 보완하거나 완료하는 협업 순환도" width="640" height="670" loading="lazy" decoding="async" style="width: 100%; height: auto;" />
+  </a>
+  <figcaption>보완 요청에는 실패한 기준과 수정 근거를 담는다. 반복 횟수보다 완료 기준을 충족했는지가 중요하다. <a href="/images/ax-edu/diagrams/aind-review-loop.svg" target="_blank" rel="noopener">원본 크게 보기</a></figcaption>
+</figure>
+
 ### 개발자 역할의 변화 — 코드 작성 중심에서 설계/검토 중심으로
 
 AIND를 도입한다고 해서 기존의 개발 지식이나 역량이 사라지는 것은 아닙니다. 오히려 개발자의 핵심 역할이 **"무엇을 만들 것인가"를 설계하고 판단하는 방향으로 상향**됩니다.
@@ -177,6 +184,13 @@ AIND의 핵심 특성 중 하나는 AI가 코드 작성 단계에만 머물지 �
 | 설계 | 설계 후 AI에게 코드 요청 | 아키텍처 대안 제시, 설계 의도 기반 구조 초안 생성 | 설계 의도/제약 전달, 대안 평가 및 결정 |
 | 구현 | AI가 코드 자동완성 보조 | 컨텍스트 기반 코드 생성, 반복 수정, 리팩토링 제안 | 컨텍스트 설계, 결과물 검토/수정, 품질 판단 |
 | 테스트/검증 | 개발자가 직접 테스트 작성 | 테스트 케이스 생성, 엣지 케이스 탐지, 코드 리뷰 보조 | 테스트 기준 정의, AI 생성 케이스 검토 및 보완 |
+
+<figure class="ax-explainer">
+  <a href="/images/ax-edu/diagrams/aind-lifecycle.svg" target="_blank" rel="noopener" aria-label="요구사항·설계·구현·검증 단계마다 AI의 보조 역할과 사람의 판단을 나란히 보여 주는 그림 — 원본 크게 보기">
+    <img src="/images/ax-edu/diagrams/aind-lifecycle.svg" alt="요구사항·설계·구현·검증 단계마다 AI의 보조 역할과 사람의 판단을 나란히 보여 주는 그림" width="640" height="720" loading="lazy" decoding="async" style="width: 100%; height: auto;" />
+  </a>
+  <figcaption>AI의 활용 범위를 개발 전주기로 넓혀도 범위 결정, 설계 판단, 변경 검토, 결과 검증은 필요하다. <a href="/images/ax-edu/diagrams/aind-lifecycle.svg" target="_blank" rel="noopener">원본 크게 보기</a></figcaption>
+</figure>
 
 ### AIND 적용 전/후 비교 시나리오
 

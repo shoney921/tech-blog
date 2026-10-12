@@ -73,6 +73,13 @@ RX는 종종 "로봇 도입"이라는 좁은 의미로 오해되지만, 실제�
 
 ---
 
+<figure class="ax-explainer">
+  <a href="/images/ax-edu/diagrams/dx-ax-rx.svg" target="_blank" rel="noopener" aria-label="DX의 디지털 기반 위에 AX의 지능과 RX의 행동이 더해지는 계층도 — 원본 크게 보기">
+    <img src="/images/ax-edu/diagrams/dx-ax-rx.svg" alt="DX의 디지털 기반 위에 AX의 지능과 RX의 행동이 더해지는 계층도" width="640" height="620" loading="lazy" decoding="async" style="width: 100%; height: auto;" />
+  </a>
+  <figcaption>DX·AX·RX를 기반과 기능의 관계로 그렸다. 반드시 한 단계가 끝나야 다음 단계로 넘어가는 일정표는 아니다. <a href="/images/ax-edu/diagrams/dx-ax-rx.svg" target="_blank" rel="noopener">원본 크게 보기</a></figcaption>
+</figure>
+
 ## 소프트웨어 RX — 화면 안에서 일어나는 자동화
 
 물리 로봇 이야기를 하기 전에, 먼저 짚어야 할 것이 화이트칼라 업무를 자동화하는 **소프트웨어 로봇** 영역입니다. 한국 기업의 RX 추진 과제 중 절반 이상이 이 영역에 해당합니다.
@@ -353,6 +360,13 @@ RX는 종종 "로봇 도입"이라는 좁은 의미로 오해되지만, 실제�
 ### VLA (Vision-Language-Action) 모델 — 로봇 파운데이션 모델
 
 LLM이 텍스트를 학습해 언어를 이해하게 된 것처럼, **VLA 모델은 영상·언어·로봇 동작 데이터를 함께 학습**해 "이 컵을 빨간 접시 위에 놓아"라는 자연어 명령을 실제 로봇 동작으로 변환합니다.
+
+<figure class="ax-explainer">
+  <a href="/images/ax-edu/diagrams/vla-loop.svg" target="_blank" rel="noopener" aria-label="카메라 관찰과 언어 지시를 받은 VLA가 행동을 출력하고 제어·안전 계층을 통해 로봇을 움직이는 순환도 — 원본 크게 보기">
+    <img src="/images/ax-edu/diagrams/vla-loop.svg" alt="카메라 관찰과 언어 지시를 받은 VLA가 행동을 출력하고 제어·안전 계층을 통해 로봇을 움직이는 순환도" width="640" height="750" loading="lazy" decoding="async" style="width: 100%; height: auto;" />
+  </a>
+  <figcaption>로봇의 행동은 환경을 바꾸고, 바뀐 환경은 다음 관찰이 된다. 실제 입력과 제어 계층은 모델·하드웨어에 따라 달라진다. <a href="/images/ax-edu/diagrams/vla-loop.svg" target="_blank" rel="noopener">원본 크게 보기</a></figcaption>
+</figure>
 
 #### 주요 VLA 모델
 

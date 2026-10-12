@@ -65,6 +65,13 @@ Agent 평가는 **무엇을 평가하느냐**에 따라 두 가지 접근으로 
 
 Anthropic은 "Agent가 무엇을 만들어냈는지(결과)를 채점하는 것이, 어떤 경로를 거쳤는지를 채점하는 것보다 낫다"고 권장합니다. 도구 호출 순서 같은 구체적인 단계의 일치 여부를 확인하는 방식은 지나치게 경직되어 취약한 테스트를 만들며, Agent는 설계자가 예상하지 못한 유효한 접근 방식을 자주 발견하기 때문입니다. 다만 실무에서는 궤적(Trajectory)에서 불필요한 도구 반복 호출, 보안 위반, 민감 데이터 부적절 접근 등을 확인하는 것도 병행됩니다.
 
+<figure class="ax-explainer">
+  <a href="/images/ax-edu/diagrams/evaluation-scope.svg" target="_blank" rel="noopener" aria-label="같은 배송 답변을 만들지만 필요한 주문만 조회한 경로와 전체 고객 정보를 조회한 경로의 차이 — 원본 크게 보기">
+    <img src="/images/ax-edu/diagrams/evaluation-scope.svg" alt="같은 배송 답변을 만들지만 필요한 주문만 조회한 경로와 전체 고객 정보를 조회한 경로의 차이" width="640" height="650" loading="lazy" decoding="async" style="width: 100%; height: auto;" />
+  </a>
+  <figcaption>최종 답이 같아도 과도한 데이터 접근이나 불필요한 호출이 숨어 있을 수 있다. 결과의 정확성과 실행 과정의 적절성을 함께 살핀다. <a href="/images/ax-edu/diagrams/evaluation-scope.svg" target="_blank" rel="noopener">원본 크게 보기</a></figcaption>
+</figure>
+
 #### AX 프로젝트 지표 선정 가이드
 
 모든 지표를 동시에 추적하는 것은 비효율적입니다. 프로젝트 성격과 고객 요구에 따라 **핵심 지표(Primary Metrics)**와 **보조 지표(Secondary Metrics)**를 구분하여 관리해야 합니다.
@@ -859,6 +866,13 @@ Agent의 **실행 환경을 격리**하여, Agent의 행동이 의도하지 않�
 ### Input/Output Guardrails (입출력 가드레일)
 
 Agent의 입력과 출력을 실시간으로 검증하고 필터링하는 안전장치입니다.
+
+<figure class="ax-explainer">
+  <a href="/images/ax-edu/diagrams/guardrail-layers.svg" target="_blank" rel="noopener" aria-label="입력 검사·모델 행동 제안·실행 전 권한 검사·도구 실행·결과 검사의 다층 방어 흐름도 — 원본 크게 보기">
+    <img src="/images/ax-edu/diagrams/guardrail-layers.svg" alt="입력 검사·모델 행동 제안·실행 전 권한 검사·도구 실행·결과 검사의 다층 방어 흐름도" width="640" height="770" loading="lazy" decoding="async" style="width: 100%; height: auto;" />
+  </a>
+  <figcaption>도구 호출은 실제 부작용을 만들 수 있으므로 실행 전에 권한과 승인 조건을 검사한다. 출력 필터만으로 이미 수행한 작업을 취소할 수는 없다. <a href="/images/ax-edu/diagrams/guardrail-layers.svg" target="_blank" rel="noopener">원본 크게 보기</a></figcaption>
+</figure>
 
 #### Input Guardrails (입력 가드레일)
 

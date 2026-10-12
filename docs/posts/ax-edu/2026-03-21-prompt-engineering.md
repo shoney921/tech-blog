@@ -155,6 +155,13 @@ Instruction-based Prompting은 LLM에게 어떤 형식으로 답을 생성해야
 | **출력** | "AI는 빠르고 정확하며, 여러 작업을 자동화할 수 있습니다." | 1. 속도: AI는 인간보다 빠르게 데이터를 처리할 수 있습니다. 대량의 정보를 실시간으로 분석하여 의사 결정을 지원합니다. 2. 정확성: AI는 학습한 데이터를 기반으로 높은 정확도의 예측을 수행합니다. 인간이 실수할 수 있는 부분도 정교한 알고리즘을 통해 보완할 수 있습니다. 3. 자동화: 반복적인 작업을 자동으로 수행하여 시간과 비용을 절감합니다. 다양한 산업에서 효율성을 극대화하는 데 사용됩니다. |
 | **특징** | 응답이 포괄적이고, 원하는 방향으로 정리되지 않음. | 지시를 명확하게 제공하면, 더 정돈되고 기대한 형태의 응답을 받을 수 있음. |
 
+<figure class="ax-explainer">
+  <a href="/images/ax-edu/diagrams/prompt-anatomy.svg" target="_blank" rel="noopener" aria-label="회의록 정리 요청을 역할·작업·제약·출력 형식으로 구체화한 예시 — 원본 크게 보기">
+    <img src="/images/ax-edu/diagrams/prompt-anatomy.svg" alt="회의록 정리 요청을 역할·작업·제약·출력 형식으로 구체화한 예시" width="640" height="650" loading="lazy" decoding="async" style="width: 100%; height: auto;" />
+  </a>
+  <figcaption>같은 요청도 자료의 범위와 누락 정보 처리 방법을 명시하면 검토 기준이 분명해진다. <a href="/images/ax-edu/diagrams/prompt-anatomy.svg" target="_blank" rel="noopener">원본 크게 보기</a></figcaption>
+</figure>
+
 ### 2.2 Role Prompting (역할 부여 프롬프트)
 
 Role Prompting는 LLM에게 특정한 역할(Role)을 부여하여 응답의 스타일과 전문성을 조정하는 프롬프트 기법입니다.
@@ -290,6 +297,13 @@ N-shot Prompting은 LLM에게 특정한 방식으로 답변하도록 유도하�
 | **입력** | "'회의 일정이 변경되었습니다.'를 구어체로 바꿔줘." | "아래 예시처럼 문장을 격식을 덜 갖춘 구어체로 바꿔줘. '금일 회의가 취소되었습니다.' → '오늘 회의 취소됐어요!' '회의 일정이 변경되었습니다.'를 구어체로 바꿔줘." | "아래 예시처럼 문장을 자연스럽고 캐주얼한 구어체로 바꿔줘. 예제 1: '금일 회의가 취소되었습니다.' → '오늘 회의 취소됐어요!' 예제 2: '프로젝트 마감일이 연장되었습니다.' → '프로젝트 마감 연장됐어요~' 예제 3: '해당 건에 대한 확인이 필요합니다.' → '이거 확인 좀 해주세요!'" |
 | **출력** | "회의 시간이 바뀌었어요." | "회의 시간 바뀌었어요!" | "회의 시간 바뀌었어요~ 확인 부탁드려요!" |
 | **특징** | 모델이 학습한 일반적인 패턴을 따름. 문장 스타일의 일관성이 부족할 수 있음 (여러번 질문 시) | 모델이 예제와 유사한 방식으로 답변함. 예제의 변환 패턴을 따르지만 한 가지 예제만 참고하기 때문에 스타일 변화가 제한적일 수 있음 | 예제 스타일을 반영하며, 문장 구조나 표현 방식까지 유사하게 변환. 일관성 있는 스타일 변화 적용 |
+
+<figure class="ax-explainer">
+  <a href="/images/ax-edu/diagrams/few-shot.svg" target="_blank" rel="noopener" aria-label="Zero-shot과 Few-shot의 입력 구성을 비교하고 감정 분류 예제를 적용하는 그림 — 원본 크게 보기">
+    <img src="/images/ax-edu/diagrams/few-shot.svg" alt="Zero-shot과 Few-shot의 입력 구성을 비교하고 감정 분류 예제를 적용하는 그림" width="640" height="630" loading="lazy" decoding="async" style="width: 100%; height: auto;" />
+  </a>
+  <figcaption>Few-shot은 입력 안에 예제를 넣어 패턴을 보여 주는 방식이다. 별도 학습으로 모델 가중치를 바꾸는 파인튜닝과 구분한다. <a href="/images/ax-edu/diagrams/few-shot.svg" target="_blank" rel="noopener">원본 크게 보기</a></figcaption>
+</figure>
 
 #### N-shot Prompting을 잘 활용하는 방법
 
