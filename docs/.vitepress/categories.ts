@@ -90,9 +90,24 @@ export const categories: Category[] = [
     series: true,
   },
   {
+    id: 'side-gig',
+    label: '부업',
+    order: 7,
+    description: '개발자가 퇴근 후에 해 볼 만한 부업을 직접 따져 본 기록. 수익 구조, 도구 비용, AI로 덜 수 있는 일과 못 덜어 내는 일.',
+    children: [
+      {
+        id: 'video-editing',
+        label: '영상 편집 부업',
+        order: 1,
+        description: 'Final Cut Pro 하나로 시작하는 영상 편집 부업. 편집기 비교, Claude·Codex 활용, 자막 자동화, 직접 개발할지 말지까지 7편.',
+        series: true,
+      },
+    ],
+  },
+  {
     id: 'blog',
     label: '블로그',
-    order: 7,
+    order: 8,
     description: '이 블로그 자체에 대한 이야기.',
   },
 ]
