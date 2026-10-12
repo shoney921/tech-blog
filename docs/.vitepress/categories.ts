@@ -91,9 +91,9 @@ export const categories: Category[] = [
   },
   {
     id: 'side-gig',
-    label: '부업',
+    label: '생존 부업',
     order: 7,
-    description: '개발자가 퇴근 후에 해 볼 만한 부업을 직접 따져 본 기록. 수익 구조, 도구 비용, AI로 덜 수 있는 일과 못 덜어 내는 일.',
+    description: '멸종위기 개발자의 생존 부업 실험. 개발 경험과 AI를 활용해 시도할 일을 찾고, 시작 비용과 작업 과정, 수익 구조를 따져 본다.',
     children: [
       {
         id: 'video-editing',
