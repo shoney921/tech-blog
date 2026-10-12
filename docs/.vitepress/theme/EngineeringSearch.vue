@@ -113,10 +113,6 @@ const results = computed(() =>
 
 const label = (id: SourceId) => SOURCES.find(s => s.id === id)!.label
 const count = (id: SourceId) => POSTS.filter(p => p.src === id).length
-// 구글 번역을 거쳐 열면 페이지 전체가 한국어로 나온다
-const translated = (p: Post) =>
-  `https://translate.google.com/translate?sl=en&tl=ko&u=${encodeURIComponent(p.url)}`
-
 const googleUrl = computed(() => {
   const en = terms.value.map(t => DICT[t] ?? t).join(' ')
   const sites = SOURCES.filter(s => !src.value || s.id === src.value).map(s => `site:${s.site}`)
@@ -147,12 +143,11 @@ const googleUrl = computed(() => {
 
     <ul class="es-list">
       <li v-for="p in results" :key="p.url">
-        <a class="es-ko" :href="translated(p)" target="_blank" rel="noopener">{{ p.ko }}</a>
+        <a class="es-ko" :href="p.url" target="_blank" rel="noopener">{{ p.ko }}</a>
         <div class="es-en">
           <span class="es-src">{{ label(p.src) }}</span>
           · {{ p.title }}
           <span v-if="p.date"> · {{ p.date }}</span>
-          · <a :href="p.url" target="_blank" rel="noopener">원문</a>
         </div>
       </li>
     </ul>
