@@ -14,6 +14,11 @@ date: 2026-03-21T09:30:00
 - 프레임워크·코딩 에이전트 이름이 여럿 바뀌었습니다. Microsoft Agent Framework 1.0 GA(AutoGen은 유지보수 모드), Windsurf는 Devin Desktop으로 개명, Amazon Q Developer IDE 플러그인은 Kiro로 이전(2027-04-30 지원 종료), GitHub Copilot의 원격 에이전트는 'Copilot cloud agent'로 불립니다.
 :::
 
+<figure>
+  <img src="/images/ax-edu/agentic-ai.jpg" alt="사람이 제시한 목표를 중심으로 AI가 계획·도구 사용·결과 확인·수정을 반복하는 삽화" width="1536" height="1024" loading="lazy" decoding="async" style="width: 100%; height: auto; border-radius: 12px;" />
+  <figcaption>에이전트는 목표를 받아 계획하고 도구를 사용하며, 실행 결과를 관찰해 다음 행동을 조정한다. <small>AI 생성 개념 삽화.</small></figcaption>
+</figure>
+
 ## AI Agent의 개념
 
 ### AI Agent란?

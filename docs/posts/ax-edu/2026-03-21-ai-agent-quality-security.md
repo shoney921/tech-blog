@@ -13,6 +13,11 @@ date: 2026-03-21T09:40:00
 - 도구 생태계: Promptfoo는 OpenAI에, Langfuse는 ClickHouse에 인수되었습니다(둘 다 오픈소스 유지 발표). OpenTelemetry GenAI 시맨틱 컨벤션은 여전히 'Development' 단계입니다.
 :::
 
+<figure>
+  <img src="/images/ax-edu/quality-security.jpg" alt="사람과 AI가 작업 결과를 검토하고 잠금장치가 있는 문으로 자료 접근을 통제하는 삽화" width="1536" height="1024" loading="lazy" decoding="async" style="width: 100%; height: auto; border-radius: 12px;" />
+  <figcaption>품질 평가는 결과와 실행 과정을 살피고, 보안 설계는 자료와 도구에 대한 접근 권한을 제한한다. <small>AI 생성 개념 삽화.</small></figcaption>
+</figure>
+
 ## AI Agent 품질 관리
 
 AI Agent는 자율적으로 도구를 호출하고 다단계 행동(Multi-step Action)을 수행하는 특성상, 기존 소프트웨어보다 품질 관리의 중요성이 훨씬 높습니다. Agent의 각 단계에서 발생한 오류는 후속 단계로 **연쇄적으로 확산(Error Propagation)**되어 최종 결과의 품질을 크게 저하시킬 수 있습니다.

@@ -14,6 +14,11 @@ date: 2026-03-21T09:20:00
 - Anthropic 압축(Compaction)이 임계값 방식과 온디맨드 방식으로 나뉘었고, 최신 Claude 모델은 이전 턴 thinking 블록을 기본으로 유지합니다. Context Awareness 대신 Task Budgets(베타)를 쓰는 모델도 늘었습니다.
 :::
 
+<figure>
+  <img src="/images/ax-edu/knowledge-context.jpg" alt="AI가 서가에서 관련 문서를 골라 대화 카드와 함께 작은 컨텍스트 상자에 담는 삽화" width="1536" height="1024" loading="lazy" decoding="async" style="width: 100%; height: auto; border-radius: 12px;" />
+  <figcaption>모든 문서를 한꺼번에 넣기보다, 관련 근거를 검색하고 한정된 컨텍스트에 필요한 정보를 구성한다. <small>AI 생성 개념 삽화.</small></figcaption>
+</figure>
+
 ## Knowledge(지식)의 개념
 
 ### AI에서 Knowledge란?

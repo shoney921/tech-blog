@@ -15,6 +15,11 @@ date: 2026-03-21T09:50:00
 - 원문의 `.claudeignore`는 Claude Code 공식 문서에서 확인되지 않습니다. 민감 파일 차단은 `permissions.deny`(필요 시 hooks)로 구성하는 것이 공식 방식입니다.
 :::
 
+<figure>
+  <img src="/images/ax-edu/aind-development.jpg" alt="개발자와 AI가 요구사항·설계·구현을 함께 다루고 사람이 테스트 결과를 검토하는 삽화" width="1536" height="1024" loading="lazy" decoding="async" style="width: 100%; height: auto; border-radius: 12px;" />
+  <figcaption>AIND는 요구사항부터 설계·구현·검증까지 AI와 협업하는 개발 방식이다. 결과를 판단하는 사람의 역할도 함께 남는다. <small>AI 생성 개념 삽화.</small></figcaption>
+</figure>
+
 ## AIND (AI Native Development) 개요
 
 ### AIND 정의

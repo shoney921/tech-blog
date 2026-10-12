@@ -15,6 +15,11 @@ date: 2026-04-30T10:00:00
 - 한국: K-휴머노이드 연합 출범은 원문의 2024년이 아니라 2025년 4월 10일이고, 소관 부처 이름은 2025년 10월부터 산업통상부입니다. 국토교통부가 2026년 7월 레벨4 무인차 안전운행 가이드라인을 내놨습니다.
 :::
 
+<figure>
+  <img src="/images/ax-edu/robotic-transformation.jpg" alt="노트북의 디지털 작업 흐름이 카메라로 관찰하는 로봇 팔과 이동 로봇으로 이어지는 삽화" width="1536" height="1024" loading="lazy" decoding="async" style="width: 100%; height: auto; border-radius: 12px;" />
+  <figcaption>RX는 소프트웨어 작업의 자동화에서 물리 세계의 인식·이동·조작까지 행동의 범위를 넓힌다. <small>AI 생성 개념 삽화.</small></figcaption>
+</figure>
+
 ## 들어가며 — DX, AX, 그리고 RX
 
 ### 왜 지금 RX인가?

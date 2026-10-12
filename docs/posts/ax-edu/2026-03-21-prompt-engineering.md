@@ -14,6 +14,11 @@ date: 2026-03-21T09:10:00
 - 프롬프트 캐싱이 비용 설계의 기본이 되면서 "고정된 내용은 앞에, 바뀌는 내용은 뒤에"라는 배치 원칙이 공식 가이드에 들어갔습니다.
 :::
 
+<figure>
+  <img src="/images/ax-edu/prompt-engineering.jpg" alt="역할·목표·맥락·출력 형식을 나타내는 카드를 사람이 정리해 AI에게 전달하는 삽화" width="1536" height="1024" loading="lazy" decoding="async" style="width: 100%; height: auto; border-radius: 12px;" />
+  <figcaption>좋은 프롬프트는 역할, 수행할 일, 필요한 맥락, 원하는 출력 형식을 구체적으로 전달한다. <small>AI 생성 개념 삽화.</small></figcaption>
+</figure>
+
 ## 프롬프트 엔지니어링의 개념
 
 ### 프롬프트란?
