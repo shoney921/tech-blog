@@ -2,7 +2,7 @@
 
 VitePress 기반 기술 블로그. Cloudflare Pages로 `blog.shoneylife.com`에 배포.
 
-> **다른 에이전트(Codex·Cursor)**: 이 파일이 원본이다. `AGENTS.md`·`.cursor/rules/*.mdc` 는 이 파일을 가리키기만 하고 내용을 복제하지 않는다(2026-10-09 — 예전 `.cursor/rules` 사본은 이 파일과 어긋나 있었다). 규칙은 여기서만 고친다.
+> **다른 에이전트(Codex·Cursor)**: 이 파일이 원본이다. `AGENTS.md`는 이 파일의 전문 사본이고 `.cursor/rules/*.mdc`는 이 파일을 가리킨다. 규칙은 여기서 고친 뒤 관리 도구로 `AGENTS.md`를 동기화한다(2026-10-13 사용자 결정).
 
 ## 프로젝트 구조
 
