@@ -1,0 +1,3 @@
+# AdSense preparation only: no authorized seller records yet.
+# Before enabling ads, paste the exact ads.txt record from your AdSense account.
+# See README.md for setup and domain verification. Do not insert a sample publisher ID.

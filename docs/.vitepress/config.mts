@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import type { HeadConfig } from 'vitepress'
 import fs from 'node:fs'
 import path from 'node:path'
 import { categories, getCategoryLabel } from './categories'
@@ -142,6 +143,19 @@ function getSidebarFromPosts() {
 const SITE_DESCRIPTION = 'AI 시대에도 일단 실행. 개발과 삽질의 생존 기록.'
 const docsRoot = path.resolve(__dirname, '..')
 
+// 빌드 환경에 실제 ID를 설정한 경우에만 활성화. .env 파일을 자동으로 읽지 않는다.
+const adsensePublisherId = process.env.ADSENSE_PUBLISHER_ID?.trim()
+if (adsensePublisherId && !/^pub-\d{16}$/.test(adsensePublisherId)) {
+  throw new Error('ADSENSE_PUBLISHER_ID must use pub- followed by 16 digits')
+}
+const adsenseHead: HeadConfig[] = adsensePublisherId
+  ? [['script', {
+      async: '',
+      src: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-${adsensePublisherId}`,
+      crossorigin: 'anonymous',
+    }]]
+  : []
+
 function readPostSource(relativePath: string): { date?: string; description?: string } {
   const file = path.join(docsRoot, relativePath)
   if (!fs.existsSync(file)) return {}
@@ -189,6 +203,7 @@ export default defineConfig({
   buildEnd: genFeed,
 
   head: [
+    ...adsenseHead,
     ['link', { rel: 'icon', type: 'image/png', href: '/brand/favicon-32.png', sizes: '32x32' }],
     ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/brand/favicon-16.png' }],
     ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/brand/apple-touch-icon.png' }],
@@ -305,7 +320,15 @@ export default defineConfig({
         ],
       },
       { text: 'AI 글 검색', link: '/ai-search' },
-      { text: '소개', link: '/about' },
+      {
+        text: '블로그 안내',
+        activeMatch: '^/(about|privacy|contact)',
+        items: [
+          { text: '소개', link: '/about' },
+          { text: '개인정보 처리방침', link: '/privacy' },
+          { text: '문의', link: '/contact' },
+        ],
+      },
       { text: '포트폴리오', link: '/portfolio' },
     ],
 
@@ -360,7 +383,7 @@ export default defineConfig({
     },
 
     footer: {
-      message: '멸종 위기 개발자',
+      message: '<a href="/about">소개</a> · <a href="/privacy">개인정보 처리방침</a> · <a href="/contact">문의</a>',
       copyright: `© ${new Date().getFullYear()} Shoney. All rights reserved.`,
     },
   },
