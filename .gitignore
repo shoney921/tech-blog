@@ -5,3 +5,5 @@ docs/.vitepress/cache
 refs/
 index.html
 test-results/
+profile/dist/
+profile/.wrangler/

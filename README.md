@@ -1,5 +1,7 @@
 # Shoney Tech Blog
 
+개인 홈페이지(`shoneylife.com`) 소스는 `profile/`에 있다. 빌드·미리보기·검증·독립된 루트 배포 방법은 [profile/README.md](profile/README.md)를 참고한다. 기술 블로그(`blog.shoneylife.com`)의 홈페이지를 교체하는 작업이 아니다.
+
 VitePress 개인 기술 블로그. 사이트는 `https://blog.shoneylife.com`이며 Cloudflare Pages가 `main` 푸시 시 자동 배포한다. 프로젝트 작업 규칙은 `CLAUDE.md`를 따른다.
 
 초기 작업은 로컬 승인 준비물까지였으며, 2026-10-27 사용자가 배포를 지시해 소유권 확인용 코드와 안내 페이지를 공개하는 단계로 진행한다. 계정 로그인·소유권 확인 버튼·검토 요청은 운영자가 직접 진행한다. 개인정보 처리방침의 보관 기준·로그 설정·광고 파트너 미정 항목은 아직 확정해야 한다.

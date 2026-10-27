@@ -146,6 +146,15 @@ git branch -d <브랜치명>
 
 ## 명령어
 
+### 개인 홈페이지 (`shoneylife.com`)
+
+- 소스는 `profile/`, 빌드는 `pnpm profile:build` → `profile/dist/`이다. 기존 블로그와 독립된 HTML/CSS/Canvas 사이트다.
+- 프로젝트 소개의 원본은 `profile/projects.mjs`. 실제 공개 상태와 개인용 도구를 구분하며, 그래픽을 실제 스크린샷으로 표현하지 않는다.
+- 미리보기 서버 실행 후 `pnpm profile:check`로 반응형·내부 링크·모션 정지·JS 비활성 상태를 검사한다. 자세한 명령은 `profile/README.md` 참고.
+- 루트는 Cloudflare Worker `shoney-personal`에 `profile/wrangler.jsonc`로 배포한다. GitHub main 푸시만으로 루트 Worker가 갱신되지는 않으며 Wrangler 배포와 공개 URL 확인이 필요하다. 기술 블로그 Pages 배포와 혼동하지 않는다.
+- 루트에 애드센스 확인용 메타 태그와 ads.txt를 제공한다. 광고 로더는 기술 블로그에만 있고 루트 프로필에는 넣지 않는다.
+- 모션은 본문 접근을 막지 않도록 하고 정지 버튼·`prefers-reduced-motion`을 유지한다. 개인 데이터와 원격 개발 환경 주소는 공개하지 않는다.
+
 | 명령어 | 용도 |
 |--------|------|
 | `pnpm docs:dev` | 로컬 개발 서버 (localhost:5173) |

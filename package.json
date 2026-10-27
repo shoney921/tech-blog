@@ -7,7 +7,9 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "test:e2e": "playwright test",
-    "check:adsense": "node scripts/check-adsense.mjs"
+    "check:adsense": "node scripts/check-adsense.mjs",
+    "profile:build": "node scripts/build-profile.mjs",
+    "profile:check": "node scripts/check-profile.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.49.0",
