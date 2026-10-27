@@ -44,7 +44,7 @@ API 수준에서 확인되는 연결 고리도 있습니다. 클라이언트 도
 
 읽기·검색은 정보를 모으고, 편집은 파일을 바꾸고, 셸은 빌드나 테스트 같은 프로그램을 실행합니다. **[문서 확인 · [도구가 하는 일](https://code.claude.com/docs/en/how-claude-code-works#tools), 2026-10-27]**
 
-그런데 셸은 특히 넓은 문입니다. `pnpm docs:build`도 셸로 실행할 수 있고, `git push`도 셸로 실행할 수 있습니다. 둘 다 글자 몇 개짜리 명령이지만 이 블로그에서는 뒤의 명령이 배포로 이어집니다. 저장소의 `CLAUDE.md`에 main 푸시 시 Cloudflare Pages가 자동 배포한다고 적혀 있습니다. **[로컬 확인 · [저장소 운영 지침](https://github.com/shoney921/tech-blog/blob/4fb004f4e2b5eac4e02db52f8498631b04b793de/CLAUDE.md), 2026-10-27]**
+그런데 셸은 특히 넓은 문입니다. `pnpm docs:build`도 셸로 실행할 수 있고, `git push`도 셸로 실행할 수 있습니다. 둘 다 글자 몇 개짜리 명령이지만 이 블로그에서는 뒤의 명령이 배포로 이어집니다. 저장소의 `CLAUDE.md`에 main 푸시 시 Cloudflare Pages가 자동 배포한다고 적혀 있습니다. **[로컬 확인 · [저장소 운영 지침](https://github.com/shoney921/tech-blog/blob/34fb7941bebba6b46229dcb738084cab2aa5c717/CLAUDE.md), 2026-10-27]**
 
 ![렌치를 든 로봇이 권한 관문 앞에서 기다리고 사람이 열쇠를 쥐고 있는 모습](/images/claude-code-execution/permission-gate.jpg)
 
@@ -77,7 +77,7 @@ API 수준에서 확인되는 연결 고리도 있습니다. 클라이언트 도
 
 `CLAUDE.md`는 가방에 넣어 주는 프로젝트 안내문입니다. 기본적인 로딩 방식은 작업 디렉토리와 상위 디렉토리의 지침을 모으고, 하위 디렉토리 지침은 그 영역의 파일을 다룰 때 필요에 따라 읽는 것입니다. 여러 파일은 단순히 하나가 다른 하나를 덮어쓰는 설정값이 아니라 컨텍스트에 함께 들어갑니다. 로딩 여부는 `/context`의 Memory files에서 확인할 수 있습니다. **[문서 확인 · [CLAUDE.md 로딩](https://code.claude.com/docs/en/memory#how-claudemd-files-load), 2026-10-27]**
 
-이 블로그의 안내문에는 파일명, 필수 frontmatter, 카테고리, `pnpm docs:build`가 적혀 있습니다. 운영 방식을 저장소에서 확인할 수 있는 사례죠. 실제 Claude Code 세션의 자동 로딩은 계측하지 않았습니다. **[로컬 확인 · [CLAUDE.md](https://github.com/shoney921/tech-blog/blob/4fb004f4e2b5eac4e02db52f8498631b04b793de/CLAUDE.md), 2026-10-27]**
+이 블로그의 안내문에는 파일명, 필수 frontmatter, 카테고리, `pnpm docs:build`가 적혀 있습니다. 운영 방식을 저장소에서 확인할 수 있는 사례죠. 실제 Claude Code 세션의 자동 로딩은 계측하지 않았습니다. **[로컬 확인 · [CLAUDE.md](https://github.com/shoney921/tech-blog/blob/34fb7941bebba6b46229dcb738084cab2aa5c717/CLAUDE.md), 2026-10-27]**
 
 가방이 차면 압축이 등장합니다. 공식 문서가 설명하는 compaction은 대화를 요약해 이어가는 과정이며, 초반의 세부 지시가 빠질 수 있습니다. `/compact`에 보존할 초점을 덧붙일 수도 있습니다. 이것을 원문이 한 글자도 빠지지 않는 ZIP 압축처럼 이해하면 곤란합니다. **[문서 확인 · [컨텍스트 관리](https://code.claude.com/docs/en/how-claude-code-works#context-management), 2026-10-27]**
 
@@ -144,7 +144,7 @@ Plan 모드는 조사하고 변경안을 제시하는 데 쓰입니다. 현재 �
 
 ## 확인하지 못한 곳에는 선을 남겨 둡니다
 
-이 맥에서 `claude --version`을 실행해 **2.1.308 (Claude Code)**을 확인했습니다. 저장소 지침, 글 메타데이터 로더, 사이드바 생성 코드도 읽었습니다. 날짜가 있는 새 Markdown 글은 자동 스캔 대상이어서 수동 등록 항목을 추가할 필요가 없습니다. **[로컬 확인 · 명령 출력 및 [글 로더](https://github.com/shoney921/tech-blog/blob/4fb004f4e2b5eac4e02db52f8498631b04b793de/docs/.vitepress/theme/posts.data.ts), [사이드바 설정](https://github.com/shoney921/tech-blog/blob/4fb004f4e2b5eac4e02db52f8498631b04b793de/docs/.vitepress/config.mts), 2026-10-27]**
+이 맥에서 `claude --version`을 실행해 **2.1.308 (Claude Code)**을 확인했습니다. 저장소 지침, 글 메타데이터 로더, 사이드바 생성 코드도 읽었습니다. 날짜가 있는 새 Markdown 글은 자동 스캔 대상이어서 수동 등록 항목을 추가할 필요가 없습니다. **[로컬 확인 · 명령 출력 및 [글 로더](https://github.com/shoney921/tech-blog/blob/34fb7941bebba6b46229dcb738084cab2aa5c717/docs/.vitepress/theme/posts.data.ts), [사이드바 설정](https://github.com/shoney921/tech-blog/blob/34fb7941bebba6b46229dcb738084cab2aa5c717/docs/.vitepress/config.mts), 2026-10-27]**
 
 확인하지 못한 것도 분명합니다. 실제 Claude Code 세션의 권한 거부, 훅 실행, 자동 압축, MCP 왕복을 이번 조사에서 재현하지 않았습니다. 압축 전후 정보 보존율과 비용도 측정하지 않았습니다. 비공개 함수 이름, 내부 호출 스택, 모든 도구의 병렬 실행 규칙은 확인하지 못했으며 이 글의 설명에 사용하지 않았습니다.
 
