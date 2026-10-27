@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Claude Code 요청과 도구 결과의 왕복</title>
+  <desc id="desc">사용자 요청에서 모델 판단으로, 도구 호출은 실행 제어와 도구 실행을 거쳐 결과가 모델에 돌아온다. 거부나 오류도 다음 판단의 정보가 된다. 모델은 답변을 선택할 수 있고 사용자가 중단할 수도 있다. 실행 제어 내부의 고정 처리 순서를 뜻하지 않는 개념도다.</desc>
+  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#256c70"/></marker></defs>
+  <rect width="960" height="540" rx="24" fill="#faf4e7"/>
+  <g font-family="sans-serif" fill="#223844" text-anchor="middle">
+    <text x="480" y="47" font-size="24" font-weight="700">요청 하나, 여러 번의 판단</text>
+    <g fill="#fffdf7" stroke="#256c70" stroke-width="2">
+      <rect x="35" y="105" width="155" height="76" rx="15"/>
+      <rect x="300" y="105" width="210" height="76" rx="15"/>
+      <rect x="720" y="105" width="195" height="76" rx="15"/>
+      <rect x="300" y="270" width="210" height="88" rx="15"/>
+      <rect x="720" y="270" width="195" height="88" rx="15"/>
+    </g>
+    <text x="112" y="151" font-size="22">사용자 요청</text>
+    <text x="405" y="151" font-size="22">모델 판단</text>
+    <text x="818" y="151" font-size="22">답변</text>
+    <text x="405" y="305" font-size="22">실행 제어</text>
+    <text x="405" y="334" font-size="16">권한 · 모드 · 관련 훅</text>
+    <text x="818" y="305" font-size="22">도구 실행</text>
+    <text x="818" y="334" font-size="16">읽기 · 편집 · 셸 등</text>
+    <g fill="none" stroke="#256c70" stroke-width="3" marker-end="url(#arrow)">
+      <path d="M192 143H290"/>
+      <path d="M512 143H710"/>
+      <path d="M405 183V260"/>
+      <path d="M512 310H710"/>
+      <path d="M818 360V425H255V200L297 166"/>
+      <path d="M300 310H218V206L297 155" stroke-dasharray="6 5"/>
+    </g>
+    <text x="610" y="128" font-size="16">응답 선택</text>
+    <text x="461" y="223" font-size="16">도구 호출</text>
+    <text x="612" y="294" font-size="16">실행 허용</text>
+    <text x="140" y="258" font-size="16" fill="#9a482d">거부 이유</text>
+    <text x="542" y="415" font-size="17">실행 결과 · 오류 → 다음 판단</text>
+    <text x="480" y="480" font-size="16">사용자는 도중에 중단하거나 방향을 바꿀 수 있습니다.</text>
+    <text x="480" y="508" font-size="14">개념도: 실행 제어 안의 고정된 내부 호출 순서를 나타내지 않습니다.</text>
+  </g>
+</svg>
