@@ -8,20 +8,20 @@ VitePress 개인 기술 블로그. 사이트는 `https://blog.shoneylife.com`이
 
 운영자가 제공한 코드의 게시자 ID는 `pub-6054380963868861`이다. `docs/.vitepress/adsense.config.json`에 저장했으며 **enabled는 false**다. `docs/public/ads.txt`에는 이 ID와 Google 공식 형식으로 구성한 DIRECT 레코드를 넣었다. 계정의 ads.txt 스니펫과 최종 대조는 아직 하지 않았다.
 
-나중에 공개 반영이 허용되면 `adsense.config.json`의 `enabled`를 `true`로 바꾸거나 빌드 환경의 `ADSENSE_PUBLISHER_ID`를 실제 ID로 설정한다. 이번 단계는 로컬 반영까지만 한다. 문의 이메일 및 처리방침의 미정 항목도 아직 확정해야 한다.
+나중에 공개 반영이 허용되면 `adsense.config.json`의 `enabled`를 `true`로 바꾸거나 빌드 환경의 `ADSENSE_PUBLISHER_ID`를 실제 ID로 설정한다. 이번 단계는 로컬 반영까지만 한다. 공개 문의 이메일은 운영자가 지정한 `ddmczp@naver.com`으로 반영했다. 처리방침의 나머지 미정 항목은 아직 확정해야 한다.
 
 애드센스 화면의 “코드를 삽입했습니다”는 공개 HTML에 코드가 올라갔다는 확인이다. 로컬 빌드 성공만으로 체크하거나 연결 확인을 완료했다고 간주하지 않는다. 신청 대상은 `shoneylife.com`, 이 저장소의 배포 대상은 `blog.shoneylife.com`이므로 루트 도메인 연결 방식도 확인해야 한다. 루트 ads.txt에 동일 판매자 행을 제공하거나, 서로 다른 판매자 설정이 필요하면 루트 파일에서 `subdomain=blog.shoneylife.com`으로 위임하는 방법을 검토한다. 현재 저장소에 루트 도메인의 설정을 임의로 추가하지 않는다. [Google ads.txt FAQ](https://support.google.com/adsense/answer/9785052?hl=ko).
 
 ## 사람이 채울 값
 
-우선 운영자가 할 일은 아래 두 가지다. 확인된 공개 정보만 전달하면 파일 반영과 빌드 검증은 에이전트가 처리할 수 있다.
+공개 이메일과 게시자 ID는 전달받아 반영했다. 이메일 수신 확인과 계정 내부 설정 확인은 운영자가 진행한다.
 
-1. 블로그에 공개할 문의 이메일 주소를 정한다. 이메일 수신 여부는 운영자가 직접 확인한다.
+1. 공개 문의 이메일 `ddmczp@naver.com`의 수신 여부를 운영자가 직접 확인한다. 문의·개인정보 페이지의 mailto 링크는 반영 완료했다.
 2. [애드센스](https://www.google.com/adsense/start/)에 직접 가입 또는 로그인해 사이트 추가를 진행하고, 화면에 표시되는 게시자 ID(`pub-`로 시작)와 ads.txt 한 줄을 확인한다. 블로그 주소는 `https://blog.shoneylife.com`이다. 입력란에서 루트 도메인만 받는다면 `shoneylife.com` 기준 안내를 따르고 하위 도메인의 연결·ads.txt 탐색도 확인한다. 비밀번호, 인증 코드, 결제 정보는 공유하지 않는다.
 
 공개 정보가 준비되면 에이전트가 연락처·ID·ads.txt 반영, 처리방침의 미정 항목 점검, 로컬 검증까지 진행할 수 있다. 로그 보관 설정과 광고 파트너 등 계정 안에서만 확인 가능한 사실은 운영자가 확인해야 한다. 그 뒤 배포가 별도로 허용되면 에이전트가 병합·배포·공개 URL 확인을 진행할 수 있다. 현재는 배포하지 않는다. 공개 확인이 끝난 다음 운영자가 애드센스 화면에서 **연결 확인 → 검토 요청**을 진행한다. [Google 공식 연결 절차](https://support.google.com/adsense/answer/7584263?hl=ko).
 
-- `docs/contact.md`, `docs/privacy.md`: 실제로 수신 가능한 공개 문의 이메일. 주소 결정 후 실제 링크로 바꾸고 수신 확인.
+- `docs/contact.md`, `docs/privacy.md`: 공개 문의 이메일 `ddmczp@naver.com` 반영 완료. 실제 수신 확인은 운영자가 진행.
 - `docs/privacy.md`: 시행일, 문의 자료 보관 기간·삭제 절차, Cloudflare 로그 설정·열람 범위·보관 기간. 실제 운영 및 적용되는 개인정보 요건에 맞게 확정.
 - `docs/privacy.md`: 광고 활성화 시 사용하는 Google 외 광고 공급업체·네트워크의 실제 목록과 개인정보·거부 설정 링크. 사용하지 않으면 그 사실을 명시.
 - 빌드 환경 `ADSENSE_PUBLISHER_ID`: 본인 계정의 `pub-`와 숫자 16자리. ID는 공개 식별자이며 비밀번호/API 키가 아니다. 계정 로그인과 값 입력은 운영자가 직접 진행.
