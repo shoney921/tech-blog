@@ -2,13 +2,13 @@
 
 VitePress 개인 기술 블로그. 사이트는 `https://blog.shoneylife.com`이며 Cloudflare Pages가 `main` 푸시 시 자동 배포한다. 프로젝트 작업 규칙은 `CLAUDE.md`를 따른다.
 
-이번 애드센스 작업은 **로컬 승인 준비물**이다. 피처 브랜치에만 커밋하며 main 머지·푸시·배포·계정 신청은 하지 않는다. 개인정보 처리방침과 문의 페이지의 자리표시를 채우기 전에는 승인 신청 준비가 끝난 것으로 보지 않는다.
+초기 작업은 로컬 승인 준비물까지였으며, 2026-10-27 사용자가 배포를 지시해 소유권 확인용 코드와 안내 페이지를 공개하는 단계로 진행한다. 계정 로그인·소유권 확인 버튼·검토 요청은 운영자가 직접 진행한다. 개인정보 처리방침의 보관 기준·로그 설정·광고 파트너 미정 항목은 아직 확정해야 한다.
 
 ## 확인된 게시자 정보와 남은 순서
 
-운영자가 제공한 코드의 게시자 ID는 `pub-6054380963868861`이다. `docs/.vitepress/adsense.config.json`에 저장했으며 **enabled는 false**다. `docs/public/ads.txt`에는 이 ID와 Google 공식 형식으로 구성한 DIRECT 레코드를 넣었다. 계정의 ads.txt 스니펫과 최종 대조는 아직 하지 않았다.
+운영자가 제공한 코드의 게시자 ID는 `pub-6054380963868861`이다. `docs/.vitepress/adsense.config.json`에 저장했으며 사용자의 배포 지시에 따라 **enabled는 true**다. `docs/public/ads.txt`에는 이 ID와 Google 공식 형식으로 구성한 DIRECT 레코드를 넣었다. 계정의 ads.txt 스니펫과 최종 대조는 아직 하지 않았다.
 
-나중에 공개 반영이 허용되면 `adsense.config.json`의 `enabled`를 `true`로 바꾸거나 빌드 환경의 `ADSENSE_PUBLISHER_ID`를 실제 ID로 설정한다. 이번 단계는 로컬 반영까지만 한다. 공개 문의 이메일은 운영자가 지정한 `ddmczp@naver.com`으로 반영했다. 처리방침의 나머지 미정 항목은 아직 확정해야 한다.
+이번 배포는 설정 파일의 `enabled: true`를 사용한다. `ADSENSE_PUBLISHER_ID` 환경 변수가 명시되어 있으면 빈 값도 파일 설정보다 우선하므로 배포된 HTML을 반드시 확인한다. 공개 문의 이메일은 운영자가 지정한 `ddmczp@naver.com`으로 반영했다. 처리방침의 나머지 미정 항목은 아직 확정해야 한다.
 
 애드센스 화면의 “코드를 삽입했습니다”는 공개 HTML에 코드가 올라갔다는 확인이다. 로컬 빌드 성공만으로 체크하거나 연결 확인을 완료했다고 간주하지 않는다. 신청 대상은 `shoneylife.com`, 이 저장소의 배포 대상은 `blog.shoneylife.com`이므로 루트 도메인 연결 방식도 확인해야 한다. 루트 ads.txt에 동일 판매자 행을 제공하거나, 서로 다른 판매자 설정이 필요하면 루트 파일에서 `subdomain=blog.shoneylife.com`으로 위임하는 방법을 검토한다. 현재 저장소에 루트 도메인의 설정을 임의로 추가하지 않는다. [Google ads.txt FAQ](https://support.google.com/adsense/answer/9785052?hl=ko).
 
@@ -19,7 +19,7 @@ VitePress 개인 기술 블로그. 사이트는 `https://blog.shoneylife.com`이
 1. 공개 문의 이메일 `ddmczp@naver.com`의 수신 여부를 운영자가 직접 확인한다. 문의·개인정보 페이지의 mailto 링크는 반영 완료했다.
 2. [애드센스](https://www.google.com/adsense/start/)에 직접 가입 또는 로그인해 사이트 추가를 진행하고, 화면에 표시되는 게시자 ID(`pub-`로 시작)와 ads.txt 한 줄을 확인한다. 블로그 주소는 `https://blog.shoneylife.com`이다. 입력란에서 루트 도메인만 받는다면 `shoneylife.com` 기준 안내를 따르고 하위 도메인의 연결·ads.txt 탐색도 확인한다. 비밀번호, 인증 코드, 결제 정보는 공유하지 않는다.
 
-공개 정보가 준비되면 에이전트가 연락처·ID·ads.txt 반영, 처리방침의 미정 항목 점검, 로컬 검증까지 진행할 수 있다. 로그 보관 설정과 광고 파트너 등 계정 안에서만 확인 가능한 사실은 운영자가 확인해야 한다. 그 뒤 배포가 별도로 허용되면 에이전트가 병합·배포·공개 URL 확인을 진행할 수 있다. 현재는 배포하지 않는다. 공개 확인이 끝난 다음 운영자가 애드센스 화면에서 **연결 확인 → 검토 요청**을 진행한다. [Google 공식 연결 절차](https://support.google.com/adsense/answer/7584263?hl=ko).
+공개 정보가 준비되면 에이전트가 연락처·ID·ads.txt 반영, 처리방침의 미정 항목 점검, 로컬 검증까지 진행할 수 있다. 로그 보관 설정과 광고 파트너 등 계정 안에서만 확인 가능한 사실은 운영자가 확인해야 한다. 사용자가 배포를 지시했으므로 에이전트가 병합·배포·공개 URL 확인을 진행한다. 공개 확인이 끝난 다음 운영자가 애드센스 화면에서 **연결 확인 → 검토 요청**을 진행한다. [Google 공식 연결 절차](https://support.google.com/adsense/answer/7584263?hl=ko).
 
 - `docs/contact.md`, `docs/privacy.md`: 공개 문의 이메일 `ddmczp@naver.com` 반영 완료. 실제 수신 확인은 운영자가 진행.
 - `docs/privacy.md`: 시행일, 문의 자료 보관 기간·삭제 절차, Cloudflare 로그 설정·열람 범위·보관 기간. 실제 운영 및 적용되는 개인정보 요건에 맞게 확정.
@@ -32,16 +32,16 @@ VitePress 개인 기술 블로그. 사이트는 `https://blog.shoneylife.com`이
 
 ```sh
 pnpm install
-# 명시적으로 끈 상태. 기본적으로 환경 변수가 없어도 꺼진다.
+# 명시적으로 끈 상태로 빌드 (현재 저장소 설정은 확인용 코드 켜짐).
 ADSENSE_PUBLISHER_ID= pnpm docs:build
 pnpm docs:preview
 ```
 
 설정 변경 후에는 `pnpm check:adsense`로 켜짐·잘못된 ID·꺼짐을 자동 검증할 수 있다. 설정된 공개 게시자 ID로 로컬 HTML만 검사하며 Google 광고 서버에 접속하지 않는다. 마지막에는 꺼짐 빌드로 복원하고, 안내 페이지·링크 및 ads.txt 복사도 검사한다. 검증 중에는 같은 폴더에서 다른 빌드나 미리보기를 동시에 실행하지 않는다.
 
-`docs/.vitepress/config.mts`는 `adsense.config.json`과 프로세스 환경 변수를 읽으며 `.env` 파일을 자동으로 읽지 않는다. 환경 변수 `ADSENSE_PUBLISHER_ID`가 있으면 빈 값도 설정 파일보다 우선한다. 환경 변수가 없으면 설정 파일의 enabled가 true일 때만 저장된 ID를 사용한다. 기본값은 false이며, 최종 ID가 없거나 공백이면 광고 head 항목은 빈 배열이다. 값이 있으면 형식을 검증하고 `async`, `crossorigin="anonymous"`인 공식 로더를 head에 한 번 삽입한다. 잘못된 값이면 빌드를 실패시켜 배포를 막는다. 설정 파일에는 운영자가 제공한 실제 공개 ID만 기록하며 임의의 ID를 넣지 않는다.
+`docs/.vitepress/config.mts`는 `adsense.config.json`과 프로세스 환경 변수를 읽으며 `.env` 파일을 자동으로 읽지 않는다. 환경 변수 `ADSENSE_PUBLISHER_ID`가 있으면 빈 값도 설정 파일보다 우선한다. 환경 변수가 없으면 설정 파일의 enabled가 true일 때만 저장된 ID를 사용한다. 준비 단계의 초기값은 false였고, 현재는 배포를 위해 true로 변경했다. 최종 ID가 없거나 공백이면 광고 head 항목은 빈 배열이다. 값이 있으면 형식을 검증하고 `async`, `crossorigin="anonymous"`인 공식 로더를 head에 한 번 삽입한다. 잘못된 값이면 빌드를 실패시켜 배포를 막는다. 설정 파일에는 운영자가 제공한 실제 공개 ID만 기록하며 임의의 ID를 넣지 않는다.
 
-실제 ID를 사용할 때는 운영자가 로컬 셸 또는 Cloudflare Pages의 **빌드 환경 변수**에 `ADSENSE_PUBLISHER_ID`를 설정한 뒤 새로 빌드한다. 설정 해제도 재빌드가 필요하다. 기존 정적 결과물이 자동으로 바뀌지 않는다. 확인용 로더는 자동 광고에서도 사용하는 코드이므로, 승인 후 계정의 자동 광고가 켜져 있으면 별도 광고 단위 없이도 광고가 나올 수 있다. 확인만 할 때는 계정의 자동 광고 설정도 확인한다.
+실제 ID를 사용할 때는 운영자가 로컬 셸 또는 Cloudflare Pages의 **빌드 환경 변수**에 `ADSENSE_PUBLISHER_ID`를 설정한 뒤 새로 빌드한다. 저장소 설정으로 켜져 있다면 환경 변수 삭제만으로는 꺼지지 않는다. 빈 환경 변수 지정 또는 `enabled: false` 변경 후 재빌드해야 한다. 기존 정적 결과물이 자동으로 바뀌지 않는다. 확인용 로더는 자동 광고에서도 사용하는 코드이므로, 승인 후 계정의 자동 광고가 켜져 있으면 별도 광고 단위 없이도 광고가 나올 수 있다. 확인만 할 때는 계정의 자동 광고 설정도 확인한다.
 
 기본 빌드 후 `docs/.vitepress/dist`의 HTML·JS에서 `adsbygoogle`, `pagead2.googlesyndication.com`, `ca-pub-`가 없는지 확인한다. 활성화 빌드는 생성 HTML head에서 로더 1개와 정확한 client ID·async·crossorigin을 확인한다. 로컬 검증에서는 외부 광고 요청을 차단하고 실제 광고를 클릭하지 않는다. 검증을 마친 뒤 꺼진 상태로 다시 빌드한다.
 
@@ -100,3 +100,9 @@ ads.txt의 레코드와 스크립트의 게시자 ID가 같은지 확인하고, 
 운영자가 제공한 실제 ID로 켜짐 빌드의 HTML 118개 head를 검증했고, 마지막에 꺼짐으로 복원한 HTML·JS 358개에서 광고 코드가 없음을 확인했다. ads.txt가 설정 파일의 실제 ID와 일치하는지도 검사했다. 공개 배포·계정의 연결 확인·검토 요청은 수행하지 않았다. 초기의 주석 전용 ads.txt 검증 기록은 당시 상태에 대한 기록이다.
 
 공개 URL의 읽기 확인을 시도했으나 이 실행 환경에서는 `shoneylife.com`의 DNS 조회가 실패하고 `blog.shoneylife.com`은 HTTP 403을 반환했다. 공개 HTML 및 루트 ads.txt는 확인하지 못했다. 이 결과만으로 Google 크롤러의 접근 가능 여부를 판단하지 않는다. 실제 브라우저와 DNS·Cloudflare 설정에서 별도 확인이 필요하다.
+
+## 소유권 확인 코드 배포 (2026-10-27)
+
+사용자의 명시적 배포 지시에 따라 저장소 설정을 `enabled: true`로 바꿨다. 기본 배포 빌드는 실제 게시자 ID의 비동기 로더를 포함한다. `pnpm check:adsense`는 마지막에 명시적 빈 환경 변수로 광고 없는 결과물을 남기므로, 배포 구성을 검사하려면 이후 `env -u ADSENSE_PUBLISHER_ID pnpm docs:build`를 별도로 실행한다. 소유권 확인 코드가 올라간 것과 Google 계정에서 소유권 확인 또는 사이트 승인이 완료된 것은 구분한다.
+
+개인정보 안내에는 실제 스크립트 로드 사실과 시행일을 반영했다. 운영자가 결정해야 하는 보관·삭제 기준, 계정의 로그 설정, 실제 광고 파트너는 여전히 미정이다. 이 배포 자체를 승인 신청 준비 완료로 간주하지 않는다.

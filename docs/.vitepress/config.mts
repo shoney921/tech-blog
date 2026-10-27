@@ -144,7 +144,7 @@ function getSidebarFromPosts() {
 const SITE_DESCRIPTION = 'AI 시대에도 일단 실행. 개발과 삽질의 생존 기록.'
 const docsRoot = path.resolve(__dirname, '..')
 
-// 기본 꺼짐. 명시적인 환경 변수(빈 값 포함)가 로컬 설정보다 우선한다.
+// 소유권 확인용으로 활성화. 명시적인 환경 변수(빈 값 포함)가 로컬 설정보다 우선한다.
 const adsensePublisherId = (
   process.env.ADSENSE_PUBLISHER_ID ?? (adsense.enabled ? adsense.publisherId : '')
 ).trim()
