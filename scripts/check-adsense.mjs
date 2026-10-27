@@ -7,7 +7,9 @@ import { fileURLToPath } from 'node:url'
 const root = fileURLToPath(new URL('../', import.meta.url))
 const dist = path.join(root, 'docs/.vitepress/dist')
 const env = { ...process.env, ADSENSE_PUBLISHER_ID: '' }
-const testId = `pub-${'0'.repeat(16)}` // Local fixture only; never a seller record.
+const fixtureId = `pub-${'0'.repeat(16)}` // Never a seller record.
+const configured = JSON.parse(readFileSync(path.join(root, 'docs/.vitepress/adsense.config.json'), 'utf8'))
+const testId = configured.publisherId || fixtureId
 const markers = /adsbygoogle|pagead2\.googlesyndication\.com|ca-pub-/
 
 function files(dir) {
@@ -39,8 +41,9 @@ function checkDisabled() {
   // Accept real seller records once configured, but never a test ID or placeholder.
   const records = source.split(/\r?\n/).map(line => line.split('#')[0].trim()).filter(Boolean)
   for (const record of records) {
-    assert(!record.includes(testId), 'Test ID must never be written to ads.txt')
+    assert(!record.includes(fixtureId), 'Fixture ID must never be written to ads.txt')
     assert(/^google\.com,\s*pub-\d{16},\s*DIRECT,\s*[a-f0-9]+$/i.test(record), 'Review ads.txt record')
+    assert.equal(record.split(',')[1].trim(), configured.publisherId, 'Configured ID differs from ads.txt')
   }
   console.log(`PASS default: ${output.length} HTML/JS files without ad code; pages, links and ads.txt checked`)
 }

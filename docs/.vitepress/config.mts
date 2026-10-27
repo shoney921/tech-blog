@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import adsense from './adsense.config.json'
 import type { HeadConfig } from 'vitepress'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -143,8 +144,10 @@ function getSidebarFromPosts() {
 const SITE_DESCRIPTION = 'AI 시대에도 일단 실행. 개발과 삽질의 생존 기록.'
 const docsRoot = path.resolve(__dirname, '..')
 
-// 빌드 환경에 실제 ID를 설정한 경우에만 활성화. .env 파일을 자동으로 읽지 않는다.
-const adsensePublisherId = process.env.ADSENSE_PUBLISHER_ID?.trim()
+// 기본 꺼짐. 명시적인 환경 변수(빈 값 포함)가 로컬 설정보다 우선한다.
+const adsensePublisherId = (
+  process.env.ADSENSE_PUBLISHER_ID ?? (adsense.enabled ? adsense.publisherId : '')
+).trim()
 if (adsensePublisherId && !/^pub-\d{16}$/.test(adsensePublisherId)) {
   throw new Error('ADSENSE_PUBLISHER_ID must use pub- followed by 16 digits')
 }
